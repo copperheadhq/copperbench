@@ -1,0 +1,21 @@
+\section{Reproducibility}
+\label{sec:repro}
+
+We distinguish two claims, because they are not equally strong and conflating them is the usual way agentic results become unfalsifiable.
+
+\paragraph{Re-scoring, which we claim fully.} Given the released records, anyone can recompute every assertion outcome, every verdict, and every table in this paper, with no provider credential and no network access:
+
+\begin{verbatim}
+git clone https://github.com/chouhanindustries/copperhead-benchmarks
+cd copperhead-benchmarks && npm install
+npm run benchmark -- --rescore results/<snapshot>
+npm run paper
+\end{verbatim}
+
+Identical assertion outcomes and a byte-identical regenerated set of tables is the reproduction claim. It holds because grading reads only files the runs already wrote, and involves no model.
+
+\paragraph{Re-running, which we claim weakly.} Executing the suite again requires credentials, costs money, and will not reproduce these numbers exactly. The models are non-deterministic, and the weights behind a model identifier may have changed. A re-run is evidence about the models as they are at the time of the re-run, which is a different and also useful thing.
+
+\paragraph{Released artifacts.} The task suite, fixtures, assertion schemas, result records, runner, scorer, and the source of this paper are released under Apache-2.0 in the project repository. Each record names the suite version, task and fixture hashes, harness version and commit, and tool versions needed to interpret it in isolation.
+
+\paragraph{Generated figures.} Every quantitative claim in Sections~\ref{sec:setup} through~\ref{sec:ablations} is emitted from the bound snapshot into generated LaTeX. A checker rejects literal numerals in those sections, so a hand-typed figure fails the build rather than surviving into a preprint. This is the same discipline the system under test applies to design documents, applied to the document that reports on it.

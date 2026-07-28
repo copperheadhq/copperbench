@@ -1,0 +1,26 @@
+\section{Failure analysis}
+\label{sec:failures}
+
+% RESULTS-BEARING SECTION. Figures come from generated tables only.
+
+Every failed run is classified into exactly one category by a deterministic rule over the exit path, the first failed required assertion, and the dominant tool-error category in the transcript. The classification involves no model, so it is reproducible offline alongside the verdicts themselves.
+
+\subsection{Categories ranked by frequency times mean cost}
+
+\tableFailures
+
+\subsection{Reading the taxonomy}
+
+The categories separate three kinds of problem, and the separation is the useful part.
+
+\emph{Plumbing.} Malformed tool calls, reverted unloadable edits, exhausted turn or repair budgets, stalls, and commit failures indicate the harness is spending the model's turns badly. These are the cheapest failures to fix and rarely say much about the model.
+
+\emph{Behavior.} Unmet synchronization obligations, left-behind document drift, constraint violations, and false refusals indicate the model understood the mechanics and got the judgment wrong.
+
+\emph{Silent wrongness.} A run that passed verification, committed, and did not make the requested change is the category this benchmark exists to surface. It is invisible to every check the project can run on itself, and it is the failure mode with the highest cost outside the benchmark, where the next observation point is a fabricated board.
+
+\subsection{Worked examples}
+
+% Populated per revision with transcript excerpts from released records, cited by
+% run identifier so a reader can retrieve the full transcript from the artifact.
+\emph{To be populated from the bound snapshot.}

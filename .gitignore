@@ -1,0 +1,21 @@
+node_modules/
+dist/
+.env
+
+# Sandboxes are materialized outside this repository and are never committed.
+# Preserved evidence belongs under results/ as records, not as raw trees.
+.sandboxes/
+tmp/
+
+# LaTeX build artifacts. paper/generated/ IS committed: it is the evidence
+# binding, and a reader must see what the prose was compiled against.
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.fdb_latexmk
+paper/*.fls
+paper/*.log
+paper/*.out
+paper/*.pdf
+paper/*.synctex.gz
+paper/*.toc

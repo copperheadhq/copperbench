@@ -1,0 +1,26 @@
+copperhead-benchmarks (copperbench)
+Copyright 2026 Chouhan Industries
+
+This product includes software developed at Chouhan Industries
+(<https://github.com/chouhanindustries/copperhead-benchmarks>).
+
+It benchmarks copperhead (<https://github.com/chouhanindustries/copperhead>),
+which is distributed separately under the same license.
+
+--------------------------------------------------------------------------------
+Third-party open hardware designs redistributed as benchmark fixtures
+--------------------------------------------------------------------------------
+
+The following KiCad design files are included under fixtures/ solely as test
+inputs for the copperbench model benchmark. They are redistributed unmodified,
+under their original licenses, with their license texts preserved in the
+corresponding fixture directory. Selection and licensing rules are stated in
+fixtures/FIXTURES.md.
+
+* Antmicro PDM Microphone Board
+  Copyright (c) 2024-2025 Antmicro <https://www.antmicro.com>
+  Licensed under the Apache License, Version 2.0
+  Source: <https://github.com/antmicro/pdm-microphone-board>
+  Commit: 20813e2bc99f52837a780334b16a30c2afb7644c
+  Included at: fixtures/antmicro-microphone-board/
+  License text: fixtures/antmicro-microphone-board/LICENSE

@@ -1,0 +1,23 @@
+{
+  "id": "do-rename-net",
+  "tier": "simple",
+  "mode": "do",
+  "fixture": {
+    "path": "fixtures/antmicro-microphone-board",
+    "sha256": "dad443ad059b7cd2ec57313967db7c511caa8bcfd1ba72dc2f02cd3560249529"
+  },
+  "setup": { "commands": ["init"] },
+  "request": {
+    "prompt": "rename net DATA to PDM_DATA"
+  },
+  "expectedOutcome": "edit",
+  "config": {
+    "maxTurns": 40,
+    "maxRepairCycles": 5
+  },
+  "caps": {
+    "turns": 40,
+    "wallClockSec": 1200
+  },
+  "tags": ["AC-3.1", "AC-3.7", "propagation", "surgicality", "docs-memory"]
+}

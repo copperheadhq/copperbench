@@ -1,0 +1,52 @@
+{
+  "name": "copperhead-benchmarks",
+  "version": "0.1.0",
+  "private": true,
+  "description": "copperbench: a benchmark for language-model agents on verified KiCad hardware design edits",
+  "license": "Apache-2.0",
+  "author": "Animesh Chouhan <animeshchouhan@outlook.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chouhanindustries/copperhead-benchmarks.git"
+  },
+  "keywords": [
+    "benchmark",
+    "eval",
+    "llm",
+    "agent",
+    "kicad",
+    "pcb",
+    "eda",
+    "hardware",
+    "copperhead"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "hash": "node scripts/hash-fixture.mjs",
+    "lint:md": "markdownlint-cli2 \"**/*.md\" \"#node_modules/**\" \"#fixtures/**/tree/**\"",
+    "typecheck": "tsc --noEmit",
+    "paper": "latexmk -pdf -cd paper/main.tex"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "markdownlint-cli2": "0.23.2",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.8"
+  },
+  "peerDependencies": {
+    "copperhead": ">=0.8.1"
+  },
+  "peerDependenciesMeta": {
+    "copperhead": {
+      "optional": false
+    }
+  },
+  "comments": {
+    "copperhead-dependency": "The runner drives the copperhead CLI as a user would, and the scorer reads artifacts it writes. Grading needs the read-only sexp parser, report normalizer, and drift check from copperhead's src/, which are published in its npm package but are NOT a stable public API. Pin an exact copperhead version when the runner lands, record it in every result record's comparability stamp, and treat an internals change as a suite-version event.",
+    "not-yet-wired": "benchmark, rescore, validate, paper:generate, and paper:check-claims scripts land with the runner, scorer, and paper generator. They are deliberately absent rather than present and broken."
+  }
+}

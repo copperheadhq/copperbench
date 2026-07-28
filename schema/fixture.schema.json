@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://copperhead.sh/schema/fixture.schema.json",
+  "title": "copperbench fixture manifest",
+  "description": "Provenance, scale, and baseline verification state for one frozen fixture. Metadata about the fixture; never copied into a sandbox. See fixtures/FIXTURES.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "sha256", "complexity", "upstream", "kicad", "artifacts", "scale", "baseline"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Matches the fixture directory name. Prefix with the upstream origin where the board is third-party."
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "Canonical hash of tree/ only, per STANDARD.md section 3.2. Metadata files are excluded so provenance edits do not invalidate results."
+    },
+    "complexity": {
+      "enum": ["simple", "medium", "hard"],
+      "description": "Scale of the fixture. Independent of a task's tier: a simple task may target a subsystem of a hard fixture."
+    },
+    "upstream": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "url", "commit", "retrieved", "license", "licenseFile", "copyright", "modifications"],
+      "properties": {
+        "name": { "type": "string" },
+        "url": { "type": "string", "format": "uri" },
+        "commit": { "type": "string", "pattern": "^[a-f0-9]{40}$", "description": "Full SHA. A tag or branch is not sufficient: both move." },
+        "retrieved": { "type": "string", "format": "date" },
+        "license": {
+          "enum": ["Apache-2.0", "MIT", "BSD-2-Clause", "BSD-3-Clause", "CERN-OHL-P-2.0", "CC0-1.0", "Unlicense", "CC-BY-4.0", "CERN-OHL-W-2.0"],
+          "description": "Permitted licenses only (FIXTURES.md section 3). Reciprocal and non-commercial licenses are not vendored."
+        },
+        "licenseFile": { "type": "string", "description": "Path to the verbatim upstream license within the fixture directory." },
+        "copyright": { "type": "string" },
+        "modifications": {
+          "type": "string",
+          "description": "What was and was not copied, and any change to a design file. The strongly preferred value states that no design file was altered."
+        }
+      }
+    },
+    "kicad": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authoredVersion", "fileFormatVersion", "verifiedWithKicadCli"],
+      "properties": {
+        "authoredVersion": { "type": "string", "description": "KiCad version the upstream project states it was designed in." },
+        "fileFormatVersion": { "type": "string", "description": "The (version ...) token from the .kicad_sch. Legacy .sch fixtures are rejected." },
+        "verifiedWithKicadCli": { "type": "string", "description": "Reference kicad-cli version that produced the baseline reports." }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schematic"],
+      "properties": {
+        "schematic": { "type": "string", "description": "Path within tree/ to the root schematic." },
+        "board": { "type": ["string", "null"] },
+        "project": { "type": ["string", "null"] }
+      }
+    },
+    "scale": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schematicLines", "symbols", "sheets"],
+      "description": "Recorded so a task author calibrates a diff bound against a known denominator rather than inheriting a constant.",
+      "properties": {
+        "schematicLines": { "type": "integer", "minimum": 1 },
+        "boardLines": { "type": ["integer", "null"], "minimum": 0 },
+        "symbols": { "type": "integer", "minimum": 1 },
+        "sheets": { "type": "integer", "minimum": 1 },
+        "signalNets": { "type": "array", "items": { "type": "string" } },
+        "powerNets": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "baseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["erc"],
+      "description": "Baseline verification state. Errors must be zero; warnings are expected and recorded so tasks can assert no NEW violations.",
+      "properties": {
+        "erc": { "$ref": "#/$defs/ercBaseline" },
+        "drc": { "$ref": "#/$defs/drcBaseline" },
+        "note": { "type": "string" }
+      }
+    }
+  },
+  "$defs": {
+    "ercBaseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["report", "errors", "warnings"],
+      "properties": {
+        "report": { "type": "string" },
+        "errors": { "const": 0, "description": "A fixture with baseline errors is rejected: a pre-existing error is indistinguishable from an agent-introduced one." },
+        "warnings": { "type": "integer", "minimum": 0 },
+        "warningTypes": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } }
+      }
+    },
+    "drcBaseline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["report", "errors", "warnings", "unconnectedItems", "schematicParity"],
+      "properties": {
+        "report": { "type": "string" },
+        "errors": { "const": 0 },
+        "warnings": { "type": "integer", "minimum": 0 },
+        "warningTypes": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+        "unconnectedItems": { "const": 0, "description": "Must be zero: this is what a bad edit breaks, so it cannot be dirty at baseline." },
+        "schematicParity": { "const": 0 }
+      }
+    }
+  }
+}

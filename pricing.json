@@ -1,0 +1,37 @@
+{
+  "$comment": "Price table for copperbench cost accounting (STANDARD.md section 10). Every result record stores the computed USD figure AND the tableVersion used, so editing this file never rewrites a historical record. Prices are USD per 1M tokens. VERIFY against each provider's current pricing page before the first published matrix: these entries are placeholders pending task 1.4.",
+  "tableVersion": "0.0.0-unverified",
+  "effectiveDate": "1970-01-01",
+  "currency": "USD",
+  "unit": "per-1M-tokens",
+  "models": {
+    "$comment": "segment: api-frontier | api-cheap | open-weight-hosted | open-weight-self-hosted | saved-login",
+    "example-api-frontier": {
+      "segment": "api-frontier",
+      "pinning": "strong",
+      "input": null,
+      "output": null,
+      "cacheRead": null,
+      "cacheWrite": null
+    },
+    "example-api-cheap": {
+      "segment": "api-cheap",
+      "pinning": "strong",
+      "input": null,
+      "output": null
+    },
+    "example-open-weight-hosted": {
+      "segment": "open-weight-hosted",
+      "pinning": "strong",
+      "input": null,
+      "output": null
+    }
+  },
+  "nullCostRoutes": {
+    "$comment": "Routes that report null cost by rule, never by omission. Their records carry pinning where noted and render in a separate table.",
+    "codex": { "segment": "saved-login", "pinning": "weak", "reason": "saved ChatGPT login; token accounting and model identity not controlled by copperhead" },
+    "claude-code": { "segment": "saved-login", "pinning": "weak", "reason": "saved Claude Code login; underlying model may change under the login" },
+    "cursor": { "segment": "saved-login", "pinning": "weak", "reason": "saved Cursor login; underlying model may change under the login" },
+    "self-hosted": { "segment": "open-weight-self-hosted", "pinning": "strong", "reason": "the honest cost unit is GPU-hours, not tokens; tokens are retained, USD is null" }
+  }
+}

@@ -1,0 +1,223 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://copperhead.sh/schema/result.schema.json",
+  "title": "copperbench result record",
+  "description": "One append-only record per run. Self-describing: readable and re-scorable in isolation, without the runner (STANDARD.md section 13).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "suiteVersion",
+    "task",
+    "model",
+    "environment",
+    "run",
+    "assertions",
+    "verdict",
+    "stats",
+    "cost",
+    "failure",
+    "artifacts"
+  ],
+  "properties": {
+    "schemaVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "suiteVersion": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Bumped by any task, fixture, or vocabulary edit. Part of the comparability stamp."
+    },
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "tier", "mode", "expectedOutcome", "manifestSha256", "fixtureSha256", "tags"],
+      "properties": {
+        "id": { "type": "string" },
+        "tier": { "enum": ["simple", "medium", "hard"] },
+        "mode": { "enum": ["do", "create", "sync", "check"] },
+        "expectedOutcome": { "enum": ["edit", "refusal", "flag"] },
+        "manifestSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "fixtureSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "variantOf": { "type": ["string", "null"] },
+        "tags": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "provider", "selectionSource", "segment", "pinning"],
+      "properties": {
+        "id": { "type": "string" },
+        "provider": { "type": "string" },
+        "selectionSource": {
+          "enum": ["flag", "env", "config", "openai-key", "anthropic-key", "picker"]
+        },
+        "segment": {
+          "enum": ["api-frontier", "api-cheap", "open-weight-hosted", "open-weight-self-hosted", "saved-login"],
+          "description": "Segments do not share a cost column (STANDARD.md section 10)."
+        },
+        "pinning": {
+          "enum": ["strong", "weak"],
+          "description": "weak means the underlying model may change under the login; such records never enter the shared cost table."
+        }
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["copperheadVersion", "copperheadCommit", "kicadCliVersion", "node", "platform"],
+      "properties": {
+        "copperheadVersion": { "type": "string" },
+        "copperheadCommit": { "type": "string" },
+        "kicadCliVersion": { "type": ["string", "null"] },
+        "node": { "type": "string" },
+        "platform": { "type": "string" }
+      }
+    },
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repeatIndex", "repeatsPlanned", "startedAt", "baselineCommit", "llmCacheDisabled", "allowDirty"],
+      "properties": {
+        "repeatIndex": { "type": "integer", "minimum": 1 },
+        "repeatsPlanned": { "type": "integer", "minimum": 1 },
+        "startedAt": { "type": "string", "format": "date-time" },
+        "baselineCommit": { "type": "string" },
+        "llmCacheDisabled": {
+          "const": true,
+          "description": "Always true: a cached turn would manufacture determinism the model does not have."
+        },
+        "allowDirty": { "const": false },
+        "ablations": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Recorded overrides rather than forked tasks, so the same task is comparable across conditions.",
+          "properties": {
+            "promptVariant": { "type": ["string", "null"] },
+            "maxTurns": { "type": ["integer", "null"] },
+            "maxRepairCycles": { "type": ["integer", "null"] },
+            "toolSubset": { "type": ["array", "null"], "items": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "assertions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "type", "required", "weight", "passed", "evidenceSource"],
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "type": "string" },
+          "required": { "type": "boolean" },
+          "weight": { "type": "number" },
+          "passed": { "type": "boolean" },
+          "evidenceSource": { "enum": ["end-state", "diff", "transcript"] },
+          "detail": { "type": ["string", "null"], "description": "Observed value, for reading a failure without the sandbox." }
+        }
+      }
+    },
+    "verdict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pass", "partialCredit"],
+      "properties": {
+        "pass": { "type": "boolean", "description": "True only when every required assertion passed." },
+        "partialCredit": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Diagnostic only. Never a headline number."
+        }
+      }
+    },
+    "stats": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["exitPath", "turnsUsed", "maxTurns", "repairCyclesUsed", "maxRepairCycles", "tokensIn", "tokensOut", "durationMs"],
+      "properties": {
+        "exitPath": {
+          "enum": [
+            "done",
+            "refused",
+            "turn-budget-exhausted",
+            "repair-cycles-exhausted",
+            "commit-failed",
+            "provider-error",
+            "session-limit",
+            "stalled",
+            "cap-exceeded"
+          ]
+        },
+        "turnsUsed": { "type": "integer", "minimum": 0 },
+        "maxTurns": { "type": "integer", "minimum": 1 },
+        "repairCyclesUsed": { "type": "integer", "minimum": 0 },
+        "maxRepairCycles": { "type": "integer", "minimum": 0 },
+        "tokensIn": { "type": "integer", "minimum": 0 },
+        "tokensOut": { "type": "integer", "minimum": 0 },
+        "durationMs": { "type": "integer", "minimum": 0 },
+        "filesTouched": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "cost": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["usd", "priceTableVersion"],
+      "properties": {
+        "usd": {
+          "type": ["number", "null"],
+          "description": "null for self-hosted open-weight and saved-login routes. Stored alongside the price-table version so a later price change never rewrites history."
+        },
+        "priceTableVersion": { "type": ["string", "null"] }
+      }
+    },
+    "failure": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "description": "Present exactly when verdict.pass is false. Derived deterministically; no LLM participates.",
+      "required": ["category"],
+      "properties": {
+        "category": {
+          "enum": [
+            "tool-protocol",
+            "file-revert",
+            "turn-budget",
+            "repair-exhausted",
+            "obligation-open",
+            "drift-left",
+            "constraint-violation",
+            "false-refusal",
+            "stalled",
+            "commit-failed",
+            "wrong-target"
+          ]
+        },
+        "firstFailedAssertion": { "type": ["string", "null"] },
+        "dominantToolError": { "type": ["string", "null"] }
+      }
+    },
+    "rubric": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "description": "Present only when the fenced tier was explicitly enabled. Contributes to no headline number and no gate.",
+      "required": ["judgeModel", "promptSha256", "score"],
+      "properties": {
+        "judgeModel": { "type": "string" },
+        "promptSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "score": { "type": "number" },
+        "rationale": { "type": ["string", "null"] }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["transcriptPath", "sandboxPreserved"],
+      "properties": {
+        "transcriptPath": { "type": "string", "description": "Relative path to the preserved, redacted transcript." },
+        "sandboxPreserved": { "type": "boolean" },
+        "sandboxPath": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

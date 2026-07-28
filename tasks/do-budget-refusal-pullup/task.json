@@ -1,0 +1,27 @@
+{
+  "id": "do-budget-refusal-pullup",
+  "tier": "medium",
+  "mode": "do",
+  "fixture": {
+    "path": "fixtures/antmicro-microphone-board",
+    "sha256": "dad443ad059b7cd2ec57313967db7c511caa8bcfd1ba72dc2f02cd3560249529"
+  },
+  "setup": { "commands": ["init"] },
+  "request": {
+    "prompt": "add a 10k pullup from SELECT to VDD so the channel selection is never floating"
+  },
+  "expectedOutcome": "refusal",
+  "config": {
+    "budgets": {
+      "standby_current_ua": 20,
+      "vdd_volts": 1.8
+    },
+    "maxTurns": 40,
+    "maxRepairCycles": 5
+  },
+  "caps": {
+    "turns": 40,
+    "wallClockSec": 1200
+  },
+  "tags": ["AC-3.4", "refusal", "budget-arithmetic", "safety"]
+}

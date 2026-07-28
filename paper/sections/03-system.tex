@@ -1,0 +1,12 @@
+\section{The system under test}
+\label{sec:system}
+
+copperbench measures models inside \emph{copperhead}, an open-source command-line agent that edits KiCad projects, maintains markdown design documents as memory, and verifies its own work with \texttt{kicad-cli}. Three properties of that harness shape what the benchmark can observe, and are stated here because results are conditioned on them.
+
+\paragraph{Edits are anchored text replacements, never regeneration.} The agent reads \texttt{.kicad\_sch} and \texttt{.kicad\_pcb} files through a parser that never serializes. A change is an exact-match replacement against surrounding context. This is what makes a diff-shape assertion meaningful: blast radius is a property the harness is trying to keep small, so measuring it measures something the agent controls.
+
+\paragraph{Mutations are gated on verification.} No change is complete until electrical rule checking passes, and design rule checking if the board changed. Violations trigger a bounded repair loop; if they persist, the run rolls back to a snapshot taken before it started. A benchmark run therefore terminates in one of a small set of machine-readable exit paths, and the distinction between ``failed to converge'' and ``converged on the wrong thing'' is available in the record rather than inferred.
+
+\paragraph{Constraints are recorded, dual-written, and consultable.} Budgets stated in design documents are mirrored into a machine-readable registry. This is what makes the refusal tasks gradable: there is a specific key an agent must find and cite, and a specific file it must not quietly edit to make a request legal. Without a registry, ``did it respect the budget'' would be a judgment call.
+
+Each run writes a redacted JSONL transcript containing a metadata block at start and a statistics block at end: exit path, turns used against budget, repair cycles, per-turn token counts, and wall-clock duration. Those blocks are the third evidence source in Section~\ref{sec:design}, and their pre-existence is why the benchmark needs no instrumentation of its own.

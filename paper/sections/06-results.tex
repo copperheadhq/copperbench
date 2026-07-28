@@ -1,0 +1,38 @@
+\section{Results}
+\label{sec:results}
+
+% RESULTS-BEARING SECTION.
+% Literal numerals are rejected here by scripts/paper/check-claims.ts.
+% State every figure through a generated macro or table.
+
+\subsection{Headline: pass rate and cost per passing task}
+
+\tableHeadline
+
+\subsection{Consistency across repeats}
+
+Pass@1 reports the expected outcome of a single user run; pass\textsuperscript{k} reports the fraction of tasks that passed every repeat. The gap between them is the reliability story.
+
+\tableConsistency
+
+\subsection{Refusal correctness}
+
+Correct-refusal rate is measured over tasks whose expected outcome is a refusal; false-refusal rate is measured over tasks with a correct edit. A model cannot improve one without exposure on the other, which is the point of mixing the classes.
+
+\tableRefusal
+
+\subsection{Surgicality}
+
+Blast radius on edit tasks, measured as changed lines relative to the baseline file and as the set of files touched outside the permitted set.
+
+\tableSurgicality
+
+\subsection{Memorization: original versus mutated variants}
+
+\tableVariantGap
+
+\subsection{Weakly pinned routes}
+
+Saved-login command-line routes are reported here rather than in the headline table: their underlying model may change without notice and their token accounting is not under the harness's control, so neither model identity nor cost is comparable to the direct API rows.
+
+\tableSavedLogin

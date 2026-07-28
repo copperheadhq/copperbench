@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://copperhead.sh/schema/task.schema.json",
+  "title": "copperbench task manifest",
+  "description": "Declarative definition of one benchmark task. Adding a task must require no runner code change; see STANDARD.md section 2.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "tier", "mode", "fixture", "request", "expectedOutcome", "caps", "tags"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Task identifier, matching the containing directory name."
+    },
+    "tier": {
+      "enum": ["simple", "medium", "hard"],
+      "description": "Reasoning load, per examples/README.md. Never a judgment of the product's impressiveness."
+    },
+    "mode": {
+      "enum": ["do", "create", "sync", "check"],
+      "description": "Which copperhead surface the runner drives."
+    },
+    "fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^fixtures/",
+          "description": "Frozen fixture tree. Never a symlink into test/fixtures/."
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "Canonical tree hash per STANDARD.md section 3.2. A mismatch refuses the task before any run."
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Exactly one of prompt (do, sync) or briefPath (create).",
+      "properties": {
+        "prompt": { "type": "string", "minLength": 1 },
+        "briefPath": { "type": "string", "minLength": 1 }
+      },
+      "oneOf": [{ "required": ["prompt"] }, { "required": ["briefPath"] }]
+    },
+    "expectedOutcome": {
+      "enum": ["edit", "refusal", "flag"],
+      "description": "edit: a satisfying change exists. refusal: none does, and the correct answer cites the arithmetic. flag: surface the inconsistency, resolve nothing."
+    },
+    "config": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Overrides written into the sandbox .copperhead/config.json. llmCache is forced false by the runner and is not settable here.",
+      "properties": {
+        "budgets": {
+          "type": "object",
+          "additionalProperties": { "type": "number" },
+          "description": "Recorded budgets the agent must respect. The refusal tasks live or die on these."
+        },
+        "maxTurns": { "type": "integer", "minimum": 1 },
+        "maxRepairCycles": { "type": "integer", "minimum": 0 },
+        "stageMaxTurns": {
+          "type": "object",
+          "additionalProperties": { "type": "integer", "minimum": 1 }
+        }
+      }
+    },
+    "setup": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Deterministic preparation run after git init and before the baseline commit, so its output is part of the starting state rather than the graded diff.",
+      "required": ["commands"],
+      "properties": {
+        "commands": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "enum": ["init"],
+            "description": "Only copperhead subcommands that are contractually LLM-free and network-free are admissible here."
+          }
+        }
+      }
+    },
+    "caps": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["turns", "wallClockSec"],
+      "properties": {
+        "turns": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Hard turn cap. Exceeding it terminates the run with a recorded exit path."
+        },
+        "wallClockSec": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Hard wall-clock cap. Bounds a hung provider call so one task cannot stall a suite."
+        }
+      }
+    },
+    "repeats": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Per-task repeat override. Defaults to 3; create-mode tasks may declare fewer. The count actually used is recorded per result."
+    },
+    "tags": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" },
+      "description": "Acceptance criteria and capabilities exercised, e.g. AC-3.1, surgicality, refusal. Drives coverage reporting."
+    },
+    "variantOf": {
+      "type": "string",
+      "description": "Set only on mutated variants (STANDARD.md section 11.1), naming the original task id. A variant must be solvable by construction."
+    },
+    "rubric": {
+      "type": "string",
+      "description": "Optional path to a rubric file for the fenced, off-by-default model-judged tier. Its presence never affects a headline number."
+    }
+  }
+}

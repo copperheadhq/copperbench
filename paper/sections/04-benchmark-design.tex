@@ -1,0 +1,56 @@
+\section{Benchmark design}
+\label{sec:design}
+
+\subsection{Two constraints that generate the design}
+
+\textbf{Grading must not call a model.} Running a task needs a provider and costs money. Grading it must not, because a score that can only be reproduced by parties who hold credentials and are willing to spend is not a score anyone can check. Everything a verdict depends on is recomputable offline from artifacts the run already wrote.
+
+\textbf{A task must be data.} Adding a task means adding JSON and prose. If grading a task would require new code, the check either enters the shared vocabulary or the task does not enter the suite. This is a real loss of expressive power, accepted for a specific gain: two tasks graded by two bespoke checkers are not comparable in principle, and their grading rules cannot be reviewed without reading the checkers.
+
+\subsection{The unit of evaluation}
+
+A task is a directory containing a manifest, an assertion list, and a prose statement of what it tests. The manifest declares the difficulty tier, the copperhead surface to drive, a content-hashed fixture project, the request, the expected outcome class, configuration overrides including recorded budgets, and hard caps on turns and wall-clock time. A run is one execution of one task by one model in its own sandbox; a repeat is one of several runs of the same pair.
+
+Each run is materialized fresh: the pinned fixture is copied outside the source repository, a git baseline is committed, the response cache is disabled, and the run proceeds from a clean tree. Repeats never share a sandbox. The cache is disabled because a replayed turn would manufacture determinism the model does not possess, and the tree starts clean because rollback assertions are only meaningful relative to a known good state.
+
+\subsection{Three evidence sources}
+
+An assertion may read the repository end state, the diff against the baseline commit, or the run transcript. Nothing else. Console output is explicitly excluded: it is presentation, free to change without a behavioral change, and grading against it would score formatting edits as regressions. All three admissible sources are files on disk, which is what makes offline re-scoring possible.
+
+\subsection{The assertion vocabulary}
+
+Grading rules are drawn from a closed, typed vocabulary spanning the three sources: verification outcomes (electrical and design rule checks, full-project check, document drift), structural end-state queries (net and symbol presence, pin-to-net assignment, document table cells, constraint registry entries), diff-shape checks (permitted file set, file untouched, bounded change ratio, commit count, byte-identical rollback, secret absence), and transcript checks (exit path, refusal citation, event occurrence). An assertion type outside the vocabulary is a validation error rather than a skipped check, and adding a type bumps the suite version.
+
+Two entries deserve comment. The bounded change ratio turns edit surgicality from a review opinion into a threshold: a regenerated schematic can satisfy every connectivity and document assertion a rename task states, and this is the only check that fails it. The refusal citation check grades a refusal on whether it names the governing budget key, not on whether it reads as cautious, because cautious prose is exactly what a model can produce without performing the arithmetic.
+
+\subsection{Outcome classes and why refusal is ungameable}
+
+Every task declares one expected outcome: \emph{edit}, where a change satisfying all recorded constraints exists; \emph{refusal}, where none does and the correct response cites the arithmetic; or \emph{flag}, where the repository is inconsistent in a way that reflects a requirement violation and the correct response surfaces both sides without resolving either.
+
+The suite contains all three classes, and this is structural rather than decorative. A model that refuses everything fails every edit task. A model that never refuses fails every refusal task. Correct-refusal rate and false-refusal rate are reported separately because they are different defects with different remedies.
+
+\subsection{Scoring}
+
+A task passes only when every assertion marked required passes. Weighted partial credit is computed and recorded but never reported as a headline, since a headline that rewards partial progress rewards touching files. Two headline figures are reported, always broken out by tier: strict pass rate, and cost per \emph{passing} task. The latter is deliberate: cost per run flatters a model that fails cheaply, and the practical question a user asks is what a completed task costs.
+
+\subsection{Repeats}
+
+Each pair is run several times by default. We report pass@1 as the mean across repeats, which is the experience of a single user run, and pass\textsuperscript{k} as the fraction of tasks passing every repeat, which is reliability. The gap between them is itself a result: a model that succeeds two times in three is a different product from one that succeeds consistently, and reporting only the mean conceals that. A report derived from a single repeat is labeled as such and is not published as a comparison.
+
+\subsection{Cost accounting}
+
+Cost is computed from a dated, versioned price table, and every record stores both the resulting figure and the table version, so a later price change cannot rewrite history. Providers are segmented by accounting fidelity: direct API models report exact cost; hosted open-weight endpoints report their endpoint price; self-hosted runs report no cost figure, because the honest unit is accelerator-hours rather than tokens; and saved-login command-line routes report no cost and carry a weak-pinning flag, since the model behind such a login can change without notice. These segments are tabulated separately. Averaging them into one currency column would produce the most misleading table this benchmark is capable of.
+
+\subsection{Comparability}
+
+Every record carries a stamp: schema version, suite version, task manifest hash, fixture hash, harness version and commit, and tool versions. Records merge into a shared table only when those agree, and disagreeing records render in a separate labeled section rather than being averaged in. Any edit to a task, fixture, or the vocabulary bumps the suite version. Re-running a full matrix on every suite edit is unaffordable, which is precisely why the segregation is mechanical instead of remembered; because grading is deterministic and offline, preserved runs can be re-scored under a new suite version at no provider cost.
+
+\subsection{Failure taxonomy}
+
+Each failed run is classified into exactly one of eleven categories, derived from the exit path, the first failed required assertion, and the dominant tool-error category in the transcript, with no model involved. The categories separate plumbing failures (malformed tool calls, reverted unloadable edits, exhausted turn or repair budgets, stalls, commit failures) from behavioral ones (unmet obligations, left-behind document drift, constraint violations, false refusals) and from the category that matters most: a run that verified, committed, and did not make the requested change. That last category is easy to lose, because from every angle except the end-state assertion it resembles a success.
+
+Categories are ranked by frequency times mean run cost. That ranking is the intended output of a benchmark run for a maintainer: not a score, but an ordered list of what to fix and roughly what fixing it is worth.
+
+\subsection{Measuring memorization}
+
+The fixtures, briefs, and this standard are public and will be trained on. For a declared subset of tasks the suite ships mutated variants generated by a deterministic transform: renamed nets and reference designators, permuted pin assignments, and scaled budget figures that preserve the reasoning while defeating recall. The variant gap, the difference in pass rate between originals and variants, is reported per model, which converts a standing caveat into a measurement.

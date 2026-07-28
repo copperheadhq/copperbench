@@ -1,0 +1,102 @@
+[
+  {
+    "id": "new-net-exists",
+    "type": "net_present",
+    "args": { "net": "PDM_DATA" },
+    "weight": 3,
+    "required": true,
+    "note": "The requested change actually happened. Without this, a run that verifies and commits while doing nothing scores as a pass."
+  },
+  {
+    "id": "old-net-gone",
+    "type": "net_absent",
+    "args": { "net": "DATA" },
+    "weight": 3,
+    "required": true,
+    "note": "A rename that leaves the old label behind is a copy. DATA appears on two labels in this schematic, so partial propagation is the likely failure."
+  },
+  {
+    "id": "sibling-nets-untouched",
+    "type": "net_present",
+    "args": { "net": "CLK" },
+    "weight": 1,
+    "required": true,
+    "note": "CLK and SELECT are the neighbouring signals. A rename that catches them too is over-reach, and CLK is the cheapest sentinel for it."
+  },
+  {
+    "id": "no-new-erc-violations",
+    "type": "erc_no_new_violations",
+    "args": { "severity": "error" },
+    "weight": 2,
+    "required": true,
+    "note": "Baseline-relative: this fixture carries 44 library-resolution warnings it cannot resolve in a bare checkout. Strict erc_clean would fail every run for reasons unrelated to the model."
+  },
+  {
+    "id": "no-new-drc-violations",
+    "type": "drc_no_new_violations",
+    "args": { "severity": "error" },
+    "weight": 1,
+    "required": true,
+    "note": "Baseline unconnected items and schematic parity are both zero, so a net rename that desyncs the board shows up here."
+  },
+  {
+    "id": "pinout-updated",
+    "type": "doc_contains",
+    "args": { "doc": "PINOUT.md", "pattern": "PDM_DATA" },
+    "weight": 1,
+    "required": true
+  },
+  {
+    "id": "pinout-old-name-gone",
+    "type": "doc_contains",
+    "args": { "doc": "PINOUT.md", "pattern": "\\bDATA\\b", "absent": true },
+    "weight": 1,
+    "required": true
+  },
+  {
+    "id": "surgical-schematic-edit",
+    "type": "diff_ratio_max",
+    "args": { "path": "hardware/microphone-board.kicad_sch", "ratio": 0.01 },
+    "weight": 3,
+    "required": true,
+    "note": "AC-3.7, calibrated to this file. A correct rename touches roughly six lines of 8,489; 1 percent allows 84, which is generous for a careful run and impossible for a regenerated one. The AC's nominal 5 percent would allow 424 lines here."
+  },
+  {
+    "id": "board-untouched",
+    "type": "file_unchanged",
+    "args": { "path": "hardware/microphone-board.kicad_pcb" },
+    "weight": 1,
+    "required": true,
+    "note": "Net names live in the schematic. Rewriting a 35,688-line board file for a label change is going looking for work."
+  },
+  {
+    "id": "touched-files-bounded",
+    "type": "files_touched_subset",
+    "args": {
+      "allowed": ["hardware/microphone-board.kicad_sch", "docs/*.md", ".copperhead/**"]
+    },
+    "weight": 2,
+    "required": true
+  },
+  {
+    "id": "one-commit",
+    "type": "commit_count",
+    "args": { "equals": 1 },
+    "weight": 1,
+    "required": true
+  },
+  {
+    "id": "finished-cleanly",
+    "type": "exit_path_in",
+    "args": { "paths": ["done"] },
+    "weight": 2,
+    "required": true
+  },
+  {
+    "id": "no-secret",
+    "type": "no_secret",
+    "args": {},
+    "weight": 1,
+    "required": true
+  }
+]

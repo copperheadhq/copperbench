@@ -1,0 +1,71 @@
+% copperbench whitepaper: arXiv-style preprint.
+%
+% Every quantitative claim in this document must come from a generated macro in
+% generated/macros.tex or a generated table in generated/tables.tex. Literal
+% numerals in results-bearing sections fail the build (scripts/paper/check-claims.ts).
+% See STANDARD.md and paper/README.md.
+
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{natbib}
+\usepackage{titlesec}
+\usepackage{abstract}
+
+% arXiv preprint look without an external style dependency. Drop in arxiv.sty
+% and remove this block if a specific house style is wanted.
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\renewcommand{\abstractnamefont}{\normalfont\bfseries}
+\renewcommand{\abstracttextfont}{\normalfont\small}
+
+% Generated provenance and figures. Regenerated from a named result snapshot by
+% scripts/paper/generate.ts; never edited by hand.
+\input{generated/macros}
+\input{generated/tables}
+
+\title{\textbf{copperbench: Benchmarking Language Models on Verified Hardware Design Edits}}
+
+\author{
+  Animesh Chouhan\\
+  Chouhan Industries\\
+  \texttt{animeshchouhan@outlook.com}
+}
+
+\date{\today\\[0.5em]\small Suite version \suiteVersion{} \quad Snapshot \snapshotId{} \quad \recordCount{} runs}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\input{sections/00-abstract}
+\end{abstract}
+
+\input{sections/01-introduction}
+\input{sections/02-related-work}
+\input{sections/03-system}
+\input{sections/04-benchmark-design}
+\input{sections/05-setup}
+\input{sections/06-results}
+\input{sections/07-failure-analysis}
+\input{sections/08-ablations}
+\input{sections/09-threats}
+\input{sections/10-reproducibility}
+\input{sections/11-conclusion}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\appendix
+\input{sections/A1-task-suite}
+
+\end{document}

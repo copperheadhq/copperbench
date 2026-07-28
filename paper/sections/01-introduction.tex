@@ -1,0 +1,29 @@
+\section{Introduction}
+
+Benchmarks for coding agents rest on a convenient property of software: the artifact under change carries its own oracle. SWE-bench and its descendants can ask whether a patch makes a failing test pass, because the test was written by a human who knew what correct meant \citep{swebench}. The agent's output is executable, the oracle is executable, and the loop closes in seconds.
+
+Hardware design does not have that property, and the ways it lacks it are more interesting than the fact that it does.
+
+\paragraph{The oracle is strong but silent about intent.} A KiCad project ships with real checkers. Electrical rule checking finds unconnected pins, conflicting drivers, and unpowered nets. Design rule checking finds clearance and width violations. These are fast, deterministic, and free of the model. What none of them will tell you is whether the agent did the thing that was asked. A schematic in which nothing changed passes every check. So does one in which the agent renamed the wrong net. The verification layer establishes that a design is \emph{legal}, and legality is orthogonal to intent.
+
+\paragraph{The failure mode is silent compliance, not a crash.} In software, an agent that misunderstands a task usually produces something that fails loudly. In hardware, the characteristic failure is an edit that is electrically valid, internally consistent, documented, committed, and wrong. A pullup resistor that violates a sleep-current budget passes every check the project can run. It is caught by arithmetic against a recorded constraint or it is not caught at all, and it is discovered on a board that has already been fabricated.
+
+\paragraph{The correct answer is sometimes refusal.} Because designs carry budgets that cannot all be satisfied at once, some well-formed requests have no correct implementation. An agent that complies with all of them is not more capable than one that refuses some; it is less useful and more dangerous. This makes refusal a first-class behavior to measure, which in turn makes it a behavior that can be gamed, which in turn constrains how a suite must be built.
+
+\paragraph{Runs are expensive and non-deterministic.} An agent run on a real project takes minutes and costs tokens. A design that needs hundreds of runs before it says anything is a design that will be executed once and then quoted forever.
+
+\subsection{Contributions}
+
+\begin{itemize}
+  \item \textbf{A benchmark over real KiCad projects} with electrical verification as a partial oracle, paired with end-state assertions that encode what the requested change was, so that legality and intent are graded separately.
+  \item \textbf{A deterministic, offline grading contract.} Every score is recomputable from three artifacts a run already writes: the repository end state, the diff against a baseline commit, and the run transcript. Re-scoring a published record requires no API key, no network, and no trust in the authors.
+  \item \textbf{A closed assertion vocabulary and declarative tasks.} Tasks are JSON, not code. This trades expressive power for the property that any two tasks are comparable and any grading rule is reviewable without reading a checker.
+  \item \textbf{Refusal as a graded, ungameable behavior.} Tasks declare an expected outcome class, and the suite mixes classes so that refusing everything and refusing nothing both score poorly. Refusals are graded on whether they cite the governing budget, not on whether they sound careful.
+  \item \textbf{Cost as a reported axis.} We report cost per \emph{passing} task rather than per run, since a model that fails cheaply is not cheap, and we segment providers by accounting fidelity rather than averaging incomparable cost figures into one column.
+  \item \textbf{A deterministic failure taxonomy that ranks work.} Failures are classified without a model into eleven categories, ranked by frequency times mean cost, which turns a benchmark result into a queue of things to fix.
+  \item \textbf{A generated-evidence discipline for the paper itself.} Every figure here is emitted from the released records, and a hand-typed number in a results section fails the build.
+\end{itemize}
+
+\subsection{What this benchmark does not claim}
+
+A passing score is not a statement that a board can be manufactured, that a part choice is wise, or that a layout is good. The oracle establishes legality and self-consistency. Results are also conditioned on one harness: a model that scores poorly here may perform differently under different prompts, tools, and gates, and that is a finding about the harness as much as about the model. Section~\ref{sec:threats} states these limits and the rest.

@@ -1,0 +1,12 @@
+\section{Related work}
+
+\paragraph{Agentic software benchmarks.} SWE-bench evaluates language models on real GitHub issues, using the repository's own tests as the oracle \citep{swebench}; SWE-agent studies the interface between an agent and a repository \citep{sweagent}. Earlier function-level benchmarks such as HumanEval established execution-based grading for self-contained problems \citep{humaneval}. We inherit the execution-based stance and the use of a real repository as the working surface. We depart on the oracle: no artifact in a KiCad project states what a requested change was supposed to accomplish, so the intent half of grading has to be authored per task rather than harvested from the repository. That authoring is what the closed assertion vocabulary constrains.
+
+\paragraph{Language models for hardware description languages.} A substantial line of work evaluates models on Verilog and related HDLs: VeriGen and its benchmark of RTL generation tasks \citep{verigen}, VerilogEval \citep{verilogeval}, and RTLLM \citep{rtllm}. Chip-Chat explored conversational hardware design with a human in the loop \citep{chipchat}. These share our domain but not our artifact. HDL is text that compiles and simulates, which restores much of the software oracle; a schematic and a board are structured design databases whose correctness conditions are geometric, electrical, and documentary. They also evaluate generation from scratch, where we emphasize edits to an existing project, which is where propagation, surgicality, and constraint retrieval become measurable.
+
+\paragraph{Tool-using agents.} The tool-use loop we measure descends from ReAct-style interleaving of reasoning and action \citep{react}. Our concern is narrower: not whether a model can use tools, but what it does when the tools include a verifier that can reject its work and a registry of constraints that can make the request impossible.
+
+\paragraph{Positioning.} To our knowledge copperbench is the first benchmark that evaluates language-model agents on edits to real KiCad projects, grades them with electrical verification plus declarative end-state assertions, treats refusal as a scored outcome class with its own correctness condition, and reports cost per passing task as a headline figure alongside pass rate.
+
+\medskip
+\noindent\textit{Note for the preprint: bibliography entries in \texttt{references.bib} are marked \texttt{VERIFY} and must be checked against the canonical records before submission.}

@@ -1,0 +1,697 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-07-28T23:52:37",
+    "ignored_checks": [
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning"
+    ],
+    "kicad_version": "10.0.4",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/4a2cf8c5-6ba3-448d-b2e4-bea2166340e3",
+            "violations": [
+                {
+                    "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+                    "items": [
+                        {
+                            "description": "Symbol MK1 [MK_SPH0644LM4H-1]",
+                            "pos": {
+                                "x": 0.8763,
+                                "y": 0.5969
+                            },
+                            "uuid": "5ea07e12-c8be-4f8d-ba8b-8133fece0a1b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicroMicrophones'",
+                    "items": [
+                        {
+                            "description": "Symbol MK1 [MK_SPH0644LM4H-1]",
+                            "pos": {
+                                "x": 0.8763,
+                                "y": 0.5969
+                            },
+                            "uuid": "5ea07e12-c8be-4f8d-ba8b-8133fece0a1b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+                    "items": [
+                        {
+                            "description": "Symbol R1 [R_51R_0402]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 0.6604
+                            },
+                            "uuid": "c1e26ad5-e421-4c0d-9545-117352d8ef03"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicroResistors0402'",
+                    "items": [
+                        {
+                            "description": "Symbol R1 [R_51R_0402]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 0.6604
+                            },
+                            "uuid": "c1e26ad5-e421-4c0d-9545-117352d8ef03"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicropower'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR04 [GND]",
+                            "pos": {
+                                "x": 0.889,
+                                "y": 0.7874
+                            },
+                            "uuid": "f246b658-f3fb-4874-9a78-5de4b6b2237d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicropower'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR07 [VDD]",
+                            "pos": {
+                                "x": 1.1049,
+                                "y": 1.1303
+                            },
+                            "uuid": "8dd38336-bca4-493e-9c7d-7bea8c936152"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+                    "items": [
+                        {
+                            "description": "Symbol R2 [R_0R_0402]",
+                            "pos": {
+                                "x": 1.1049,
+                                "y": 1.2065
+                            },
+                            "uuid": "850fb6b1-e781-4a5e-83b4-9f745796d8c9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicroResistors0402'",
+                    "items": [
+                        {
+                            "description": "Symbol R2 [R_0R_0402]",
+                            "pos": {
+                                "x": 1.1049,
+                                "y": 1.2065
+                            },
+                            "uuid": "850fb6b1-e781-4a5e-83b4-9f745796d8c9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+                    "items": [
+                        {
+                            "description": "Symbol R3 [R_0R_0402]",
+                            "pos": {
+                                "x": 1.1049,
+                                "y": 1.3081
+                            },
+                            "uuid": "76dc6f84-d24d-48f1-bfd1-4d59544e2c2e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicroResistors0402'",
+                    "items": [
+                        {
+                            "description": "Symbol R3 [R_0R_0402]",
+                            "pos": {
+                                "x": 1.1049,
+                                "y": 1.3081
+                            },
+                            "uuid": "76dc6f84-d24d-48f1-bfd1-4d59544e2c2e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicropower'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR09 [GND]",
+                            "pos": {
+                                "x": 1.1049,
+                                "y": 1.3335
+                            },
+                            "uuid": "ac8c0b50-9474-40d1-acf3-57b9920c039b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicropower'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR06 [VDD]",
+                            "pos": {
+                                "x": 1.1303,
+                                "y": 0.5588
+                            },
+                            "uuid": "23e4a215-6374-483f-bda6-aa5a7afa9a55"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+                    "items": [
+                        {
+                            "description": "Symbol C1 [C_180p_0402]",
+                            "pos": {
+                                "x": 1.1684,
+                                "y": 0.6858
+                            },
+                            "uuid": "88eef4ee-45df-4a9e-993c-573c4c96c955"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicroCapacitors0402'",
+                    "items": [
+                        {
+                            "description": "Symbol C1 [C_180p_0402]",
+                            "pos": {
+                                "x": 1.1684,
+                                "y": 0.6858
+                            },
+                            "uuid": "88eef4ee-45df-4a9e-993c-573c4c96c955"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicropower'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR01 [GND]",
+                            "pos": {
+                                "x": 1.1684,
+                                "y": 0.7112
+                            },
+                            "uuid": "dce2b913-d0b6-40f3-9409-b6f8415a8853"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+                    "items": [
+                        {
+                            "description": "Symbol C2 [C_100n_50V_X8L_0402]",
+                            "pos": {
+                                "x": 1.2319,
+                                "y": 0.6858
+                            },
+                            "uuid": "12b6b5a0-73a7-4e59-8a32-0c28d3d1457a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicroCapacitors0402'",
+                    "items": [
+                        {
+                            "description": "Symbol C2 [C_100n_50V_X8L_0402]",
+                            "pos": {
+                                "x": 1.2319,
+                                "y": 0.6858
+                            },
+                            "uuid": "12b6b5a0-73a7-4e59-8a32-0c28d3d1457a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicropower'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR02 [GND]",
+                            "pos": {
+                                "x": 1.2319,
+                                "y": 0.7112
+                            },
+                            "uuid": "e20ed857-b831-4446-aae6-84ceb663199c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+                    "items": [
+                        {
+                            "description": "Symbol FB1 [FB_600Z_0.3A_Murata-BLM15AG_0402]",
+                            "pos": {
+                                "x": 1.3208,
+                                "y": 0.5969
+                            },
+                            "uuid": "88becf18-9c97-41ef-8757-d82bf6968e3a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicroFerriteBeadsandChips'",
+                    "items": [
+                        {
+                            "description": "Symbol FB1 [FB_600Z_0.3A_Murata-BLM15AG_0402]",
+                            "pos": {
+                                "x": 1.3208,
+                                "y": 0.5969
+                            },
+                            "uuid": "88becf18-9c97-41ef-8757-d82bf6968e3a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicropower'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR012 [VCC]",
+                            "pos": {
+                                "x": 1.4478,
+                                "y": 0.5588
+                            },
+                            "uuid": "41d34f99-d4e3-421c-9b9b-0ca7b5a10ac1"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+                    "items": [
+                        {
+                            "description": "Symbol C3 [C_1u_0402]",
+                            "pos": {
+                                "x": 1.4478,
+                                "y": 0.6858
+                            },
+                            "uuid": "9ba6ef7f-408c-4616-8d14-af84a610956c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicroCapacitors0402'",
+                    "items": [
+                        {
+                            "description": "Symbol C3 [C_1u_0402]",
+                            "pos": {
+                                "x": 1.4478,
+                                "y": 0.6858
+                            },
+                            "uuid": "9ba6ef7f-408c-4616-8d14-af84a610956c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicropower'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR03 [GND]",
+                            "pos": {
+                                "x": 1.4478,
+                                "y": 0.7112
+                            },
+                            "uuid": "592eb296-fac4-4f1c-b15d-b7c593f01427"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicropower'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR010 [VDD]",
+                            "pos": {
+                                "x": 1.651,
+                                "y": 1.4097
+                            },
+                            "uuid": "3871d8a3-8d29-46db-b3c3-f5897d82b1a2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicropower'",
+                    "items": [
+                        {
+                            "description": "Symbol #FLG02 [PWR_FLAG]",
+                            "pos": {
+                                "x": 1.6764,
+                                "y": 1.4351
+                            },
+                            "uuid": "71216f99-f6ed-492d-8172-fc1e54e9b28d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicropower'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR014 [VCC]",
+                            "pos": {
+                                "x": 1.7272,
+                                "y": 0.9906
+                            },
+                            "uuid": "f048778b-e7db-44fa-81ff-f43959a93493"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+                    "items": [
+                        {
+                            "description": "Symbol D1 [TPD1E0B04_XDFN-2]",
+                            "pos": {
+                                "x": 1.7272,
+                                "y": 1.0033
+                            },
+                            "uuid": "1eb5247c-f484-41ee-ac49-60641946dc9d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicroTVSDiodes'",
+                    "items": [
+                        {
+                            "description": "Symbol D1 [TPD1E0B04_XDFN-2]",
+                            "pos": {
+                                "x": 1.7272,
+                                "y": 1.0033
+                            },
+                            "uuid": "1eb5247c-f484-41ee-ac49-60641946dc9d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicropower'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR016 [GND]",
+                            "pos": {
+                                "x": 1.7272,
+                                "y": 1.0668
+                            },
+                            "uuid": "379a02a1-a53e-40f1-960c-b113f26289ea"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+                    "items": [
+                        {
+                            "description": "Symbol D2 [TPD1E0B04_XDFN-2]",
+                            "pos": {
+                                "x": 1.8161,
+                                "y": 1.0033
+                            },
+                            "uuid": "d0822c64-bbad-4285-b398-da68b214276d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicroTVSDiodes'",
+                    "items": [
+                        {
+                            "description": "Symbol D2 [TPD1E0B04_XDFN-2]",
+                            "pos": {
+                                "x": 1.8161,
+                                "y": 1.0033
+                            },
+                            "uuid": "d0822c64-bbad-4285-b398-da68b214276d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicropower'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR017 [GND]",
+                            "pos": {
+                                "x": 1.8161,
+                                "y": 1.0668
+                            },
+                            "uuid": "d29e608c-9c87-4924-b2fa-07950ca09129"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+                    "items": [
+                        {
+                            "description": "Symbol D4 [TPD1E0B04_XDFN-2]",
+                            "pos": {
+                                "x": 1.8923,
+                                "y": 1.0033
+                            },
+                            "uuid": "0e9cafe3-3c8e-4586-81da-d843694115ec"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicroTVSDiodes'",
+                    "items": [
+                        {
+                            "description": "Symbol D4 [TPD1E0B04_XDFN-2]",
+                            "pos": {
+                                "x": 1.8923,
+                                "y": 1.0033
+                            },
+                            "uuid": "0e9cafe3-3c8e-4586-81da-d843694115ec"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicropower'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR015 [GND]",
+                            "pos": {
+                                "x": 1.8923,
+                                "y": 1.0668
+                            },
+                            "uuid": "b25fc9e8-93d3-49cf-bf43-56529d139e0f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicropower'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR08 [VCC]",
+                            "pos": {
+                                "x": 1.905,
+                                "y": 1.4097
+                            },
+                            "uuid": "96885324-df7e-4686-bb85-ee9fcb064896"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicropower'",
+                    "items": [
+                        {
+                            "description": "Symbol #FLG01 [PWR_FLAG]",
+                            "pos": {
+                                "x": 1.9304,
+                                "y": 1.4351
+                            },
+                            "uuid": "4f4f49c4-e74e-47a4-8bd4-1c520f6f529e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicropower'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR011 [VCC]",
+                            "pos": {
+                                "x": 2.032,
+                                "y": 0.8636
+                            },
+                            "uuid": "ea276973-7dd8-4c40-ad2b-68242b6f83c5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicropower'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR05 [GND]",
+                            "pos": {
+                                "x": 2.032,
+                                "y": 1.0795
+                            },
+                            "uuid": "efbae2f4-2800-4f1a-bc3f-0792ac9fa2a5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+                    "items": [
+                        {
+                            "description": "Symbol J1 [Conn_FFC_Molex_5019510550]",
+                            "pos": {
+                                "x": 2.0574,
+                                "y": 0.889
+                            },
+                            "uuid": "21d8e654-5ed0-496a-b23a-7dc1e7bb7bc3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicroFCCConnectors'",
+                    "items": [
+                        {
+                            "description": "Symbol J1 [Conn_FFC_Molex_5019510550]",
+                            "pos": {
+                                "x": 2.0574,
+                                "y": 0.889
+                            },
+                            "uuid": "21d8e654-5ed0-496a-b23a-7dc1e7bb7bc3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicropower'",
+                    "items": [
+                        {
+                            "description": "Symbol #FLG03 [PWR_FLAG]",
+                            "pos": {
+                                "x": 2.2225,
+                                "y": 1.4351
+                            },
+                            "uuid": "13331a92-d60b-435a-896d-b690b483f507"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'antmicropower'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR013 [GND]",
+                            "pos": {
+                                "x": 2.2225,
+                                "y": 1.4478
+                            },
+                            "uuid": "ed5e2bdf-2141-4953-9738-fc2820b77e18"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                }
+            ]
+        }
+    ],
+    "source": "microphone-board.kicad_sch"
+}

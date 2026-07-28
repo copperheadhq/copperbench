@@ -1,0 +1,51 @@
+{
+  "$schema": "../../schema/fixture.schema.json",
+  "id": "antmicro-microphone-board",
+  "sha256": "dad443ad059b7cd2ec57313967db7c511caa8bcfd1ba72dc2f02cd3560249529",
+  "complexity": "simple",
+  "upstream": {
+    "name": "Antmicro PDM Microphone Board",
+    "url": "https://github.com/antmicro/pdm-microphone-board",
+    "commit": "20813e2bc99f52837a780334b16a30c2afb7644c",
+    "retrieved": "2026-07-28",
+    "license": "Apache-2.0",
+    "licenseFile": "LICENSE",
+    "copyright": "Copyright (c) 2024-2025 Antmicro",
+    "modifications": "Design files copied verbatim into tree/hardware/. Repository assets, documentation PDFs, CI configuration, .gitignore, and .kicad_prl were not copied. No design file was altered."
+  },
+  "kicad": {
+    "authoredVersion": "8.x",
+    "fileFormatVersion": "20231120",
+    "verifiedWithKicadCli": "10.0.4"
+  },
+  "artifacts": {
+    "schematic": "hardware/microphone-board.kicad_sch",
+    "board": "hardware/microphone-board.kicad_pcb",
+    "project": "hardware/microphone-board.kicad_pro"
+  },
+  "scale": {
+    "schematicLines": 8489,
+    "boardLines": 35688,
+    "symbols": 12,
+    "sheets": 1,
+    "signalNets": ["CLK", "DATA", "SELECT"],
+    "powerNets": ["VDD", "VCC", "GND"]
+  },
+  "baseline": {
+    "erc": {
+      "report": "baseline/erc.json",
+      "errors": 0,
+      "warnings": 44,
+      "warningTypes": { "lib_symbol_issues": 32, "footprint_link_issues": 12 }
+    },
+    "drc": {
+      "report": "baseline/drc.json",
+      "errors": 0,
+      "warnings": 13,
+      "warningTypes": { "lib_footprint_issues": 13 },
+      "unconnectedItems": 0,
+      "schematicParity": 0
+    },
+    "note": "Every baseline violation is a library-resolution warning: the design references the upstream `antmicro-footprints` and `antmicro-symbols` libraries, which are not vendored here. Nothing electrical is outstanding, and unconnected items and schematic parity are both zero. Tasks on this fixture assert no NEW violations rather than a clean report; see fixtures/FIXTURES.md."
+  }
+}

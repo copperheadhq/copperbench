@@ -1,0 +1,5 @@
+(version 1)
+(rule "inner to edge"
+	(constraint edge_clearance(min 0.4mm))
+	(condition "A.existsOnLayer('In1.Cu') || A.existsOnLayer('In2.Cu') ")
+)

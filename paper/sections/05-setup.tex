@@ -1,0 +1,19 @@
+\section{Experimental setup}
+\label{sec:setup}
+
+All figures in this section and those following are generated from the released result records; see Section~\ref{sec:repro}.
+
+\paragraph{Provenance.} Suite version \suiteVersion{}, result snapshot \snapshotId{} (\snapshotSha{}), \recordCount{} runs over \taskCount{} tasks and \modelCount{} models at \repeatCount{} repeats per pair. Harness version \copperheadVersion{}, \texttt{kicad-cli} \kicadCliVersion{}.
+
+\paragraph{Model matrix.} This revision covers \segmentsCovered{}. The following segments are absent and their rows are labeled accordingly throughout: \segmentsAbsent{}. The intended full matrix spans four segments, which differ in what can be known about them rather than only in capability:
+
+\begin{itemize}
+  \item \textbf{Direct API, frontier tier.} Exact model identifiers, exact token accounting, exact cost.
+  \item \textbf{Direct API, cheap tier.} Same accounting. Included because cost per passing task is uninteresting without a spread in price, and because the verification loop may or may not rescue a weaker model.
+  \item \textbf{Open-weight.} Hosted endpoints report endpoint pricing; self-hosted runs report tokens without a currency figure.
+  \item \textbf{Saved-login command-line routes.} Reported separately with weak model pinning and no cost figure. Included because a substantial share of real usage runs this way, and excluding it would measure a population we do not have.
+\end{itemize}
+
+\paragraph{Suites.} The default suite covers edit-mode and check-mode tasks and is bounded per task by turn and wall-clock caps. The full suite adds create-mode tasks, which run a multi-stage pipeline from a product brief and cost substantially more per run; create-mode tasks may declare a lower repeat count, recorded per result.
+
+\paragraph{Environment.} Runs execute against a pinned reference environment; the tool versions above are part of the comparability stamp. Results produced in a different environment remain valid evidence about that environment and are not merged into these tables.

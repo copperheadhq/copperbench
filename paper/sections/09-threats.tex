@@ -1,0 +1,26 @@
+\section{Threats to validity and limitations}
+\label{sec:threats}
+
+\paragraph{The oracle is incomplete.} Passing electrical and design rule checks, and agreeing with the project's own documents, establishes that a design is legal and internally consistent. It does not establish that the board can be manufactured, that the part selection is sound, that the layout is good, or that the design meets any requirement not encoded as a recorded budget or an assertion. No result here should be read as a fabrication-readiness claim.
+
+\paragraph{Intent is authored, not harvested.} Unlike a software benchmark that inherits an oracle from a repository's tests, our end-state assertions are written by us. A task's assertions are an interpretation of the request. We constrain that interpretation with a closed vocabulary and publish every assertion, which makes disagreement possible rather than impossible, but it does not make the interpretation neutral.
+
+\paragraph{Contamination.} The fixtures, briefs, and this document are public and will appear in training data. We measure rather than assume the effect: mutated variants preserve required reasoning while defeating recall, and the variant gap is reported per model. The mitigation is partial. A transform we designed may be inverted by a model that has seen the transform described here.
+
+\paragraph{Repeats are few and models are non-deterministic.} Agent runs vary even at low temperature, because tool results, ordering, and timing vary. Our repeat count bounds cost, not variance. Consequently we report pass\textsuperscript{k} and spread alongside means, treat single-run figures as unpublishable, and set a threshold floor on the regression gate rather than reacting to any movement.
+
+\paragraph{Models change under their names.} A model identifier can refer to different weights over time, and saved-login routes can change the underlying model without any identifier changing at all. Records stamp what was knowable at run time; for weakly pinned routes what was knowable is less. Those rows carry the flag and are never merged into the shared cost column.
+
+\paragraph{Results are conditioned on one harness.} Every score is a score for a model inside copperhead's prompts, tools, and gates. A model that scores poorly here may do well elsewhere, and improvements to the harness will move every model's score. Comparisons across suite versions are segregated for this reason.
+
+\paragraph{Cost figures are not fully commensurable.} Exact for direct API models, endpoint-dependent for hosted open-weight models, absent for self-hosted and saved-login routes. Cost per passing task is comparable within a segment and should not be read across segments.
+
+\paragraph{Tier assignment is a judgment.} Difficulty tiers reflect how much a task requires an agent to hold at once, assigned by us. They are a reporting convenience, not a measured quantity, and a reader who disagrees with a tier assignment can recompute the tables from the released records with a different grouping.
+
+\paragraph{Rubric results, where reported, are opinion.} The model-judged tier is disabled by default and reported in a labeled column. It contributes to no headline figure and no gate. Where it appears, it reflects one judge model's reading of a rubric and inherits every weakness of model-based evaluation.
+
+\paragraph{Fixture provenance is concentrated.} Fixtures must be real boards under permissive licenses in modern KiCad format, and that intersection is narrow: reciprocally licensed and legacy-format designs are excluded by policy, which removes much of the published open-hardware corpus. At the time of writing our fixtures come from a small number of upstream origins, so results partly reflect how well models handle those organizations' design conventions. Broadening origin diversity is a prerequisite for treating the suite as representative of open hardware generally.
+
+\paragraph{Fixtures carry baseline warnings.} Real boards in a bare checkout cannot resolve their vendor libraries, so verification is asserted relative to a recorded baseline rather than absolutely. This is necessary but weakens the oracle at warning severity: a run that introduces a new warning of a type already present in the baseline is not distinguished from one that introduces none. Error-severity violations, unconnected items, and schematic parity are unaffected, since fixtures with any of those at baseline are rejected.
+
+\paragraph{Scope of the suite.} The current suite emphasizes edits to existing projects and a small number of end-to-end pipeline tasks. Layout quality, thermal and signal-integrity reasoning, multi-board systems, and manufacturability are not represented.

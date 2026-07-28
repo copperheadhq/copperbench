@@ -1,0 +1,103 @@
+# add-model-benchmark-suite: Design
+
+## Context
+
+copperhead already produces almost everything a benchmark needs and throws it away. Every run writes a redacted `transcript.jsonl` with a `run-start` metadata block and a `run-end` stats block carrying exit path, turns used against budget, repair cycles, per-turn token counts, and wall-clock duration (AC-8). `copperhead check` is contractually LLM-free and network-free, so ERC, DRC, and doc-drift verdicts can be recomputed by anyone without an API key. The `examples/` corpus is already tiered by reasoning load, and one brief is deliberately unsatisfiable. What is missing is two things: a layer that turns those per-run artifacts into a comparable measurement across models, and something worth measuring against. `test/fixtures/open-key/` is a synthetic project sized for unit tests, a few hundred lines with three symbols; it is the right shape for asserting that the parser works and the wrong shape for asserting anything about a model, for reasons made concrete in D20.
+
+The constraint that shapes everything below: a published benchmark number must be reproducible by a third party who has the repo but no API key. That forces the scorer and the oracle to be deterministic, and it pushes anything model-judged out of the headline.
+
+The second constraint is cost. Every benchmark run is a real agent run against a real provider, minutes long and priced in tokens. A design that needs hundreds of runs to say anything is a design nobody will execute twice.
+
+## Goals / Non-Goals
+
+**Goals:**
+
+- One number per (model, tier) that a stranger can reproduce from the repo and a provider key, plus a cost figure that makes a cheap model's extra retries visible.
+- Tasks addable as data by a contributor who never reads the runner.
+- Failure output that names what to fix next, ranked, rather than a pass/fail wall.
+- A measurable answer to "did that prompt change help", including on models other than the one it was tuned against.
+- A whitepaper whose tables cannot drift from the evidence that produced them.
+
+**Non-Goals:**
+
+- Any claim about fabrication readiness. A board that passes ERC, DRC, and drift checks is legal and self-consistent, not manufacturable or correct.
+- Benchmarking KiCad, `kicad-cli`, or copperhead's wall-clock performance. The suite measures agent behavior; `kicad-cli` time is recorded, not optimized.
+- A general EDA-agent benchmark. Tasks run through copperhead's own `do`, `create`, `sync`, and `check` surfaces, so the suite measures models inside this harness.
+- Human-scored evaluation in v1. The optional rubric tier is model-judged and clearly fenced; human scoring is a later question.
+- Latency or throughput SLAs. Duration is reported for cost context only.
+
+## Decisions
+
+- **D1: A task is data, not code.** `tasks/<id>/task.json` declares mode, fixture, prompt or brief, expected outcome class, budgets and caps, and tags; `assertions.json` declares checks drawn from a closed vocabulary. The runner has no per-task branches. Alternative: a checker function per task in TypeScript, which is what most agent benchmarks do. Rejected: arbitrary checkers make two tasks incomparable in principle, hide grading logic from review, and let a task quietly grade something the standard never defined. A closed vocabulary is a weaker expressive tool and a much stronger comparability guarantee.
+
+- **D2: The scorer is LLM-free and network-free, inheriting the `check` contract.** Grading a completed run requires no API key, no network, and no provider account. This is what makes a published number auditable rather than merely reported. It also means grading is separable from running: a stored sandbox and transcript can be regraded when the standard changes, which is how a suite-version bump stays honest about old evidence.
+
+- **D3: Exactly three evidence sources, and stdout is not one of them.** Assertions read the sandbox end state (via the read-only sexp parser and the docs), the git diff against the run's baseline commit, and `transcript.jsonl` including `run-start` and `run-end`. CLI output is presentation and is allowed to change without a spec change, so grading against it would make cosmetic edits look like behavior regressions. The transcript is the contract surface (AC-8), so it is what the scorer reads.
+
+- **D4: One pristine sandbox per (task, model, repeat).** The runner copies the content-hashed fixture into a temp directory, `git init`s it, commits a baseline, and records the baseline SHA in the result. It never touches the copperhead working tree, mirroring the shape `manual-tests/setup.sh` already uses. Repeats do not share a sandbox, so a repeat cannot inherit the previous attempt's partial work.
+
+- **D5: Benchmark runs disable the response cache and never pass `--allow-dirty`.** `llmCache` defaults on, and a cached turn would silently manufacture determinism that the model does not have; the runner forces it off and records that it did. Starting from a committed clean tree is what gives the rollback assertions meaning: `rollback_byte_identical` is only a real check if there was a known-good state to return to.
+
+- **D6: Two headline numbers, strict pass rate and cost per passing task.** A task passes only when every `required` assertion passes. Weighted partial credit is computed and recorded, but it never appears as the headline, because a headline that rewards partial progress rewards touching files. Cost per passing task rather than cost per run is the efficiency figure, since a model that costs half as much and passes a third as often is not cheaper.
+
+- **D7: Three repeats by default, and a single run is never a result.** Reported as pass@1 (mean across repeats), pass^k (all k repeats passed), and the spread. Agent runs are non-deterministic even at temperature 0 because tool results and timing vary, and the gap between pass@1 and pass^k is itself a finding: a model that passes two thirds of the time is a different product from one that passes reliably.
+
+- **D8: Comparability is stamped and enforced, not assumed.** Every result record carries `schemaVersion`, `suiteVersion`, fixture hash, task manifest hash, copperhead version and git commit, and `kicad-cli` version. Records whose stamps disagree render in a separate section of the leaderboard and are never averaged into a shared row. Editing any manifest bumps `suiteVersion`. Alternative: silently re-run everything on every suite edit. Rejected as unaffordable, which is exactly why segregation has to be mechanical rather than remembered.
+
+- **D9: Cost comes from a dated, pinned price table, and providers are tabled by accounting fidelity.** `pricing.json` maps model id to input and output price with an effective date; the record stores both the computed USD figure and the price-table version, so a price change never rewrites history. The four matrix segments do not share a table: direct API models (Anthropic, OpenAI, frontier and cheap tiers) report exact cost; open-weight endpoints report cost against their hosted price or `null` when self-hosted; saved-login CLI routes (`codex`, `claude-code`, `cursor`) report `null` cost and a weaker model-pinning caveat, because their token accounting and model identity are not fully under copperhead's control. Mixing those into one cost column would be the most misleading table in the paper.
+
+- **D10: The suite mixes solvable and unsatisfiable tasks so refusal cannot be a strategy.** Each manifest declares an expected outcome class: `edit` (a correct change exists), `refusal` (no change satisfies the recorded budgets, so the correct behavior is a refusal citing the arithmetic), or `flag` (the correct behavior is to surface an inconsistency without resolving it, per the sync truth-precedence rule). Correct-refusal rate and false-refusal rate are both reported. A model that refuses everything fails every `edit` task; a model that never refuses fails every `refusal` task.
+
+- **D11: The failure taxonomy is derived, not authored.** Each failed run is classified from deterministic signals only: the `run-end` exit path, the first failed required assertion, and the dominant tool-error category in the transcript. Categories: `tool-protocol`, `file-revert`, `turn-budget`, `repair-exhausted`, `obligation-open`, `drift-left`, `constraint-violation`, `false-refusal`, `stalled`, `commit-failed`, `wrong-target` (verification passed but the required end-state assertion did not). The aggregate report ranks categories by frequency times mean cost, which is the queue for prompt and tool work. An LLM triage pass over transcripts would read better and would not be reproducible; it can be added later as an optional annotation, never as the classification of record.
+
+- **D12: Regression is a gate with a floor, not a comparison.** `--compare <baseline.json>` fails when strict pass rate falls or cost per pass rises beyond a configured threshold, evaluated per tier. The threshold exists because repeats are few and the noise floor is real; a gate that fires on one flipped repeat trains people to ignore it.
+
+- **D13: Ablations are recorded overrides, not forked tasks.** Prompt variant id, turn budget, tool subset, and repair-cycle cap are runner flags stamped into the result record. Copying a task to vary a knob would multiply the suite and break the "same task across conditions" comparison that makes an ablation an ablation.
+
+- **D14: Results are append-only evidence; the leaderboard is generated.** One JSON record per run under `results/<date>/<model>/<task>/run-N.json`, never edited after write. `LEADERBOARD.md` is regenerated from those records with a generated-file marker, and CI fails on a hand edit. This is the same anti-drift stance the product takes toward docs, applied to the repo's own claims.
+
+- **D15: Every number in the paper is generated, and unbacked numbers fail the build.** The generator emits `paper/generated/macros.tex` and `paper/generated/tables.tex` from a result snapshot; the paper's prose may only state figures through those macros, and a checker rejects bare numerals in results-bearing sections. The paper records the result-snapshot hash and the suite version it describes, which is what makes a living preprint honest: v1 states a thin matrix as a thin matrix, and each revision is tied to the evidence that justified it.
+
+- **D16: The rubric tier is fenced, off, and separately reported.** When enabled, a pinned judge model scores a rubric stored beside the task, with the judge model id and prompt hash recorded. It never contributes to strict pass rate, never gates CI or the regression check, and appears in its own column labeled as model-judged. Alternative: fold judge scores into a single quality score. Rejected: it would make the headline non-reproducible and judge-version dependent, which is precisely the property the rest of the design spends its effort avoiding.
+
+- **D17: Memorization is measured, not assumed away.** The example briefs and the fixture are public and will be trained on. For a subset of tasks the suite ships a mutated variant generated by a deterministic transform: renamed nets and refdes, permuted pin assignments, and scaled budget numbers that preserve the reasoning while breaking recall. A model whose score drops sharply on variants is recalling rather than reasoning, and the gap is a reported metric rather than a caveat in prose.
+
+- **D18: Telegraph becomes a task, and this change owns the format.** `prove-live-acceptance` section 4 specified a bespoke `traps.json` for one brief. That trap list is expressible in this assertion vocabulary, so the Telegraph brief lands as `tasks/create-telegraph/` and section 4 of that change is struck rather than implemented twice. Its other sections, nightly live CI, evidence promotion, and README self-consistency, are untouched.
+
+- **D19: Redaction is re-verified at record-write time.** Every artifact written under `results/` is grepped for `sk-[A-Za-z0-9_-]{20,}` before it lands, and a match hard-fails the run rather than being scrubbed silently. AC-4.1 already covers transcripts; this extends the same rule to the benchmark's own output, which is the surface most likely to be published.
+
+- **D20: Fixtures are real boards from permissively licensed open-hardware projects.** A synthetic fixture measures whether a model can edit a file shaped like a schematic. Three concrete problems, all measured rather than assumed: (1) a proportional diff bound does not bind at toy scale, since 5 percent of a 300-line file is fifteen lines but 5 percent of a real 8,489-line schematic is 424; (2) toy fixtures have no vendor libraries, no hierarchical sheets, and no design rules, so the propagation failures that matter have nothing to propagate through; (3) a model that only ever meets a toy is never tested against what it will be pointed at. Licensing is a hard gate rather than a preference: only permissive licenses are vendored (Apache-2.0 preferred, matching this repository), because publishing agent-modified derivatives of a reciprocally licensed board would create a per-artifact obligation to track forever for no measurement benefit. Alternative: fetch fixtures on demand from upstream at run time. Rejected: it makes a published result depend on a third party's repository staying up and unchanged, which is the opposite of a pinned hash.
+
+- **D21: Verification is asserted relative to a recorded baseline, not absolutely.** Measured on the first real fixture, a professionally designed shipped board: 44 ERC warnings and 13 DRC warnings, zero errors, zero unconnected items, zero parity issues. Every warning is library resolution, because a bare checkout cannot see the vendor's symbol and footprint libraries. This is the ordinary condition of real designs, so `erc_clean` would fail every task on every real fixture for reasons unrelated to the model. `erc_no_new_violations` and `drc_no_new_violations` compare against the fixture's recorded baseline reports and pass when nothing new appears. The strict forms stay in the vocabulary for synthetic fixtures and for fixtures whose libraries are fully vendored. Fixtures with baseline *errors* are rejected outright: a pre-existing error is indistinguishable from an agent-introduced one, which would make the assertion meaningless in the direction that matters. Baselines regenerate only on a reference `kicad-cli` change, with the new counts committed alongside, because a silently drifting baseline is exactly where an introduced violation would hide.
+
+- **D22: A surgicality bound is calibrated per task, not inherited as a constant.** AC-3.7's 5 percent was calibrated against a small synthetic schematic. On a real file the same fraction permits wholesale rewriting. Tasks state a bound sized against a correct minimal edit for the file they constrain, roughly an order of magnitude above it, with the reasoning in the task's README. Alternative: an absolute line count in the vocabulary. Rejected for now, since a ratio still travels across fixtures of different sizes as long as the author calibrates it; if per-task calibration proves error-prone, an absolute-count variant is the fix.
+
+## Risks / Trade-offs
+
+- [Provider non-determinism makes a single run meaningless] → repeats default to 3, pass^k is reported alongside pass@1, and the standard forbids single-run claims; the regression gate has a threshold floor so one flipped repeat cannot fire it.
+- [Cost makes the full suite unaffordable to run often] → `smoke` is the default and covers `do`-mode only; `full` prints a cost estimate from the price table before executing; per-task turn and wall-clock caps bound the worst case; result records are cached evidence, so regrading after a scorer change costs nothing.
+- [The oracle is incomplete: ERC and DRC clean does not mean a good board] → stated as a limitation in the standard and in the paper's threats section; surgicality, doc-consistency, and constraint assertions cover part of the gap; the rubric tier exists for the rest and is labeled as opinion, not measurement.
+- [Contamination from public briefs and fixtures] → mutated variants per D17, with the variant gap reported as a first-class number.
+- [Goodharting: prompts tuned against the suite] → the variant gap is the detector, and the regression gate reports per tier rather than in aggregate, so a change that lifts simple tasks while sinking hard ones is visible rather than netted out.
+- [Suite churn strands historical results] → stamped comparability per D8, with mismatched records segregated rather than dropped, and regrading available because the scorer is deterministic.
+- [`kicad-cli` version drift changes ERC verdicts under the suite] → version recorded in every record and included in the comparability stamp; the reference environment is pinned in the benchmark documentation.
+- [Saved-login CLI routes cannot be pinned to a model version or costed exactly] → reported in their own table with the caveat stated inline, never merged into the cost column, and their records carry a `pinning: weak` flag.
+- [The paper's living-preprint form invites "this benchmark has not been run" criticism] → v1 states the size of its own matrix in the abstract, reports the model segments it does cover, and the generated-numbers pipeline means each revision is a mechanical update rather than a rewrite.
+
+## Migration Plan
+
+1. Land the standard, schemas, and two worked tasks with no runner. The format is reviewable on its own, and a task written against a schema outlives the first runner implementation.
+2. Land the runner and scorer against those two tasks, verified offline with a recorded transcript fixture so the scorer has tests that need no provider.
+3. Seed the suite from the AC-3.x, AC-7.x, and `create`-mode set, including one `refusal` task and one mutated variant.
+4. First live matrix: the two direct API providers at frontier and cheap tiers, `smoke` suite, 3 repeats. Publish records and the generated leaderboard.
+5. Extend to saved-login and open-weight segments in their own tables.
+6. Paper v1 from the snapshot at step 4, revised at step 5.
+
+Rollback is per-step and cheap: `` and `paper/` are additive, no `src/` behavior changes, and removing the npm scripts removes the surface entirely.
+
+## Open Questions
+
+- Repeat count for `create`-mode tasks, where a single run is minutes and many turns. Three may be unaffordable; the standard may need a per-mode repeat default rather than one global default.
+- Whether a `smoke`-suite run gates pull requests or stays manual. Gating gives continuous signal and spends credits on every PR.
+- Pricing for self-hosted open-weight runs, where the honest figure is GPU-hours rather than tokens. v1 records `null` and reports tokens only.
+- Whether mutated variants ship as generated-on-the-fly transforms or as committed fixtures. Committed is reproducible; generated resists memorization longer.

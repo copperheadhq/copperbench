@@ -1,0 +1,16 @@
+\section{Ablations}
+\label{sec:ablations}
+
+% RESULTS-BEARING SECTION. Figures come from generated tables only.
+
+Ablations are recorded overrides on the same tasks rather than forked task copies: prompt variant, turn budget, tool subset, and repair-cycle cap are stamped into each result record. Duplicating a task per condition would multiply the suite and destroy the same-task-across-conditions comparison that makes an ablation informative.
+
+Three questions motivate the conditions we run.
+
+\paragraph{Does the verification loop rescue weaker models?} If a cheap model reaches the same pass rate as a frontier model given more repair cycles, the interesting quantity is what that costs, and whether the extra cycles converge or merely churn. Varying the repair-cycle cap separates a model that fixes its own violations from one that resubmits them.
+
+\paragraph{Does the turn budget bind?} Runs that end at the turn cap are not necessarily incapable; they may be inefficient. Raising the cap distinguishes a model that would have finished from one that was not converging, and the distinction changes whether the fix belongs in the prompt or in the model choice.
+
+\paragraph{Do prompt changes generalize across models?} A prompt tuned against one model can regress others. Running a variant across the matrix is the only way to tell an improvement from an overfit, and it is the reason ablation results are reported per model rather than pooled.
+
+\emph{Conditions and results are populated from the bound snapshot.}

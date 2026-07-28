@@ -1,0 +1,322 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://copperhead.sh/schema/assertions.schema.json",
+  "title": "copperbench assertion list",
+  "description": "The closed grading vocabulary (STANDARD.md section 6). A type outside this enum is a validation error, never a skipped check. Adding a type bumps the suite version.",
+  "type": "array",
+  "minItems": 1,
+  "items": { "$ref": "#/$defs/assertion" },
+  "$defs": {
+    "base": {
+      "type": "object",
+      "required": ["id", "type", "weight", "required"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "description": "Stable identifier, unique within the task. Cited by result records and by the paper."
+        },
+        "weight": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Used for partial credit only. Partial credit is never a headline number."
+        },
+        "required": {
+          "type": "boolean",
+          "description": "When true, failing this assertion fails the task. Strict pass rate is all-required-pass."
+        },
+        "note": { "type": "string", "description": "Why this assertion is here, for the reader of a failure." }
+      }
+    },
+    "assertion": {
+      "allOf": [{ "$ref": "#/$defs/base" }],
+      "unevaluatedProperties": false,
+      "oneOf": [
+        {
+          "title": "end-state: verification, baseline-relative (prefer this on real fixtures)",
+          "properties": {
+            "type": { "enum": ["erc_no_new_violations", "drc_no_new_violations"] },
+            "args": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "severity": {
+                  "enum": ["error", "warning"],
+                  "default": "error",
+                  "description": "Lowest severity counted. A real board in a bare checkout carries library-resolution warnings it cannot resolve, so strict cleanliness is unachievable there."
+                }
+              }
+            }
+          },
+          "required": ["type"]
+        },
+        {
+          "title": "end-state: verification, strict (synthetic or fully vendored fixtures)",
+          "properties": {
+            "type": { "enum": ["erc_clean", "drc_clean", "check_clean", "drift_clean"] },
+            "args": { "type": "object", "additionalProperties": false }
+          },
+          "required": ["type"]
+        },
+        {
+          "title": "end-state: net presence",
+          "properties": {
+            "type": { "enum": ["net_present", "net_absent"] },
+            "args": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["net"],
+              "properties": { "net": { "type": "string" } }
+            }
+          },
+          "required": ["type", "args"]
+        },
+        {
+          "title": "end-state: symbol presence",
+          "properties": {
+            "type": { "const": "symbol_present" },
+            "args": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["refdes"],
+              "properties": {
+                "refdes": { "type": "string" },
+                "value": { "type": "string" },
+                "footprint": { "type": "string" }
+              }
+            }
+          },
+          "required": ["type", "args"]
+        },
+        {
+          "title": "end-state: symbol absence",
+          "properties": {
+            "type": { "const": "symbol_absent" },
+            "args": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["refdes"],
+              "properties": { "refdes": { "type": "string" } }
+            }
+          },
+          "required": ["type", "args"]
+        },
+        {
+          "title": "end-state: pin connectivity",
+          "properties": {
+            "type": { "const": "pin_net_equals" },
+            "args": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["refdes", "pin", "net"],
+              "properties": {
+                "refdes": { "type": "string" },
+                "pin": { "type": "string" },
+                "net": { "type": "string" }
+              }
+            }
+          },
+          "required": ["type", "args"]
+        },
+        {
+          "title": "end-state: document table row",
+          "properties": {
+            "type": { "const": "doc_row_matches" },
+            "args": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["doc", "key", "column", "pattern"],
+              "properties": {
+                "doc": { "type": "string", "description": "Path relative to the docs directory, e.g. BOM.md" },
+                "key": { "type": "string", "description": "First-column value identifying the row, e.g. a refdes" },
+                "column": { "type": "string" },
+                "pattern": { "type": "string", "description": "Regular expression the cell must match" }
+              }
+            }
+          },
+          "required": ["type", "args"]
+        },
+        {
+          "title": "end-state: document content",
+          "properties": {
+            "type": { "const": "doc_contains" },
+            "args": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["doc", "pattern"],
+              "properties": {
+                "doc": { "type": "string" },
+                "pattern": { "type": "string" },
+                "absent": { "type": "boolean", "description": "Invert: the pattern must not appear." }
+              }
+            }
+          },
+          "required": ["type", "args"]
+        },
+        {
+          "title": "end-state: constraint registry",
+          "properties": {
+            "type": { "const": "constraint_registered" },
+            "args": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["key"],
+              "properties": {
+                "key": { "type": "string" },
+                "source": { "type": "string" },
+                "affects": { "type": "array", "items": { "type": "string" } }
+              }
+            }
+          },
+          "required": ["type", "args"]
+        },
+        {
+          "title": "diff: touched-file set",
+          "properties": {
+            "type": { "const": "files_touched_subset" },
+            "args": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["allowed"],
+              "properties": {
+                "allowed": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": { "type": "string", "description": "Path or glob permitted to change" }
+                }
+              }
+            }
+          },
+          "required": ["type", "args"]
+        },
+        {
+          "title": "diff: file untouched",
+          "properties": {
+            "type": { "const": "file_unchanged" },
+            "args": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["path"],
+              "properties": { "path": { "type": "string" } }
+            }
+          },
+          "required": ["type", "args"]
+        },
+        {
+          "title": "diff: surgicality bound (AC-3.7)",
+          "properties": {
+            "type": { "const": "diff_ratio_max" },
+            "args": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["path", "ratio"],
+              "properties": {
+                "path": { "type": "string" },
+                "ratio": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "maximum": 1,
+                  "description": "Maximum changed lines as a fraction of the baseline line count. 0.05 is the AC-3.7 bound."
+                }
+              }
+            }
+          },
+          "required": ["type", "args"]
+        },
+        {
+          "title": "diff: commit count",
+          "properties": {
+            "type": { "const": "commit_count" },
+            "args": {
+              "type": "object",
+              "additionalProperties": false,
+              "minProperties": 1,
+              "properties": {
+                "equals": { "type": "integer", "minimum": 0 },
+                "max": { "type": "integer", "minimum": 0 }
+              }
+            }
+          },
+          "required": ["type", "args"]
+        },
+        {
+          "title": "diff: rollback integrity (AC-3.6)",
+          "properties": {
+            "type": { "enum": ["rollback_byte_identical", "no_secret"] },
+            "args": { "type": "object", "additionalProperties": false }
+          },
+          "required": ["type"]
+        },
+        {
+          "title": "transcript: exit path",
+          "properties": {
+            "type": { "const": "exit_path_in" },
+            "args": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["paths"],
+              "properties": {
+                "paths": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "enum": [
+                      "done",
+                      "refused",
+                      "turn-budget-exhausted",
+                      "repair-cycles-exhausted",
+                      "commit-failed",
+                      "provider-error",
+                      "session-limit",
+                      "stalled"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "required": ["type", "args"]
+        },
+        {
+          "title": "transcript: refusal cites its budget",
+          "properties": {
+            "type": { "const": "refusal_cites_budget" },
+            "args": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["budgetKey"],
+              "properties": {
+                "budgetKey": {
+                  "type": "string",
+                  "description": "A refusal is graded on its citation, not its tone: tone is what a model can produce without doing the arithmetic."
+                }
+              }
+            }
+          },
+          "required": ["type", "args"]
+        },
+        {
+          "title": "transcript: event occurred",
+          "properties": {
+            "type": { "const": "transcript_event" },
+            "args": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["event"],
+              "properties": {
+                "event": { "type": "string" },
+                "minCount": { "type": "integer", "minimum": 1 },
+                "matches": {
+                  "type": "object",
+                  "additionalProperties": { "type": "string" },
+                  "description": "Field-to-regex predicate over the event's data object."
+                }
+              }
+            }
+          },
+          "required": ["type", "args"]
+        }
+      ]
+    }
+  }
+}
