@@ -1,0 +1,52 @@
+{
+  "$schema": "../../schema/fixture.schema.json",
+  "id": "antmicro-jetson-orin-baseboard",
+  "sha256": "9ef3ef828b842bd1375c7eed13bf17b5135d3d70699c2a5e975ed38a1462afdc",
+  "complexity": "hard",
+  "upstream": {
+    "name": "Antmicro Jetson Orin Baseboard",
+    "url": "https://github.com/antmicro/jetson-orin-baseboard",
+    "commit": "34f0e7f5fbca441191e20ed55d93cf8614e12bed",
+    "retrieved": "2026-07-29",
+    "license": "Apache-2.0",
+    "licenseFile": "LICENSE",
+    "copyright": "Copyright (c) 2022-2026 Antmicro, per the upstream README",
+    "modifications": "All ten schematic sheets, the board, the project file, the custom design rules, and the (empty) project sym-lib-table and fp-lib-table copied verbatim from the upstream repository root. Documentation, rendered images, and .kicad_prl were not copied. No design file was altered."
+  },
+  "kicad": {
+    "authoredVersion": "8.x",
+    "fileFormatVersion": "20231120",
+    "verifiedWithKicadCli": "10.0.4"
+  },
+  "artifacts": {
+    "schematic": "jetson-orin-baseboard.kicad_sch",
+    "board": "jetson-orin-baseboard.kicad_pcb",
+    "project": "jetson-orin-baseboard.kicad_pro"
+  },
+  "scale": {
+    "schematicLines": 364016,
+    "boardLines": 1799902,
+    "symbols": 669,
+    "sheets": 10,
+    "signalNets": ["CSI1_0_D0_P", "CSI1_0_D0_N", "CSIA_3V3", "CSIA_5V", "CSIA_3V3_ISET"],
+    "powerNets": ["+1V8", "+3V3", "+5V", "+5V_SoM", "3V3_STDB", "VDD_SoM", "VCC", "GND", "GNDD"]
+  },
+  "baseline": {
+    "erc": {
+      "report": "baseline/erc.json",
+      "errors": 0,
+      "warnings": 1750,
+      "warningTypes": { "lib_symbol_issues": 1066, "footprint_link_issues": 678, "same_local_global_label": 6 }
+    },
+    "drc": {
+      "report": "baseline/drc.json",
+      "errors": 6,
+      "errorTypes": { "hole_clearance": 4, "courtyards_overlap": 1, "zones_intersect": 1 },
+      "warnings": 251,
+      "warningTypes": { "lib_footprint_issues": 199, "silk_over_copper": 48, "silk_overlap": 4 },
+      "unconnectedItems": 0,
+      "schematicParity": 0
+    },
+    "note": "Zero ERC errors, zero unconnected items, and zero parity issues across ten hierarchical sheets, which is the best result of any hard-tier candidate vetted. The six DRC errors are all geometry rules that KiCad tightened after this board was laid out: four `hole_clearance`, one `courtyards_overlap`, one `zones_intersect`. They are enumerated here as the recorded allowlist, so drc_no_new_violations still catches anything an agent adds. The 1,066 `lib_symbol_issues` and 678 `footprint_link_issues` are the ordinary bare-checkout condition: this design references Antmicro's vendor libraries, and its own project sym-lib-table and fp-lib-table are empty."
+  }
+}

@@ -1,0 +1,1367 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-07-29T20:53:23",
+    "ignored_checks": [
+        {
+            "description": "Courtyards overlap",
+            "key": "courtyards_overlap"
+        },
+        {
+            "description": "Footprint has no courtyard defined",
+            "key": "missing_courtyard"
+        },
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "key": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "key": "silk_over_copper"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "key": "pth_inside_courtyard"
+        },
+        {
+            "description": "NPTH inside courtyard",
+            "key": "npth_inside_courtyard"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning"
+    ],
+    "kicad_version": "10.0.4",
+    "schematic_parity": [
+        {
+            "description": "Footprint attributes don't match symbol: 'Do not populate' settings differ",
+            "items": [
+                {
+                    "description": "Footprint AE1",
+                    "pos": {
+                        "x": 5.05,
+                        "y": 10.3
+                    },
+                    "uuid": "3901dbd7-02eb-4124-9152-76a186d91b9a"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Antenna', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint AE1",
+                    "pos": {
+                        "x": 5.05,
+                        "y": 10.3
+                    },
+                    "uuid": "3901dbd7-02eb-4124-9152-76a186d91b9a"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'LCSC Part' differs (PCB: 'C23733', Schematic: 'C368809')",
+            "items": [
+                {
+                    "description": "Footprint C1",
+                    "pos": {
+                        "x": 3.45,
+                        "y": -0.725
+                    },
+                    "uuid": "00000000-0000-0000-0000-0000600dd308"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Unpolarized capacitor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint C2",
+                    "pos": {
+                        "x": -4.7,
+                        "y": 6.55
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005ff00897"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Unpolarized capacitor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint C3",
+                    "pos": {
+                        "x": 4.525,
+                        "y": 4.975
+                    },
+                    "uuid": "00000000-0000-0000-0000-0000601438a6"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Unpolarized capacitor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint C4",
+                    "pos": {
+                        "x": -4.7,
+                        "y": 4.05
+                    },
+                    "uuid": "00000000-0000-0000-0000-00006015246b"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Value (C5) doesn't match symbol value (1pF)",
+            "items": [
+                {
+                    "description": "Footprint C5",
+                    "pos": {
+                        "x": 1.825,
+                        "y": 9.68
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005fed8d3f"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_mismatch"
+        },
+        {
+            "description": "Field 'LCSC Part' differs (PCB: 'C1550', Schematic: 'C76912')",
+            "items": [
+                {
+                    "description": "Footprint C5",
+                    "pos": {
+                        "x": 1.825,
+                        "y": 9.68
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005fed8d3f"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Unpolarized capacitor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint C6",
+                    "pos": {
+                        "x": 5.47,
+                        "y": 8.9
+                    },
+                    "uuid": "00000000-0000-0000-0000-0000600bcf81"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Unpolarized capacitor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint C7",
+                    "pos": {
+                        "x": 5.625,
+                        "y": 4.975
+                    },
+                    "uuid": "00000000-0000-0000-0000-00006014157c"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Unpolarized capacitor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint C8",
+                    "pos": {
+                        "x": -1.1,
+                        "y": -0.275
+                    },
+                    "uuid": "00000000-0000-0000-0000-00006009f005"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Value (C9) doesn't match symbol value (1pF)",
+            "items": [
+                {
+                    "description": "Footprint C9",
+                    "pos": {
+                        "x": 1.25,
+                        "y": 8.175
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005feb0990"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_mismatch"
+        },
+        {
+            "description": "Field 'LCSC Part' differs (PCB: 'C1550', Schematic: 'C88902')",
+            "items": [
+                {
+                    "description": "Footprint C9",
+                    "pos": {
+                        "x": 1.25,
+                        "y": 8.175
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005feb0990"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Unpolarized capacitor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint C10",
+                    "pos": {
+                        "x": 2.5,
+                        "y": -0.725
+                    },
+                    "uuid": "00000000-0000-0000-0000-00006016b4ba"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Unpolarized capacitor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint C11",
+                    "pos": {
+                        "x": 3.125,
+                        "y": 8.175
+                    },
+                    "uuid": "00000000-0000-0000-0000-00006014051b"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Unpolarized capacitor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint C12",
+                    "pos": {
+                        "x": -0.45,
+                        "y": 8.8
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005febc4a6"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'LCSC Part' differs (PCB: 'C23733', Schematic: 'C368809')",
+            "items": [
+                {
+                    "description": "Footprint C13",
+                    "pos": {
+                        "x": -3.15,
+                        "y": -0.7
+                    },
+                    "uuid": "00000000-0000-0000-0000-0000600aea3b"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'LCSC Part' differs (PCB: 'C23733', Schematic: 'C368809')",
+            "items": [
+                {
+                    "description": "Footprint C14",
+                    "pos": {
+                        "x": -4.5,
+                        "y": 0.125
+                    },
+                    "uuid": "00000000-0000-0000-0000-0000600c1a84"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Unpolarized capacitor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint C15",
+                    "pos": {
+                        "x": 4.275,
+                        "y": 1.425
+                    },
+                    "uuid": "00000000-0000-0000-0000-000060a9bbde"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Unpolarized capacitor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint C16",
+                    "pos": {
+                        "x": 5.2,
+                        "y": 1.425
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005feb0a07"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Unpolarized capacitor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint C17",
+                    "pos": {
+                        "x": 3.4,
+                        "y": -2.6
+                    },
+                    "uuid": "00000000-0000-0000-0000-0000600d661e"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Unpolarized capacitor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint C18",
+                    "pos": {
+                        "x": 0.1,
+                        "y": -2.6
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005ff985dd"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Unpolarized capacitor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint C19",
+                    "pos": {
+                        "x": -4.925,
+                        "y": 7.725
+                    },
+                    "uuid": "00000000-0000-0000-0000-00006012e7c2"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'LCSC Part' differs (PCB: 'C23733', Schematic: 'C368809')",
+            "items": [
+                {
+                    "description": "Footprint C20",
+                    "pos": {
+                        "x": -4.95,
+                        "y": -3.2
+                    },
+                    "uuid": "00000000-0000-0000-0000-000060a58b91"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Unpolarized capacitor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint C21",
+                    "pos": {
+                        "x": -3.125,
+                        "y": -3.45
+                    },
+                    "uuid": "6a4d72b6-630b-431a-9dbe-18d1d4204112"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'LCSC Part' differs (PCB: 'C1552', Schematic: 'C76901')",
+            "items": [
+                {
+                    "description": "Footprint C22",
+                    "pos": {
+                        "x": 4.575,
+                        "y": 11.05
+                    },
+                    "uuid": "00000000-0000-0000-0000-0000600d24f9"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Unpolarized capacitor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint C23",
+                    "pos": {
+                        "x": 2.05,
+                        "y": -3.575
+                    },
+                    "uuid": "1a4fc877-da7c-49ad-960f-35d623450018"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'LCSC Part' differs (PCB: 'C23733', Schematic: 'C368809')",
+            "items": [
+                {
+                    "description": "Footprint C24",
+                    "pos": {
+                        "x": 0.175,
+                        "y": -6.85
+                    },
+                    "uuid": "7ef205c3-2923-4eef-9e56-9cd152537108"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'LCSC Part' differs (PCB: 'C23733', Schematic: 'C368809')",
+            "items": [
+                {
+                    "description": "Footprint C25",
+                    "pos": {
+                        "x": -0.825,
+                        "y": -2.6
+                    },
+                    "uuid": "00000000-0000-0000-0000-000060a4b7ce"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'LCSC Part' differs (PCB: 'C23733', Schematic: 'C368809')",
+            "items": [
+                {
+                    "description": "Footprint C26",
+                    "pos": {
+                        "x": 5.6,
+                        "y": -6.35
+                    },
+                    "uuid": "3ed9fd51-c0dc-42b3-addc-3de3015a2947"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Light emitting diode, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint D1",
+                    "pos": {
+                        "x": -5.5,
+                        "y": -8.1
+                    },
+                    "uuid": "00000000-0000-0000-0000-0000600e3656"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Light emitting diode, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint D3",
+                    "pos": {
+                        "x": 5.5,
+                        "y": -8.1
+                    },
+                    "uuid": "00000000-0000-0000-0000-0000601638af"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Schottky diode, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint D5",
+                    "pos": {
+                        "x": -1.25,
+                        "y": -5.2
+                    },
+                    "uuid": "472b9f2c-70b2-4c8b-a811-eb217611b495"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Footprint attributes don't match symbol: 'Do not populate' settings differ",
+            "items": [
+                {
+                    "description": "Footprint DUMMY1",
+                    "pos": {
+                        "x": 0.0,
+                        "y": 13.0
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005ff9497f"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Mounting Hole without connection', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint DUMMY1",
+                    "pos": {
+                        "x": 0.0,
+                        "y": 13.0
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005ff9497f"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Footprint attributes don't match symbol: 'Do not populate' settings differ",
+            "items": [
+                {
+                    "description": "Footprint DUMMY2",
+                    "pos": {
+                        "x": 0.0,
+                        "y": 14.5
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005ff940c4"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Mounting Hole without connection', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint DUMMY2",
+                    "pos": {
+                        "x": 0.0,
+                        "y": 14.5
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005ff940c4"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Resettable fuse, polymeric positive temperature coefficient, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint F1",
+                    "pos": {
+                        "x": 0.175,
+                        "y": -4.65
+                    },
+                    "uuid": "eadeb2fc-938c-4b49-a45e-41089253bae9"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Datasheet' differs (PCB: '', Schematic: 'https://www.usb.org/sites/default/files/documents/usb_type-c.zip')",
+            "items": [
+                {
+                    "description": "Footprint J1",
+                    "pos": {
+                        "x": 0.0,
+                        "y": -17.55
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005feb3bf4"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Footprint attributes don't match symbol: 'Do not populate' settings differ",
+            "items": [
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 4.3,
+                        "y": -10.2
+                    },
+                    "uuid": "4388a0e6-8563-49ff-99ae-819fed77e249"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint J4",
+                    "pos": {
+                        "x": 4.3,
+                        "y": -10.2
+                    },
+                    "uuid": "4388a0e6-8563-49ff-99ae-819fed77e249"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Footprint attributes don't match symbol: 'Do not populate' settings differ",
+            "items": [
+                {
+                    "description": "Footprint J5",
+                    "pos": {
+                        "x": -4.3,
+                        "y": -10.2
+                    },
+                    "uuid": "5408f128-bd35-450a-80bc-65365d1e5dfb"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint J5",
+                    "pos": {
+                        "x": -4.3,
+                        "y": -10.2
+                    },
+                    "uuid": "5408f128-bd35-450a-80bc-65365d1e5dfb"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Value (L1) doesn't match symbol value (3.9nH)",
+            "items": [
+                {
+                    "description": "Footprint L1",
+                    "pos": {
+                        "x": 0.775,
+                        "y": 9.675
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005feb0ad0"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_mismatch"
+        },
+        {
+            "description": "Field 'LCSC Part' differs (PCB: 'C14033', Schematic: 'C98064')",
+            "items": [
+                {
+                    "description": "Footprint L1",
+                    "pos": {
+                        "x": 0.775,
+                        "y": 9.675
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005feb0ad0"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Inductor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint L2",
+                    "pos": {
+                        "x": 5.65,
+                        "y": -1.65
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005feb0adf"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Inductor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint L3",
+                    "pos": {
+                        "x": 4.575,
+                        "y": -1.2
+                    },
+                    "uuid": "00000000-0000-0000-0000-0000600de556"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Inductor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint L4",
+                    "pos": {
+                        "x": -3.125,
+                        "y": -2.175
+                    },
+                    "uuid": "00000000-0000-0000-0000-000060a384df"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Footprint attributes don't match symbol: 'Do not populate' settings differ",
+            "items": [
+                {
+                    "description": "Footprint NT1",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 6.1
+                    },
+                    "uuid": "00000000-0000-0000-0000-00006013708c"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Net tie, 2 pins', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint NT1",
+                    "pos": {
+                        "x": 1.5,
+                        "y": 6.1
+                    },
+                    "uuid": "00000000-0000-0000-0000-00006013708c"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Resistor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint R1",
+                    "pos": {
+                        "x": 5.05,
+                        "y": -3.05
+                    },
+                    "uuid": "38b0d2de-fb13-44d3-a30c-64bdfd88eb33"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Resistor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint R2",
+                    "pos": {
+                        "x": -3.7,
+                        "y": -7.7
+                    },
+                    "uuid": "ab75713b-8f94-4f5a-ac3d-a69ed8b71e21"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Resistor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint R5",
+                    "pos": {
+                        "x": -3.7,
+                        "y": -8.6
+                    },
+                    "uuid": "00000000-0000-0000-0000-0000601266ad"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Resistor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint R6",
+                    "pos": {
+                        "x": 5.6,
+                        "y": -4.475
+                    },
+                    "uuid": "fa4ab886-7eb7-43d8-bc57-91282809896d"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Resistor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint R7",
+                    "pos": {
+                        "x": 0.575,
+                        "y": -1.2
+                    },
+                    "uuid": "00000000-0000-0000-0000-000060110ca2"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Resistor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint R8",
+                    "pos": {
+                        "x": 5.6,
+                        "y": -5.425
+                    },
+                    "uuid": "9a1a9469-db0c-4e77-b976-39ebb95c7409"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Resistor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint R9",
+                    "pos": {
+                        "x": 1.75,
+                        "y": -9.4
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005ff04864"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Resistor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint R10",
+                    "pos": {
+                        "x": -2.0,
+                        "y": -9.4
+                    },
+                    "uuid": "00000000-0000-0000-0000-000060a7243f"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Resistor, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint R11",
+                    "pos": {
+                        "x": 4.55,
+                        "y": 10.15
+                    },
+                    "uuid": "e793742f-e4dc-4954-86b4-b92b8189067d"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Footprint attributes don't match symbol: 'Do not populate' settings differ",
+            "items": [
+                {
+                    "description": "Footprint TP1",
+                    "pos": {
+                        "x": -1.5,
+                        "y": 9.5
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005ff7273d"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'test point', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint TP1",
+                    "pos": {
+                        "x": -1.5,
+                        "y": 9.5
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005ff7273d"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Footprint attributes don't match symbol: 'Do not populate' settings differ",
+            "items": [
+                {
+                    "description": "Footprint TP2",
+                    "pos": {
+                        "x": -4.5,
+                        "y": 9.5
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005ff7133a"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'test point', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint TP2",
+                    "pos": {
+                        "x": -4.5,
+                        "y": 9.5
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005ff7133a"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Footprint attributes don't match symbol: 'Do not populate' settings differ",
+            "items": [
+                {
+                    "description": "Footprint TP3",
+                    "pos": {
+                        "x": -4.5,
+                        "y": 5.5
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005ff248c5"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'test point', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint TP3",
+                    "pos": {
+                        "x": -4.5,
+                        "y": 5.5
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005ff248c5"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Footprint attributes don't match symbol: 'Do not populate' settings differ",
+            "items": [
+                {
+                    "description": "Footprint TP4",
+                    "pos": {
+                        "x": 1.3,
+                        "y": -10.1
+                    },
+                    "uuid": "99d57817-0d13-4d37-9fe0-f3a0f1d8fbd3"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'test point', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint TP4",
+                    "pos": {
+                        "x": 1.3,
+                        "y": -10.1
+                    },
+                    "uuid": "99d57817-0d13-4d37-9fe0-f3a0f1d8fbd3"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Footprint attributes don't match symbol: 'Do not populate' settings differ",
+            "items": [
+                {
+                    "description": "Footprint TP5",
+                    "pos": {
+                        "x": -4.5,
+                        "y": -8.0
+                    },
+                    "uuid": "20c2c058-f746-4fb9-a0c9-75f6c60fa006"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'test point', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint TP5",
+                    "pos": {
+                        "x": -4.5,
+                        "y": -8.0
+                    },
+                    "uuid": "20c2c058-f746-4fb9-a0c9-75f6c60fa006"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Footprint attributes don't match symbol: 'Do not populate' settings differ",
+            "items": [
+                {
+                    "description": "Footprint TP6",
+                    "pos": {
+                        "x": -1.3,
+                        "y": -10.1
+                    },
+                    "uuid": "0db9df79-f95b-4cad-a70b-3b8a1499ed0a"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'test point', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint TP6",
+                    "pos": {
+                        "x": -1.3,
+                        "y": -10.1
+                    },
+                    "uuid": "0db9df79-f95b-4cad-a70b-3b8a1499ed0a"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Footprint attributes don't match symbol: 'Do not populate' settings differ",
+            "items": [
+                {
+                    "description": "Footprint TP7",
+                    "pos": {
+                        "x": -0.5,
+                        "y": -2.5
+                    },
+                    "uuid": "98cee7a0-2f09-40d5-8639-79625f29f40b"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'test point', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint TP7",
+                    "pos": {
+                        "x": -0.5,
+                        "y": -2.5
+                    },
+                    "uuid": "98cee7a0-2f09-40d5-8639-79625f29f40b"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Footprint attributes don't match symbol: 'Do not populate' settings differ",
+            "items": [
+                {
+                    "description": "Footprint TP8",
+                    "pos": {
+                        "x": -4.7,
+                        "y": -4.5
+                    },
+                    "uuid": "435960f9-5f02-4a62-b70b-90c1310d341d"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'test point', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint TP8",
+                    "pos": {
+                        "x": -4.7,
+                        "y": -4.5
+                    },
+                    "uuid": "435960f9-5f02-4a62-b70b-90c1310d341d"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Footprint attributes don't match symbol: 'Do not populate' settings differ",
+            "items": [
+                {
+                    "description": "Footprint TP9",
+                    "pos": {
+                        "x": -4.0,
+                        "y": 2.0
+                    },
+                    "uuid": "12a70400-b291-4d8b-93c0-ccb9a5f9af47"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'test point', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint TP9",
+                    "pos": {
+                        "x": -4.0,
+                        "y": 2.0
+                    },
+                    "uuid": "12a70400-b291-4d8b-93c0-ccb9a5f9af47"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Datasheet' differs (PCB: '', Schematic: 'http://infocenter.nordicsemi.com/topic/com.nordic.infocenter.nrf52/dita/nrf52/chips/nrf52840.html')",
+            "items": [
+                {
+                    "description": "Footprint U1",
+                    "pos": {
+                        "x": 0.0,
+                        "y": 3.8
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005feb36a0"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Datasheet' differs (PCB: '', Schematic: 'http://www.ti.com/lit/ds/symlink/bq24075.pdf')",
+            "items": [
+                {
+                    "description": "Footprint U2",
+                    "pos": {
+                        "x": 2.65,
+                        "y": -6.1
+                    },
+                    "uuid": "ef4b3375-d736-48e2-86eb-2961aa25190e"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Datasheet' differs (PCB: '', Schematic: 'https://www.torexsemi.com/file/xc6220/XC6220.pdf')",
+            "items": [
+                {
+                    "description": "Footprint U3",
+                    "pos": {
+                        "x": -3.8,
+                        "y": -5.7
+                    },
+                    "uuid": "b8b33d8b-24f2-49d1-a149-95e7ec606607"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Footprint attributes don't match symbol: 'Do not populate' settings differ",
+            "items": [
+                {
+                    "description": "Footprint U4",
+                    "pos": {
+                        "x": 0.0,
+                        "y": 1.27
+                    },
+                    "uuid": "0be3e7c1-6a40-432c-9f3c-eb2658a3dbc5"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_mismatch"
+        },
+        {
+            "description": "Field 'Datasheet' differs (PCB: '', Schematic: 'http://www.onsemi.cn/pub_link/Collateral/ESDR0502N-D.PDF')",
+            "items": [
+                {
+                    "description": "Footprint U5",
+                    "pos": {
+                        "x": -0.9,
+                        "y": -7.95
+                    },
+                    "uuid": "808b21e2-73fc-4c2d-a1cf-0237356223dd"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Four pin crystal, GND on pins 2 and 4, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint Y1",
+                    "pos": {
+                        "x": 5.175,
+                        "y": 7.175
+                    },
+                    "uuid": "00000000-0000-0000-0000-0000601415b3"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        },
+        {
+            "description": "Field 'Description' differs (PCB: 'Two pin crystal, small symbol', Schematic: '')",
+            "items": [
+                {
+                    "description": "Footprint Y2",
+                    "pos": {
+                        "x": 1.75,
+                        "y": -2.4
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005ff96103"
+                }
+            ],
+            "severity": "warning",
+            "type": "footprint_symbol_field_mismatch"
+        }
+    ],
+    "source": "mikoto.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Copper zones intersect (intersecting zones must have distinct priorities)",
+            "items": [
+                {
+                    "description": "Zone 'asdf' [GND] on F.Cu, priority 0",
+                    "pos": {
+                        "x": 8.75,
+                        "y": 11.4
+                    },
+                    "uuid": "00000000-0000-0000-0000-000060a9cb8b"
+                },
+                {
+                    "description": "Zone [GND] on F.Cu, priority 0",
+                    "pos": {
+                        "x": 8.75,
+                        "y": 7.725
+                    },
+                    "uuid": "00000000-0000-0000-0000-000060a9cb94"
+                }
+            ],
+            "severity": "error",
+            "type": "zones_intersect"
+        },
+        {
+            "description": "Footprint 'Inductor_0402_1005M-nosilk' does not match copy in library 'footprints'",
+            "items": [
+                {
+                    "description": "Footprint L1",
+                    "pos": {
+                        "x": 0.775,
+                        "y": 9.675
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005feb0ad0"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        },
+        {
+            "description": "Footprint 'Capacitor_0402_1005M-nosilk' does not match copy in library 'footprints'",
+            "items": [
+                {
+                    "description": "Footprint C5",
+                    "pos": {
+                        "x": 1.825,
+                        "y": 9.68
+                    },
+                    "uuid": "00000000-0000-0000-0000-00005fed8d3f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_mismatch"
+        }
+    ]
+}

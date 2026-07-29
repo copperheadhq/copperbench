@@ -1,0 +1,53 @@
+{
+  "$schema": "../../schema/fixture.schema.json",
+  "id": "openlighting-dmxsun-baseboard",
+  "sha256": "f055e9296dc769d4ef037919ab6752711b6163242f8d8c8f105a960d39ae93f4",
+  "complexity": "simple",
+  "upstream": {
+    "name": "Open Lighting Project rp2040-dmxsun (2-slot baseboard)",
+    "url": "https://github.com/OpenLightingProject/rp2040-dmxsun",
+    "commit": "f3b1749c982da85770dc9a11eada035404edc25d",
+    "retrieved": "2026-07-29",
+    "license": "Apache-2.0",
+    "licenseFile": "LICENSE",
+    "copyright": "Open Lighting Project (openlighting.org), named as the company in the schematic title block. Upstream declares Apache-2.0 for source, schematics, and board layouts in its README but states no explicit copyright line and leaves the license appendix unfilled.",
+    "modifications": "Design files copied verbatim, preserving the upstream hardware/ layout because the project sym-lib-table and fp-lib-table resolve through ${KIPRJMOD}/../symbols and ${KIPRJMOD}/../footprints. Only the two symbol libraries and two footprint libraries those tables name were copied; the sibling board variants, NC3FD-H.pretty, RJ45_Sparkfun.pretty, the .dcm legacy descriptions, firmware, documentation, and .kicad_prl were not. No design file was altered."
+  },
+  "kicad": {
+    "authoredVersion": "8.x",
+    "fileFormatVersion": "20231120",
+    "verifiedWithKicadCli": "10.0.4"
+  },
+  "artifacts": {
+    "schematic": "hardware/baseboard_2slots/baseboard_2slots.kicad_sch",
+    "board": "hardware/baseboard_2slots/baseboard_2slots.kicad_pcb",
+    "project": "hardware/baseboard_2slots/baseboard_2slots.kicad_pro"
+  },
+  "scale": {
+    "schematicLines": 15122,
+    "boardLines": 37794,
+    "symbols": 45,
+    "sheets": 1,
+    "signalNets": ["SPI_CLK", "SPI_MISO", "SPI_MOSI", "SPI_CS0", "SPI_CS1", "SCL", "SDA", "INT_WIZ", "INT_RF24", "NRF_CE", "STATUS_LEDS"],
+    "powerNets": ["+3.3V", "VDD", "GND"]
+  },
+  "baseline": {
+    "erc": {
+      "report": "baseline/erc.json",
+      "errors": 0,
+      "warnings": 182,
+      "warningTypes": { "lib_symbol_issues": 109, "endpoint_off_grid": 72, "footprint_link_issues": 1 }
+    },
+    "drc": {
+      "report": "baseline/drc.json",
+      "errors": 1,
+      "errorTypes": { "courtyards_overlap": 1 },
+      "warnings": 31,
+      "warningTypes": { "lib_footprint_mismatch": 30, "lib_footprint_issues": 1 },
+      "unconnectedItems": 0,
+      "schematicParity": 1,
+      "schematicParityTypes": { "footprint_symbol_mismatch": 1 }
+    },
+    "note": "The cleanest baseline of every candidate vetted apart from antmicro-microphone-board: one DRC error, one parity issue, zero unconnected items. The single `courtyards_overlap` error is a KiCad 10 geometry evaluation of a board laid out under KiCad 8, not an upstream defect; the project's own .kicad_pro leaves `courtyards_overlap` at error severity, so it is reported rather than suppressed. The 109 `lib_symbol_issues` are library resolution, including a stale `baseboard_4slots-rescue:` lib_id that has no file upstream and resolves from the embedded symbol cache. Tasks assert erc_no_new_violations and drc_no_new_violations against this record."
+  }
+}

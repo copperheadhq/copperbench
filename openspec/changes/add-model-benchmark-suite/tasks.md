@@ -13,10 +13,11 @@
 - [x] 2.1 Write `fixtures/FIXTURES.md`: why fixtures are real boards, selection criteria, license policy, directory layout, baseline-verification rule, surgicality calibration, preparation procedure, coverage targets, candidate shortlist
 - [x] 2.2 Write `schema/fixture.schema.json` (provenance, KiCad format, scale, baseline counts) and `scripts/hash-fixture.mjs` implementing the canonical tree hash standalone, so a third party can verify a hash without installing the project
 - [x] 2.3 Vendor the first real fixture: `antmicro-microphone-board` (Apache-2.0, KiCad 8.x, single sheet, 12 symbols), with verbatim LICENSE, `NOTICE` entry, measured baseline ERC/DRC reports, and `fixture.json`
-- [ ] 2.4 Vet and vendor a medium-tier fixture (2 to 5 sheets, power tree plus interfaces) from a different upstream origin than the simple one
-- [ ] 2.5 Vet and vendor a hard-tier fixture; `GlasgowEmbedded/glasgow` revD0 is the lead candidate (0BSD or Apache-2.0, format 20260306 matching the reference CLI, hierarchical), with `antmicro/jetson-orin-baseboard` as the alternate
-- [x] 2.6 Close the vendor-diversity gap: shortlist now spans five origins other than Antmicro (Glasgow, anyon_e laptop, rp2040-dmxsun, OtterCast, mikoto), all license- and format-verified
-- [ ] 2.7 Evaluate vendoring the CERN-OHL-P KiCad libraries into a fixture to eliminate library-resolution warnings, and decide whether a warning-free fixture is worth the added tree size
+- [x] 2.4 Vet and vendor a medium-tier fixture from a different upstream origin than the simple one: `zhiayang-mikoto` (Apache-2.0, 67 symbols, individual designer). Also vendored `openlighting-dmxsun-baseboard` (Apache-2.0, simple tier, third origin). **Partially open:** both are single-sheet. A genuinely multi-sheet 2-to-5-sheet fixture is still missing; the shortlist's best-shaped candidate, `Ottercast/OtterCastAudioV2`, measured 17 ERC errors, 219 DRC errors, and 238 parity issues and was rejected (FIXTURES.md 8.2)
+- [x] 2.5 Vet and vendor a hard-tier fixture: `antmicro-jetson-orin-baseboard` (Apache-2.0, 10 hierarchical sheets, 364k-line schematic set, zero ERC errors, zero unconnected, zero parity). The lead candidate `GlasgowEmbedded/glasgow` revD0 was measured and *not* chosen: 26 ERC errors against the alternate's zero, and vendoring its libraries changed nothing
+- [x] 2.6 Close the vendor-diversity gap: the suite itself now spans three origins (Antmicro, Open Lighting Project, an individual designer) rather than only the shortlist
+- [x] 2.7 Evaluate vendoring libraries to eliminate library-resolution warnings: **answered by measurement, no CERN vendoring needed to answer it.** Re-measuring Glasgow revD0 with its own symbol and footprint libraries vendored beside it produced byte-identical counts. Library vendoring suppresses `lib_symbol_issues` warnings only and does not touch error counts, so a warning-free fixture buys tidier reports and nothing that affects a verdict. Not worth the tree size
+- [x] 2.11 Revise the baseline gate from "zero errors" to "errors enumerated and accounted for" (design D23), updating `schema/fixture.schema.json`, `fixtures/FIXTURES.md` sections 2, 4, 5, 7, 8, and `STANDARD.md` section 6. Driven by a 19-configuration measured sweep in which zero DRC errors proved unachievable on every real board
 - [ ] 2.8 Implement `scripts/validate.ts`: schema validation of every task and fixture, closed-vocabulary enforcement, fixture hash verification, `NOTICE`-entry presence, duplicate id detection; wire to `npm run benchmark -- --validate`
 - [ ] 2.9 Promote the standalone hasher into the runner without changing the algorithm, and add a `--rehash` maintenance path that reports what changed
 - [ ] 2.10 Offline unit tests for validation and hashing, including the unknown-type, hash-mismatch, legacy-format, and baseline-error refusal paths
@@ -40,7 +41,7 @@
 
 ## 5. Records, report, and gating
 
-- [ ] 5.1 Implement result-record writing with the full comparability stamp, the secret re-scan that hard-fails on a match, and append-only semantics
+- [ ] 5.1 Implement result-record writing with the full comparability stamp, the secret re-scan that hard-fails on a match against the STANDARD.md 6.1 credential pattern set (shared with the `no_secret` assertion, so both read one list), and append-only semantics
 - [ ] 5.2 Implement the aggregate report: strict pass rate and cost per passing task per tier and model, pass@1 and pass^k with spread, correct-refusal and false-refusal rates, surgicality and process-discipline detail, variant gap
 - [ ] 5.3 Implement the failure work queue: categories ranked by frequency times mean cost, with affected tasks and models
 - [ ] 5.4 Implement `LEADERBOARD.md` generation with generated-file markers, comparability segregation of mismatched records, and a consistency check that fails on a hand edit
@@ -76,6 +77,6 @@
 
 - [ ] 9.1 Confirm a stranger path: from a clean clone, re-score published records with no API key and no network, and reproduce the leaderboard byte-for-byte
 - [ ] 9.2 Confirm a hand edit inside the generated leaderboard region fails the consistency check
-- [ ] 9.3 Confirm a planted `sk-` string in a candidate record hard-fails record writing
+- [ ] 9.3 Confirm a planted credential in a candidate record hard-fails record writing, with one case per kind in the STANDARD.md 6.1 pattern set. The `AIza` (Google/Gemini) case is the one that matters most: copperhead's write-time redaction does not cover it, so this scan is the only thing standing between a Gemini key and published output
 - [ ] 9.4 Confirm a task manifest edit bumps the suite version and segregates prior records in the leaderboard
 - [ ] 9.5 Confirm the full suite leaves the copperhead working tree unchanged outside `results/`

@@ -81,7 +81,7 @@
       "type": "object",
       "additionalProperties": false,
       "required": ["erc"],
-      "description": "Baseline verification state. Errors must be zero; warnings are expected and recorded so tasks can assert no NEW violations.",
+      "description": "Baseline verification state. Errors, warnings, unconnected items, and parity issues are all expected and recorded by type, so tasks assert no NEW violations against a characterized baseline rather than a clean one. A non-zero error count obliges the fixture README to account for every error type.",
       "properties": {
         "erc": { "$ref": "#/$defs/ercBaseline" },
         "drc": { "$ref": "#/$defs/drcBaseline" },
@@ -96,10 +96,22 @@
       "required": ["report", "errors", "warnings"],
       "properties": {
         "report": { "type": "string" },
-        "errors": { "const": 0, "description": "A fixture with baseline errors is rejected: a pre-existing error is indistinguishable from an agent-introduced one." },
+        "errors": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Baseline error count. Non-zero is permitted only when every error is enumerated in errorTypes and accounted for in the fixture README. A pre-existing error stays distinguishable from an agent-introduced one because erc_no_new_violations compares against this recorded report, not against zero."
+        },
+        "errorTypes": {
+          "type": "object",
+          "additionalProperties": { "type": "integer", "minimum": 0 },
+          "description": "Required whenever errors is non-zero. This is the recorded allowlist: an error type appearing at run time that is absent here, or that exceeds its recorded count, is a new violation.",
+          "minProperties": 1
+        },
         "warnings": { "type": "integer", "minimum": 0 },
         "warningTypes": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } }
-      }
+      },
+      "if": { "properties": { "errors": { "minimum": 1 } }, "required": ["errors"] },
+      "then": { "required": ["errorTypes"] }
     },
     "drcBaseline": {
       "type": "object",
@@ -107,12 +119,41 @@
       "required": ["report", "errors", "warnings", "unconnectedItems", "schematicParity"],
       "properties": {
         "report": { "type": "string" },
-        "errors": { "const": 0 },
+        "errors": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Baseline error count, under the same enumerate-and-account rule as ERC. A real board checked by a kicad-cli newer than the one it was designed in routinely carries geometry errors it never had upstream; see fixtures/FIXTURES.md section 5."
+        },
+        "errorTypes": {
+          "type": "object",
+          "additionalProperties": { "type": "integer", "minimum": 0 },
+          "description": "Required whenever errors is non-zero.",
+          "minProperties": 1
+        },
         "warnings": { "type": "integer", "minimum": 0 },
         "warningTypes": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
-        "unconnectedItems": { "const": 0, "description": "Must be zero: this is what a bad edit breaks, so it cannot be dirty at baseline." },
-        "schematicParity": { "const": 0 }
-      }
+        "unconnectedItems": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Unconnected items at baseline. This is what a bad edit breaks, so a non-zero value materially weakens the fixture: it must be argued for in the README, not merely recorded."
+        },
+        "schematicParity": { "type": "integer", "minimum": 0 },
+        "schematicParityTypes": {
+          "type": "object",
+          "additionalProperties": { "type": "integer", "minimum": 0 },
+          "description": "Required whenever schematicParity is non-zero. Metadata drift such as footprint_symbol_field_mismatch is tolerable and common; an electrical mismatch is not."
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "errors": { "minimum": 1 } }, "required": ["errors"] },
+          "then": { "required": ["errorTypes"] }
+        },
+        {
+          "if": { "properties": { "schematicParity": { "minimum": 1 } }, "required": ["schematicParity"] },
+          "then": { "required": ["schematicParityTypes"] }
+        }
+      ]
     }
   }
 }

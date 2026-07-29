@@ -24,3 +24,31 @@ fixtures/FIXTURES.md.
   Commit: 20813e2bc99f52837a780334b16a30c2afb7644c
   Included at: fixtures/antmicro-microphone-board/
   License text: fixtures/antmicro-microphone-board/LICENSE
+
+* Antmicro Jetson Orin Baseboard
+  Copyright (c) 2022-2026 Antmicro <https://www.antmicro.com>
+  Licensed under the Apache License, Version 2.0
+  Source: <https://github.com/antmicro/jetson-orin-baseboard>
+  Commit: 34f0e7f5fbca441191e20ed55d93cf8614e12bed
+  Included at: fixtures/antmicro-jetson-orin-baseboard/
+  License text: fixtures/antmicro-jetson-orin-baseboard/LICENSE
+
+* Open Lighting Project rp2040-dmxsun
+  Open Lighting Project <https://www.openlighting.org/>
+  Licensed under the Apache License, Version 2.0. The upstream README licenses
+  source, schematics, and board layouts under Apache-2.0; it states no explicit
+  copyright line, and the license appendix is left unfilled.
+  Source: <https://github.com/OpenLightingProject/rp2040-dmxsun>
+  Commit: f3b1749c982da85770dc9a11eada035404edc25d
+  Included at: fixtures/openlighting-dmxsun-baseboard/
+  License text: fixtures/openlighting-dmxsun-baseboard/LICENSE
+
+* mikoto nRF52840 module
+  zhiayang <https://github.com/zhiayang>
+  Licensed under the Apache License, Version 2.0. The upstream README declares
+  Apache-2.0; it states no explicit copyright line, and the license appendix is
+  left unfilled.
+  Source: <https://github.com/zhiayang/mikoto>
+  Commit: 86318f6c69495b8308354b6393d85229177b26ae
+  Included at: fixtures/zhiayang-mikoto/
+  License text: fixtures/zhiayang-mikoto/LICENSE

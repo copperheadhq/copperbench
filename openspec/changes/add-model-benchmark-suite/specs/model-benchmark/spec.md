@@ -248,12 +248,18 @@ A model-judged rubric tier SHALL be disabled by default and enabled only by expl
 
 ### Requirement: Benchmark output is re-checked for secrets before it is written
 
-Before any artifact is written under `results/`, the runner SHALL scan it for `sk-[A-Za-z0-9_-]{20,}` and SHALL hard-fail the run on a match rather than scrubbing it silently.
+Before any artifact is written under `results/`, the runner SHALL scan it against the credential pattern set defined in STANDARD.md section 6.1, and SHALL hard-fail the run on a match rather than scrubbing it silently. The set SHALL cover at minimum `sk-` prefixed keys (OpenAI, Anthropic), `AIza` prefixed keys (Google, including Gemini via the `compat` route), HTTP bearer tokens, and npm and GitHub tokens. The `no_secret` assertion and this re-scan SHALL use the same set, and changing it SHALL bump the suite version.
 
 #### Scenario: A planted key fails the run instead of being published
 
-- **WHEN** a candidate result artifact contains a string matching the secret pattern
-- **THEN** the runner exits non-zero naming the artifact, and no file is written under `results/`
+- **WHEN** a candidate result artifact contains a string matching any pattern in the credential pattern set
+- **THEN** the runner exits non-zero naming the artifact and the pattern kind matched, and no file is written under `results/`
+
+#### Scenario: A credential copperhead does not redact is still caught
+
+- **GIVEN** a provider whose key format copperhead's write-time redaction does not cover
+- **WHEN** that key reaches a candidate result artifact through a preserved transcript or a provider error string
+- **THEN** the re-scan hard-fails the run, because the benchmark's set is a superset of copperhead's rather than a copy of it
 
 ### Requirement: Cost is bounded by default
 

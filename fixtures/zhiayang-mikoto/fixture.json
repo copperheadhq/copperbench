@@ -1,0 +1,53 @@
+{
+  "$schema": "../../schema/fixture.schema.json",
+  "id": "zhiayang-mikoto",
+  "sha256": "85e81c58af200cc3fb39c8ec0e711acbc02fa4929ad9d9ffeddcfa8aff9dae42",
+  "complexity": "medium",
+  "upstream": {
+    "name": "mikoto nRF52840 module",
+    "url": "https://github.com/zhiayang/mikoto",
+    "commit": "86318f6c69495b8308354b6393d85229177b26ae",
+    "retrieved": "2026-07-29",
+    "license": "Apache-2.0",
+    "licenseFile": "LICENSE",
+    "copyright": "zhiayang (github.com/zhiayang). Upstream declares Apache-2.0 in its README but states no explicit copyright line and leaves the license appendix unfilled; attribution here is to the repository author.",
+    "modifications": "Design files copied verbatim from the upstream repository root, with the project sym-lib-table and fp-lib-table and the two libraries they name (lib/mikoto.kicad_sym and footprints.pretty). empty.kicad_wks is included because the project file references it as the page layout. The footprints.pretty/3d/ STEP models were not copied: they are rendering assets, they do not affect ERC, DRC, or parity, and they would add 388 KB to every sandbox copy of every repeat. The separate flashbed/ board, misc/, pins.txt, CHANGELOG.md, and .kicad_prl were not copied. No design file was altered."
+  },
+  "kicad": {
+    "authoredVersion": "8.x",
+    "fileFormatVersion": "20231120",
+    "verifiedWithKicadCli": "10.0.4"
+  },
+  "artifacts": {
+    "schematic": "mikoto.kicad_sch",
+    "board": "mikoto.kicad_pcb",
+    "project": "mikoto.kicad_pro"
+  },
+  "scale": {
+    "schematicLines": 19991,
+    "boardLines": 26468,
+    "symbols": 67,
+    "sheets": 1,
+    "signalNets": ["ANT", "CC1", "CC2", "BAT_I2C_SCL", "BAT_I2C_SDA", "CHARGE_CTRL_1", "CHARGE_CTRL_2", "BLUE_LED"],
+    "powerNets": ["VBUS", "VBAT", "VDDH", "VDD_NRF", "EXT_5V", "GND"]
+  },
+  "baseline": {
+    "erc": {
+      "report": "baseline/erc.json",
+      "errors": 0,
+      "warnings": 295,
+      "warningTypes": { "lib_symbol_issues": 102, "endpoint_off_grid": 193 }
+    },
+    "drc": {
+      "report": "baseline/drc.json",
+      "errors": 1,
+      "errorTypes": { "zones_intersect": 1 },
+      "warnings": 2,
+      "warningTypes": { "lib_footprint_mismatch": 2 },
+      "unconnectedItems": 0,
+      "schematicParity": 84,
+      "schematicParityTypes": { "footprint_symbol_field_mismatch": 65, "footprint_symbol_mismatch": 19 }
+    },
+    "note": "Zero ERC errors and zero unconnected items. The one DRC error is `zones_intersect`, two copper zones sharing a priority, which KiCad 10 rules on more strictly than the KiCad 8 this board was laid out in. The 84 parity issues are entirely metadata: `footprint_symbol_field_mismatch` is Description and LCSC Part fields differing between board and schematic, and `footprint_symbol_mismatch` here is 'Do not populate' and similar attribute flags. None of it is electrical, and the netlist parity that an edit task actually depends on is intact. The 193 `endpoint_off_grid` warnings are a real property of this design and a useful hazard: an agent that reflows geometry will move that count."
+  }
+}

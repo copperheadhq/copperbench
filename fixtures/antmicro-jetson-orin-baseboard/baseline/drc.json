@@ -1,0 +1,4352 @@
+{
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-07-29T20:53:47",
+    "ignored_checks": [
+        {
+            "description": "Track endpoint not centered on via",
+            "key": "track_not_centered_on_via"
+        },
+        {
+            "description": "Tuning profile track geometries",
+            "key": "tuning_profile_track_geometries"
+        },
+        {
+            "description": "Footprint doesn't match symbol's footprint filters",
+            "key": "footprint_filters_mismatch"
+        },
+        {
+            "description": "Footprint component type doesn't match footprint pads",
+            "key": "footprint_type_mismatch"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning"
+    ],
+    "kicad_version": "10.0.4",
+    "schematic_parity": [],
+    "source": "jetson-orin-baseboard.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+        {
+            "description": "Courtyards overlap",
+            "items": [
+                {
+                    "description": "Footprint REF**",
+                    "pos": {
+                        "x": 138.6,
+                        "y": 125.3
+                    },
+                    "uuid": "713db625-2533-4b51-aba5-31fe88cb90de"
+                },
+                {
+                    "description": "Footprint REF**",
+                    "pos": {
+                        "x": 138.605,
+                        "y": 125.3
+                    },
+                    "uuid": "b2ce695b-3d29-4a2b-b9b4-789eb77810f4"
+                }
+            ],
+            "severity": "error",
+            "type": "courtyards_overlap"
+        },
+        {
+            "description": "Hole clearance violation (rule 'clearance3' clearance 0.2500 mm; actual 0.1937 mm)",
+            "items": [
+                {
+                    "description": "Pad A1 [GND] of J3 on B.Cu",
+                    "pos": {
+                        "x": 56.792,
+                        "y": 121.24
+                    },
+                    "uuid": "40e6a9ac-b9a1-490f-a1ec-b9c80e219ad2"
+                },
+                {
+                    "description": "NPTH pad of J3",
+                    "pos": {
+                        "x": 56.481,
+                        "y": 122.314
+                    },
+                    "uuid": "c00ea420-c2ac-4048-8b4c-fd24f4113e6c"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (rule 'clearance3' clearance 0.2500 mm; actual 0.1937 mm)",
+            "items": [
+                {
+                    "description": "Pad B12 [GND] of J3 on B.Cu",
+                    "pos": {
+                        "x": 56.792,
+                        "y": 121.24
+                    },
+                    "uuid": "14a339af-d317-4b41-917c-8d9ea25acedc"
+                },
+                {
+                    "description": "NPTH pad of J3",
+                    "pos": {
+                        "x": 56.481,
+                        "y": 122.314
+                    },
+                    "uuid": "c00ea420-c2ac-4048-8b4c-fd24f4113e6c"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (rule 'clearance3' clearance 0.2500 mm; actual 0.1934 mm)",
+            "items": [
+                {
+                    "description": "Pad A12 [GND] of J3 on B.Cu",
+                    "pos": {
+                        "x": 50.39,
+                        "y": 121.24
+                    },
+                    "uuid": "af1536a8-4b0c-48ed-af78-f8b4ef725bd2"
+                },
+                {
+                    "description": "NPTH pad of J3",
+                    "pos": {
+                        "x": 50.7,
+                        "y": 122.314
+                    },
+                    "uuid": "eac0f080-fb82-4f0a-9c09-60215cc4b9b4"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Hole clearance violation (rule 'clearance3' clearance 0.2500 mm; actual 0.1934 mm)",
+            "items": [
+                {
+                    "description": "Pad B1 [GND] of J3 on B.Cu",
+                    "pos": {
+                        "x": 50.39,
+                        "y": 121.24
+                    },
+                    "uuid": "79fb6784-83dc-4631-8afa-bb736504b078"
+                },
+                {
+                    "description": "NPTH pad of J3",
+                    "pos": {
+                        "x": 50.7,
+                        "y": 122.314
+                    },
+                    "uuid": "eac0f080-fb82-4f0a-9c09-60215cc4b9b4"
+                }
+            ],
+            "severity": "error",
+            "type": "hole_clearance"
+        },
+        {
+            "description": "Copper zones intersect (intersecting zones must have distinct priorities)",
+            "items": [
+                {
+                    "description": "Zone [GND] on In1.Cu, priority 5",
+                    "pos": {
+                        "x": 74.984506,
+                        "y": 120.1
+                    },
+                    "uuid": "d4492162-4c83-4e41-ae91-e3d2b664553d"
+                },
+                {
+                    "description": "Zone [GND] on In1.Cu, In2.Cu and In4.Cu, priority 5",
+                    "pos": {
+                        "x": 74.984506,
+                        "y": 120.1
+                    },
+                    "uuid": "f9d0418f-edc4-4dc4-8ec7-e902757595d3"
+                }
+            ],
+            "severity": "error",
+            "type": "zones_intersect"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment of J13 on F.Silkscreen",
+                    "pos": {
+                        "x": 88.238,
+                        "y": 124.009
+                    },
+                    "uuid": "0882c186-c23d-4ed0-ab02-cdd8b626002b"
+                },
+                {
+                    "description": "NPTH pad of J9",
+                    "pos": {
+                        "x": 87.719,
+                        "y": 125.2545
+                    },
+                    "uuid": "a6a40a9f-f5a5-486f-95a7-94a451f232ed"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment of J12 on F.Silkscreen",
+                    "pos": {
+                        "x": 57.895,
+                        "y": 126.9085
+                    },
+                    "uuid": "7ccced43-7f71-43eb-a4a2-43af9d6d8668"
+                },
+                {
+                    "description": "PTH pad SH [GND] of J3",
+                    "pos": {
+                        "x": 57.911,
+                        "y": 125.995
+                    },
+                    "uuid": "cdce0a69-df66-4798-98b7-dc7c57d61f14"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment of J12 on F.Silkscreen",
+                    "pos": {
+                        "x": 58.095,
+                        "y": 126.5085
+                    },
+                    "uuid": "f4dcb7c0-9bfd-4273-84be-bcb04a4451f2"
+                },
+                {
+                    "description": "PTH pad SH [GND] of J3",
+                    "pos": {
+                        "x": 57.911,
+                        "y": 125.995
+                    },
+                    "uuid": "cdce0a69-df66-4798-98b7-dc7c57d61f14"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment of J12 on F.Silkscreen",
+                    "pos": {
+                        "x": 58.095,
+                        "y": 126.5085
+                    },
+                    "uuid": "02ef0ba1-461e-4a9f-b3d6-1892d21c6d7d"
+                },
+                {
+                    "description": "PTH pad SH [GND] of J3",
+                    "pos": {
+                        "x": 57.911,
+                        "y": 125.995
+                    },
+                    "uuid": "cdce0a69-df66-4798-98b7-dc7c57d61f14"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment of J12 on F.Silkscreen",
+                    "pos": {
+                        "x": 58.095,
+                        "y": 126.5085
+                    },
+                    "uuid": "02ef0ba1-461e-4a9f-b3d6-1892d21c6d7d"
+                },
+                {
+                    "description": "PTH pad SH [GND] of J3",
+                    "pos": {
+                        "x": 57.911,
+                        "y": 121.814
+                    },
+                    "uuid": "967a1bd9-33a6-4871-8d53-4d5830606685"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment of J12 on F.Silkscreen",
+                    "pos": {
+                        "x": 49.145,
+                        "y": 119.7105
+                    },
+                    "uuid": "fdd04786-5e40-4f92-9c94-2cb3bb02bc89"
+                },
+                {
+                    "description": "PTH pad SH [GND] of J3",
+                    "pos": {
+                        "x": 49.27,
+                        "y": 125.995
+                    },
+                    "uuid": "4fa28e9c-be14-4a52-95fa-eecc831fc79f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment of J12 on F.Silkscreen",
+                    "pos": {
+                        "x": 49.145,
+                        "y": 119.7105
+                    },
+                    "uuid": "fdd04786-5e40-4f92-9c94-2cb3bb02bc89"
+                },
+                {
+                    "description": "PTH pad SH [GND] of J3",
+                    "pos": {
+                        "x": 49.27,
+                        "y": 121.814
+                    },
+                    "uuid": "ad1d8407-8689-4078-9718-d23fd79dd2d9"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment of J12 on F.Silkscreen",
+                    "pos": {
+                        "x": 49.145,
+                        "y": 126.3095
+                    },
+                    "uuid": "ed1970f7-22f9-4483-9228-664ca160f9ce"
+                },
+                {
+                    "description": "PTH pad SH [GND] of J3",
+                    "pos": {
+                        "x": 49.27,
+                        "y": 125.995
+                    },
+                    "uuid": "4fa28e9c-be14-4a52-95fa-eecc831fc79f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment of J12 on F.Silkscreen",
+                    "pos": {
+                        "x": 49.294,
+                        "y": 126.7095
+                    },
+                    "uuid": "97247e4f-124c-403f-831b-1ec2c369d6d5"
+                },
+                {
+                    "description": "PTH pad SH [GND] of J3",
+                    "pos": {
+                        "x": 49.27,
+                        "y": 125.995
+                    },
+                    "uuid": "4fa28e9c-be14-4a52-95fa-eecc831fc79f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 135.75,
+                        "y": 90.5
+                    },
+                    "uuid": "799fc994-0d50-4bfc-9c97-93536f2ed1ed"
+                },
+                {
+                    "description": "Pad 1 [/Peripherals/USBSS2_TX_CONN_N] of D19 on F.Cu",
+                    "pos": {
+                        "x": 136.27,
+                        "y": 91.611
+                    },
+                    "uuid": "7cd611ec-a5e2-4926-9459-f7b8c0adf121"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 135.75,
+                        "y": 90.5
+                    },
+                    "uuid": "799fc994-0d50-4bfc-9c97-93536f2ed1ed"
+                },
+                {
+                    "description": "Pad 1 [/Peripherals/USBSS2_TX_CONN_P] of D21 on F.Cu",
+                    "pos": {
+                        "x": 136.27,
+                        "y": 92.279
+                    },
+                    "uuid": "e26d1530-1a91-4e35-8140-50d756912125"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 135.75,
+                        "y": 90.5
+                    },
+                    "uuid": "799fc994-0d50-4bfc-9c97-93536f2ed1ed"
+                },
+                {
+                    "description": "Pad 2 [GND] of D19 on F.Cu",
+                    "pos": {
+                        "x": 136.27,
+                        "y": 90.911
+                    },
+                    "uuid": "7e9ea4db-2d83-4b3b-9722-37747ebb6ced"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 135.75,
+                        "y": 90.5
+                    },
+                    "uuid": "799fc994-0d50-4bfc-9c97-93536f2ed1ed"
+                },
+                {
+                    "description": "Pad 2 [GND] of D21 on F.Cu",
+                    "pos": {
+                        "x": 136.27,
+                        "y": 92.979
+                    },
+                    "uuid": "6a02b7cc-a348-48df-9a88-b17c7324a060"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 146.81,
+                        "y": 83.5
+                    },
+                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
+                },
+                {
+                    "description": "Pad 2 [GND] of D45 on F.Cu",
+                    "pos": {
+                        "x": 147.45,
+                        "y": 83.951
+                    },
+                    "uuid": "56197d0e-a096-4d1e-8a10-d2918b86a29b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 146.81,
+                        "y": 83.5
+                    },
+                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
+                },
+                {
+                    "description": "Pad 1 [PCIE2_RX0_P] of D40 on F.Cu",
+                    "pos": {
+                        "x": 147.45,
+                        "y": 87.849
+                    },
+                    "uuid": "b9036b78-27f6-4997-b8d4-5ae19dbdaa7c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 146.81,
+                        "y": 83.5
+                    },
+                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
+                },
+                {
+                    "description": "Pad 1 [PCIE2_RX0_N] of D39 on F.Cu",
+                    "pos": {
+                        "x": 147.45,
+                        "y": 87.251
+                    },
+                    "uuid": "151dc50a-6b8d-456c-8362-fb20999bbe5f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 146.81,
+                        "y": 83.5
+                    },
+                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
+                },
+                {
+                    "description": "Pad 1 [PCIE2_RX1_P] of D46 on F.Cu",
+                    "pos": {
+                        "x": 147.45,
+                        "y": 85.249
+                    },
+                    "uuid": "828dca47-ce97-4b73-a3ab-cad4412047e3"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 146.81,
+                        "y": 83.5
+                    },
+                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
+                },
+                {
+                    "description": "Pad 2 [GND] of D46 on F.Cu",
+                    "pos": {
+                        "x": 147.45,
+                        "y": 85.949
+                    },
+                    "uuid": "5d44dfac-c8a1-477f-a660-a64ecdeff135"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 146.81,
+                        "y": 83.5
+                    },
+                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
+                },
+                {
+                    "description": "Pad 1 [PCIE2_RX1_N] of D45 on F.Cu",
+                    "pos": {
+                        "x": 147.45,
+                        "y": 84.651
+                    },
+                    "uuid": "980231aa-d96b-4647-b0c0-8235433675df"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 146.81,
+                        "y": 83.5
+                    },
+                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
+                },
+                {
+                    "description": "Pad 2 [GND] of D39 on F.Cu",
+                    "pos": {
+                        "x": 147.45,
+                        "y": 86.551
+                    },
+                    "uuid": "eca23446-c50d-4757-b6b8-715861738c84"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 146.81,
+                        "y": 83.5
+                    },
+                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
+                },
+                {
+                    "description": "Pad 2 [GND] of D40 on F.Cu",
+                    "pos": {
+                        "x": 147.45,
+                        "y": 88.549
+                    },
+                    "uuid": "10aa3c6b-718b-410e-91bc-319cfd0cb11f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 146.81,
+                        "y": 83.5
+                    },
+                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
+                },
+                {
+                    "description": "Pad 2 [GND] of D49 on F.Cu",
+                    "pos": {
+                        "x": 147.45,
+                        "y": 89.151
+                    },
+                    "uuid": "065a9dba-07bb-4004-9c03-99fa0a3aa6ba"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 146.81,
+                        "y": 83.5
+                    },
+                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
+                },
+                {
+                    "description": "Pad 1 [PCIE3_CLK_P] of D50 on F.Cu",
+                    "pos": {
+                        "x": 147.45,
+                        "y": 90.449
+                    },
+                    "uuid": "260b1b85-e658-439b-be00-2af1e62fc864"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 146.81,
+                        "y": 83.5
+                    },
+                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
+                },
+                {
+                    "description": "Pad 2 [GND] of D50 on F.Cu",
+                    "pos": {
+                        "x": 147.45,
+                        "y": 91.149
+                    },
+                    "uuid": "0a1359f4-267c-4de8-9419-5ffe77e42657"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 146.81,
+                        "y": 83.5
+                    },
+                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
+                },
+                {
+                    "description": "Pad 1 [PCIE3_CLK_N] of D49 on F.Cu",
+                    "pos": {
+                        "x": 147.45,
+                        "y": 89.851
+                    },
+                    "uuid": "b8a79a11-e197-435e-ae72-cfc39c0bb608"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 134.61,
+                        "y": 87.7
+                    },
+                    "uuid": "48b847fa-37e9-4a25-88e3-6dffef673559"
+                },
+                {
+                    "description": "Pad 1 [PCIE2_CLK_N] of D43 on F.Cu",
+                    "pos": {
+                        "x": 135.1,
+                        "y": 88.821
+                    },
+                    "uuid": "35def102-833a-4430-aa98-cebf40502bc2"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 134.61,
+                        "y": 87.7
+                    },
+                    "uuid": "48b847fa-37e9-4a25-88e3-6dffef673559"
+                },
+                {
+                    "description": "Pad 2 [GND] of D43 on F.Cu",
+                    "pos": {
+                        "x": 135.1,
+                        "y": 88.121
+                    },
+                    "uuid": "297a9e02-358d-422d-a6a1-f1ca4b768a87"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 134.61,
+                        "y": 87.7
+                    },
+                    "uuid": "48b847fa-37e9-4a25-88e3-6dffef673559"
+                },
+                {
+                    "description": "Pad 1 [PCIE2_CLK_P] of D44 on F.Cu",
+                    "pos": {
+                        "x": 135.1,
+                        "y": 89.49
+                    },
+                    "uuid": "183dd1f7-4a6e-4a9f-a6cd-59c9dc4a2bbd"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 134.61,
+                        "y": 87.7
+                    },
+                    "uuid": "48b847fa-37e9-4a25-88e3-6dffef673559"
+                },
+                {
+                    "description": "Pad 2 [GND] of D44 on F.Cu",
+                    "pos": {
+                        "x": 135.1,
+                        "y": 90.19
+                    },
+                    "uuid": "15904c60-18eb-4f03-bf9a-630592965ee5"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 137.26,
+                        "y": 82.0
+                    },
+                    "uuid": "1f520a01-0e66-4f42-a472-a00c264ca986"
+                },
+                {
+                    "description": "Pad 2 [GND] of D47 on F.Cu",
+                    "pos": {
+                        "x": 137.8,
+                        "y": 82.451
+                    },
+                    "uuid": "2053b37d-0193-46af-8400-1c7030605a34"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 137.26,
+                        "y": 82.0
+                    },
+                    "uuid": "1f520a01-0e66-4f42-a472-a00c264ca986"
+                },
+                {
+                    "description": "Pad 1 [/Peripherals/PCIE2_TX0_CONN_N] of D41 on F.Cu",
+                    "pos": {
+                        "x": 137.8,
+                        "y": 86.421
+                    },
+                    "uuid": "5ffa5814-fba4-4dc2-9072-e22538fbff78"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 137.26,
+                        "y": 82.0
+                    },
+                    "uuid": "1f520a01-0e66-4f42-a472-a00c264ca986"
+                },
+                {
+                    "description": "Pad 2 [GND] of D41 on F.Cu",
+                    "pos": {
+                        "x": 137.8,
+                        "y": 85.721
+                    },
+                    "uuid": "4af81695-2370-4d72-b10a-4707c9f5d98b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 137.26,
+                        "y": 82.0
+                    },
+                    "uuid": "1f520a01-0e66-4f42-a472-a00c264ca986"
+                },
+                {
+                    "description": "Pad 1 [/Peripherals/PCIE2_TX1_CONN_P] of D48 on F.Cu",
+                    "pos": {
+                        "x": 137.8,
+                        "y": 83.799
+                    },
+                    "uuid": "f34be3ea-44b8-49dd-ba02-4e0714b0b44b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 137.26,
+                        "y": 82.0
+                    },
+                    "uuid": "1f520a01-0e66-4f42-a472-a00c264ca986"
+                },
+                {
+                    "description": "Pad 2 [GND] of D48 on F.Cu",
+                    "pos": {
+                        "x": 137.8,
+                        "y": 84.499
+                    },
+                    "uuid": "10774f1c-7433-42e0-9d6e-a73652ad6523"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 137.26,
+                        "y": 82.0
+                    },
+                    "uuid": "1f520a01-0e66-4f42-a472-a00c264ca986"
+                },
+                {
+                    "description": "Pad 1 [/Peripherals/PCIE2_TX1_CONN_N] of D47 on F.Cu",
+                    "pos": {
+                        "x": 137.8,
+                        "y": 83.151
+                    },
+                    "uuid": "1c7c78fa-565c-4c61-b8ed-4076fd41977b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 137.26,
+                        "y": 82.0
+                    },
+                    "uuid": "1f520a01-0e66-4f42-a472-a00c264ca986"
+                },
+                {
+                    "description": "Pad 1 [/Peripherals/PCIE2_TX0_CONN_P] of D42 on F.Cu",
+                    "pos": {
+                        "x": 137.8,
+                        "y": 87.099
+                    },
+                    "uuid": "799c26a8-db6e-4c08-96bf-b438c3e5f743"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "pos": {
+                        "x": 137.26,
+                        "y": 82.0
+                    },
+                    "uuid": "1f520a01-0e66-4f42-a472-a00c264ca986"
+                },
+                {
+                    "description": "Pad 2 [GND] of D42 on F.Cu",
+                    "pos": {
+                        "x": 137.8,
+                        "y": 87.799
+                    },
+                    "uuid": "f554824c-cf35-488d-88f7-8a2427028cfa"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "PCB text 'J9 SELECT ONE' on B.Silkscreen",
+                    "pos": {
+                        "x": 84.335,
+                        "y": 117.04
+                    },
+                    "uuid": "81ba2bd6-18da-46b1-a3bf-fc503fdbaffd"
+                },
+                {
+                    "description": "Rectangle on B.Silkscreen",
+                    "pos": {
+                        "x": 79.685,
+                        "y": 116.39
+                    },
+                    "uuid": "f4ea2f9c-4268-4766-8db6-a6a151ecf4d8"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Rectangle on B.Silkscreen",
+                    "pos": {
+                        "x": 71.55,
+                        "y": 122.757
+                    },
+                    "uuid": "17f466a0-7e24-452f-8a7f-9fc193e067de"
+                },
+                {
+                    "description": "PCB text 'SPI' on B.Silkscreen",
+                    "pos": {
+                        "x": 75.78,
+                        "y": 122.71
+                    },
+                    "uuid": "5810b949-012a-4167-8ac3-ece078b03a4d"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "PCB text 'SPI' on B.Silkscreen",
+                    "pos": {
+                        "x": 75.78,
+                        "y": 122.71
+                    },
+                    "uuid": "5810b949-012a-4167-8ac3-ece078b03a4d"
+                },
+                {
+                    "description": "Rectangle on B.Silkscreen",
+                    "pos": {
+                        "x": 75.69,
+                        "y": 121.65
+                    },
+                    "uuid": "6e666a79-8a6d-48a8-81f1-fbac40b66d26"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "PCB text 'SPI' on B.Silkscreen",
+                    "pos": {
+                        "x": 75.78,
+                        "y": 122.71
+                    },
+                    "uuid": "5810b949-012a-4167-8ac3-ece078b03a4d"
+                },
+                {
+                    "description": "Rectangle on B.Silkscreen",
+                    "pos": {
+                        "x": 71.55,
+                        "y": 121.65
+                    },
+                    "uuid": "9b3c4371-38ab-4597-9c20-d0df4c310f9b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment of J9 on B.Silkscreen",
+                    "pos": {
+                        "x": 78.809,
+                        "y": 126.9545
+                    },
+                    "uuid": "5721641b-f3a2-4fe0-899b-b3e1dd6ec2b5"
+                },
+                {
+                    "description": "PTH pad SH [GND] of J4",
+                    "pos": {
+                        "x": 79.02,
+                        "y": 125.245
+                    },
+                    "uuid": "430ced6d-d1c3-497b-b814-d9d3da67f2d0"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on B.Cu and B.Silkscreen",
+                    "pos": {
+                        "x": 128.149999,
+                        "y": 95.275
+                    },
+                    "uuid": "e8535b5d-8bd3-4816-a271-518e51cca0e6"
+                },
+                {
+                    "description": "Pad 1 [/Peripherals/USB_CONN_N] of R134 on B.Cu",
+                    "pos": {
+                        "x": 130.6,
+                        "y": 93.68
+                    },
+                    "uuid": "0500a2d3-8861-49c1-b1a5-635c98c9b452"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on B.Cu and B.Silkscreen",
+                    "pos": {
+                        "x": 128.149999,
+                        "y": 95.275
+                    },
+                    "uuid": "e8535b5d-8bd3-4816-a271-518e51cca0e6"
+                },
+                {
+                    "description": "Pad 2 [GND] of D22 on B.Cu",
+                    "pos": {
+                        "x": 130.599,
+                        "y": 94.78
+                    },
+                    "uuid": "224500d6-fcb3-4afa-9a34-6cf3c152db71"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on B.Cu and B.Silkscreen",
+                    "pos": {
+                        "x": 128.149999,
+                        "y": 95.275
+                    },
+                    "uuid": "e8535b5d-8bd3-4816-a271-518e51cca0e6"
+                },
+                {
+                    "description": "Pad 1 [USB1_D_N] of D22 on B.Cu",
+                    "pos": {
+                        "x": 129.899,
+                        "y": 94.78
+                    },
+                    "uuid": "2299d316-93b1-47d2-ab45-aa4fd2ae8e9d"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on B.Cu and B.Silkscreen",
+                    "pos": {
+                        "x": 128.149999,
+                        "y": 95.275
+                    },
+                    "uuid": "e8535b5d-8bd3-4816-a271-518e51cca0e6"
+                },
+                {
+                    "description": "Pad 1 [USB1_D_P] of D23 on B.Cu",
+                    "pos": {
+                        "x": 129.301,
+                        "y": 94.5
+                    },
+                    "uuid": "aceaa4fc-55b7-4dc7-a6d5-48fba32e3acc"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on B.Cu and B.Silkscreen",
+                    "pos": {
+                        "x": 128.149999,
+                        "y": 95.275
+                    },
+                    "uuid": "e8535b5d-8bd3-4816-a271-518e51cca0e6"
+                },
+                {
+                    "description": "Pad 2 [GND] of D23 on B.Cu",
+                    "pos": {
+                        "x": 128.601,
+                        "y": 94.5
+                    },
+                    "uuid": "06fb7200-284d-421a-bf85-85a5789093c0"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on B.Cu and B.Silkscreen",
+                    "pos": {
+                        "x": 114.9,
+                        "y": 71.575
+                    },
+                    "uuid": "9e7b4932-ab53-4334-955d-18e456eaf87e"
+                },
+                {
+                    "description": "Pad 1 [USBSS1_RX_N] of D16 on B.Cu",
+                    "pos": {
+                        "x": 116.649,
+                        "y": 71.1
+                    },
+                    "uuid": "7a4308a7-5378-49cc-b84e-0d2bdabd9f44"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on B.Cu and B.Silkscreen",
+                    "pos": {
+                        "x": 114.9,
+                        "y": 71.575
+                    },
+                    "uuid": "9e7b4932-ab53-4334-955d-18e456eaf87e"
+                },
+                {
+                    "description": "Pad 1 [USBSS1_RX_P] of D17 on B.Cu",
+                    "pos": {
+                        "x": 116.051,
+                        "y": 71.1
+                    },
+                    "uuid": "1020330a-bf4c-488d-ab9a-db116a9d000f"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on B.Cu and B.Silkscreen",
+                    "pos": {
+                        "x": 114.9,
+                        "y": 71.575
+                    },
+                    "uuid": "9e7b4932-ab53-4334-955d-18e456eaf87e"
+                },
+                {
+                    "description": "Pad 2 [GND] of D17 on B.Cu",
+                    "pos": {
+                        "x": 115.351,
+                        "y": 71.1
+                    },
+                    "uuid": "d4be3d0a-6c65-49b1-b470-c154e405b89b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Rule area 'allow_overlap' on B.Cu and B.Silkscreen",
+                    "pos": {
+                        "x": 114.9,
+                        "y": 71.575
+                    },
+                    "uuid": "9e7b4932-ab53-4334-955d-18e456eaf87e"
+                },
+                {
+                    "description": "Pad 2 [GND] of D16 on B.Cu",
+                    "pos": {
+                        "x": 117.349,
+                        "y": 71.1
+                    },
+                    "uuid": "9a1a0107-ff3a-4fad-8e2b-d73aa3959c27"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment of C79 on B.Silkscreen",
+                    "pos": {
+                        "x": 40.325,
+                        "y": 100.62
+                    },
+                    "uuid": "1a18ec71-c8c9-4f03-920d-f63f5625adac"
+                },
+                {
+                    "description": "PTH pad 2 [/Ethernet/ULS-12_CTRL] of U23",
+                    "pos": {
+                        "x": 41.668,
+                        "y": 99.491145
+                    },
+                    "uuid": "229f1413-6d33-430e-bf64-edc06e4979ec"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R287",
+                    "pos": {
+                        "x": 57.3,
+                        "y": 87.5
+                    },
+                    "uuid": "027d78bc-44d7-41a9-a06f-bbdc4d0027c6"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R154",
+                    "pos": {
+                        "x": 32.15,
+                        "y": 105.2
+                    },
+                    "uuid": "0459de58-aa65-42a8-ae7d-fa2ab78740d7"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R115",
+                    "pos": {
+                        "x": 105.15,
+                        "y": 105.05
+                    },
+                    "uuid": "06482f91-17a1-4b27-8c8c-2a7f0a6590dd"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R240",
+                    "pos": {
+                        "x": 81.23,
+                        "y": 89.13
+                    },
+                    "uuid": "0660f30a-e9f3-4063-86ba-e0c64d77711c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C74",
+                    "pos": {
+                        "x": 102.95,
+                        "y": 122.95
+                    },
+                    "uuid": "08075d58-c2ae-4f11-90d8-bc5c0180bead"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R223",
+                    "pos": {
+                        "x": 134.7,
+                        "y": 121.1
+                    },
+                    "uuid": "08457e0d-1bad-47b1-aeab-a1d5bad208c2"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R233",
+                    "pos": {
+                        "x": 137.2,
+                        "y": 110.3
+                    },
+                    "uuid": "096298bc-47e9-4547-a775-3fee30e0f579"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C57",
+                    "pos": {
+                        "x": 68.6,
+                        "y": 119.0
+                    },
+                    "uuid": "09c999f8-33f0-49de-bc6a-239bf6b6dfde"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R235",
+                    "pos": {
+                        "x": 137.2,
+                        "y": 114.4
+                    },
+                    "uuid": "0a95d81a-48e8-426f-8447-5437e14a0bad"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint U13",
+                    "pos": {
+                        "x": 70.0,
+                        "y": 111.367469
+                    },
+                    "uuid": "0c2f4964-1ad4-4cac-a8b4-fe22015a00e4"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D61",
+                    "pos": {
+                        "x": 87.3,
+                        "y": 127.05
+                    },
+                    "uuid": "0cf8ec39-df1c-4623-b4d3-fbf3e646a16b"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C120",
+                    "pos": {
+                        "x": 56.64,
+                        "y": 94.63
+                    },
+                    "uuid": "0d7798e0-dc41-46cc-b243-607fc7d9b2ff"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D40",
+                    "pos": {
+                        "x": 147.45,
+                        "y": 88.2
+                    },
+                    "uuid": "0e8d4231-4417-4aea-b241-088c542d886f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R47",
+                    "pos": {
+                        "x": 102.95,
+                        "y": 89.8
+                    },
+                    "uuid": "0fcad67f-d301-4201-ad8c-100707b41092"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R53",
+                    "pos": {
+                        "x": 137.4,
+                        "y": 97.72
+                    },
+                    "uuid": "0ff0d86c-1a2c-4771-8b0b-23fc3748f383"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint U15",
+                    "pos": {
+                        "x": 72.0,
+                        "y": 115.5
+                    },
+                    "uuid": "14745153-3f54-4ef6-b071-1100c4c04662"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R248",
+                    "pos": {
+                        "x": 143.85,
+                        "y": 119.3
+                    },
+                    "uuid": "153afcfa-d402-425c-a329-ce416aa6b459"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R232",
+                    "pos": {
+                        "x": 100.05,
+                        "y": 114.65
+                    },
+                    "uuid": "15d18956-8e9e-4539-a3c8-d938c5406801"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C36",
+                    "pos": {
+                        "x": 79.9,
+                        "y": 106.25
+                    },
+                    "uuid": "173a586a-0311-4656-b454-00673cbb69e2"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C75",
+                    "pos": {
+                        "x": 101.2,
+                        "y": 122.4
+                    },
+                    "uuid": "17689e93-096d-43ab-8743-13f3f1618976"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C73",
+                    "pos": {
+                        "x": 101.2,
+                        "y": 115.8
+                    },
+                    "uuid": "1ab2687b-02f2-4daa-b016-4c50479ab987"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint L4",
+                    "pos": {
+                        "x": 56.875,
+                        "y": 99.485
+                    },
+                    "uuid": "1c56d5e2-6e53-4373-a4e5-f28955821ded"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint Q17",
+                    "pos": {
+                        "x": 42.109,
+                        "y": 105.185
+                    },
+                    "uuid": "1d1b1397-44cc-4592-b311-209b24f77a4d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R26",
+                    "pos": {
+                        "x": 137.4,
+                        "y": 94.71
+                    },
+                    "uuid": "1d9c81f9-8949-49ac-85c4-326993bca366"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint Q2",
+                    "pos": {
+                        "x": 87.5,
+                        "y": 100.2
+                    },
+                    "uuid": "1e4d2842-7cc1-4204-970c-a8346f0447b1"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R125",
+                    "pos": {
+                        "x": 109.8,
+                        "y": 102.65
+                    },
+                    "uuid": "1eb9d4b7-a5f3-4b0e-86af-4126a046ebfc"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R173",
+                    "pos": {
+                        "x": 75.42,
+                        "y": 84.34
+                    },
+                    "uuid": "1ec9d099-d883-4ee7-8d8f-7985f500a936"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C152",
+                    "pos": {
+                        "x": 62.68,
+                        "y": 92.95
+                    },
+                    "uuid": "1f6440f5-f669-42ea-9fe9-64f3f242ff27"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint U46",
+                    "pos": {
+                        "x": 90.6,
+                        "y": 119.9
+                    },
+                    "uuid": "1fe2af99-ca5b-4f0a-9c4f-4d54f21311bb"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R55",
+                    "pos": {
+                        "x": 139.1,
+                        "y": 107.6
+                    },
+                    "uuid": "1ffe3c0f-77f5-45ef-8104-029af352e02e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R242",
+                    "pos": {
+                        "x": 99.05,
+                        "y": 114.65
+                    },
+                    "uuid": "21afd8ec-5045-41bb-add0-bda8bd9ac6f7"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C71",
+                    "pos": {
+                        "x": 111.8,
+                        "y": 111.75
+                    },
+                    "uuid": "21fbc1c6-a446-48b7-abc2-12e2cc368a77"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D38",
+                    "pos": {
+                        "x": 87.7,
+                        "y": 119.5
+                    },
+                    "uuid": "22226173-9f22-485a-a49c-32abff65bb3d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R336",
+                    "pos": {
+                        "x": 148.0,
+                        "y": 111.5
+                    },
+                    "uuid": "23491a48-4870-45ef-9c71-b7f94da78f60"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R100",
+                    "pos": {
+                        "x": 147.85,
+                        "y": 99.4
+                    },
+                    "uuid": "23725802-a21f-49bf-a5c1-c618025a6c2e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C102",
+                    "pos": {
+                        "x": 65.75,
+                        "y": 95.82
+                    },
+                    "uuid": "24191f55-ff40-4606-8561-3c189ee0a7b3"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D46",
+                    "pos": {
+                        "x": 147.45,
+                        "y": 85.6
+                    },
+                    "uuid": "241bf577-298f-4274-bff9-e2fa6ce0ed85"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D53",
+                    "pos": {
+                        "x": 59.3,
+                        "y": 123.4
+                    },
+                    "uuid": "25193038-c7c4-4578-9bb2-b475585bf49e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C66",
+                    "pos": {
+                        "x": 105.05,
+                        "y": 102.3
+                    },
+                    "uuid": "25f2ca9c-b671-497a-846d-1f118e7ff66e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint H2",
+                    "pos": {
+                        "x": 124.525,
+                        "y": 118.1125
+                    },
+                    "uuid": "2653617a-b2e0-40a4-8d74-e893258b058f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint M1",
+                    "pos": {
+                        "x": 92.742,
+                        "y": 98.588
+                    },
+                    "uuid": "29ae05e1-7c2c-4721-8790-a0ed0add72b0"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R250",
+                    "pos": {
+                        "x": 56.1,
+                        "y": 109.25
+                    },
+                    "uuid": "2a1c1daa-3ee3-405b-b2a4-e920c2ba219e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint Q3",
+                    "pos": {
+                        "x": 92.85,
+                        "y": 93.9
+                    },
+                    "uuid": "2a8193dd-209c-483e-93c9-b216ab25abc1"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint TP35",
+                    "pos": {
+                        "x": 104.1,
+                        "y": 82.25
+                    },
+                    "uuid": "2b5f1ca2-b21b-4141-97ac-21c7a4f5ac52"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D56",
+                    "pos": {
+                        "x": 130.19,
+                        "y": 123.34
+                    },
+                    "uuid": "2c5ebe2a-182f-45b9-9924-59a28772531f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D28",
+                    "pos": {
+                        "x": 53.725,
+                        "y": 117.4
+                    },
+                    "uuid": "2e600bb3-b0c2-43ff-a234-88a2a30763f5"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R177",
+                    "pos": {
+                        "x": 79.23,
+                        "y": 85.88
+                    },
+                    "uuid": "2f0358da-42bf-4abd-9871-4cda14d882e7"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C9",
+                    "pos": {
+                        "x": 127.05,
+                        "y": 94.2
+                    },
+                    "uuid": "2fbfaa73-4135-4e7b-a89d-7c8224d8a4fa"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint U45",
+                    "pos": {
+                        "x": 93.625,
+                        "y": 119.9
+                    },
+                    "uuid": "302fff28-635b-4dc7-8df3-29406d1d54b4"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint TP28",
+                    "pos": {
+                        "x": 65.48,
+                        "y": 122.485
+                    },
+                    "uuid": "31df345a-0ac1-4499-b116-63fa6d67fc54"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C37",
+                    "pos": {
+                        "x": 78.62,
+                        "y": 110.34
+                    },
+                    "uuid": "321ae7d1-0486-41da-bc3d-a3ac95609706"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C121",
+                    "pos": {
+                        "x": 74.07,
+                        "y": 89.44
+                    },
+                    "uuid": "326d7a0a-7a88-4f00-bdaf-e2da1def528a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint FB4",
+                    "pos": {
+                        "x": 86.25,
+                        "y": 117.95
+                    },
+                    "uuid": "32cbe853-ba6b-4554-8dd6-ea9ae7bb03c1"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint S2",
+                    "pos": {
+                        "x": 122.9,
+                        "y": 125.9
+                    },
+                    "uuid": "3310fd1f-0274-434e-88ff-47f91822560d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R200",
+                    "pos": {
+                        "x": 105.154938,
+                        "y": 110.0
+                    },
+                    "uuid": "3675f8d6-223e-40fb-8fba-375038b0abdb"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C114",
+                    "pos": {
+                        "x": 148.0,
+                        "y": 112.79
+                    },
+                    "uuid": "3758257d-0999-4c28-bd3b-286eb2f30b15"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R186",
+                    "pos": {
+                        "x": 127.9,
+                        "y": 107.9
+                    },
+                    "uuid": "3856ed1b-1da5-401d-ac62-b426f8c08234"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint FID4",
+                    "pos": {
+                        "x": 148.25,
+                        "y": 127.25
+                    },
+                    "uuid": "38a472c5-0ddc-4a9d-8f41-fce0668c57cf"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint J15",
+                    "pos": {
+                        "x": 92.706,
+                        "y": 84.0225
+                    },
+                    "uuid": "393d0f68-4499-4683-95f3-363c532df732"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint Q1",
+                    "pos": {
+                        "x": 101.3,
+                        "y": 89.75
+                    },
+                    "uuid": "3a84caa0-c8fb-4b56-9e91-e7ffd9eca4eb"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D48",
+                    "pos": {
+                        "x": 137.8,
+                        "y": 84.15
+                    },
+                    "uuid": "3ba6a2fe-368a-4323-b4a5-c7df307a9fa1"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R49",
+                    "pos": {
+                        "x": 101.35,
+                        "y": 91.4
+                    },
+                    "uuid": "3e59b271-8e8f-4f8f-a7f0-85faa177465a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint TP5",
+                    "pos": {
+                        "x": 96.95,
+                        "y": 83.1
+                    },
+                    "uuid": "3f4e1dce-08bd-44b8-be4c-c76192300d19"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R237",
+                    "pos": {
+                        "x": 65.91,
+                        "y": 94.35
+                    },
+                    "uuid": "3faf41f6-2ceb-485a-aef3-9c69e087bbcc"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C35",
+                    "pos": {
+                        "x": 62.55,
+                        "y": 102.925
+                    },
+                    "uuid": "41823d26-5f1d-4baf-b5bd-176a6091b69f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint SP7",
+                    "pos": {
+                        "x": 79.25,
+                        "y": 95.15
+                    },
+                    "uuid": "41c66f8b-00b6-4fb2-85b5-94f1fdfa73b1"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C125",
+                    "pos": {
+                        "x": 75.42,
+                        "y": 86.34
+                    },
+                    "uuid": "4233c67d-b9fa-4aff-9caa-da0bb0d2e69d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D19",
+                    "pos": {
+                        "x": 136.27,
+                        "y": 91.26
+                    },
+                    "uuid": "4250b8f0-1a98-4915-a19c-e6d7297e83e8"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C112",
+                    "pos": {
+                        "x": 136.35,
+                        "y": 82.95
+                    },
+                    "uuid": "42763a7a-38fd-4ef9-b10f-3aa1b2da8e60"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C126",
+                    "pos": {
+                        "x": 71.25,
+                        "y": 91.67
+                    },
+                    "uuid": "436969f3-114d-4035-ba45-47b3150ece4f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C55",
+                    "pos": {
+                        "x": 69.9,
+                        "y": 108.7
+                    },
+                    "uuid": "4404910a-ec66-42aa-97a0-6667f8bb9597"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint J5",
+                    "pos": {
+                        "x": 113.40008,
+                        "y": 123.835
+                    },
+                    "uuid": "44522f16-7330-4232-b0cd-c373975065bf"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C164",
+                    "pos": {
+                        "x": 89.3,
+                        "y": 117.95
+                    },
+                    "uuid": "454dd5b6-8319-49c5-871c-2e179d0113a7"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint FID2",
+                    "pos": {
+                        "x": 31.6,
+                        "y": 70.35
+                    },
+                    "uuid": "45c5e404-e3f9-4f44-b535-f68c3c0888c6"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R137",
+                    "pos": {
+                        "x": 103.2,
+                        "y": 115.8
+                    },
+                    "uuid": "48284e0b-dd8e-4252-9765-bb362c3c3e25"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R39",
+                    "pos": {
+                        "x": 129.9,
+                        "y": 107.9
+                    },
+                    "uuid": "4afcd983-9043-4971-a1ea-d7b9f8f33af1"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R116",
+                    "pos": {
+                        "x": 105.15,
+                        "y": 104.1
+                    },
+                    "uuid": "4c8e17c5-55f2-4de0-b85a-0bdf3e778f37"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C61",
+                    "pos": {
+                        "x": 76.6,
+                        "y": 111.0
+                    },
+                    "uuid": "4cac61cf-9785-4b12-b228-c2b5ad2b4e33"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C128",
+                    "pos": {
+                        "x": 72.575,
+                        "y": 91.67
+                    },
+                    "uuid": "4e5c639f-fe67-402a-beea-07b1dec9cc3f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R277",
+                    "pos": {
+                        "x": 89.95,
+                        "y": 88.7
+                    },
+                    "uuid": "50b3874d-b910-409f-9985-8809cbb171f0"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R2",
+                    "pos": {
+                        "x": 68.74,
+                        "y": 82.31
+                    },
+                    "uuid": "51c53671-7783-4d1a-808c-171fb38ceb15"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R14",
+                    "pos": {
+                        "x": 127.05,
+                        "y": 99.55
+                    },
+                    "uuid": "51d050b3-cbd6-4cd6-91c2-13878802f7be"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R52",
+                    "pos": {
+                        "x": 129.3,
+                        "y": 92.2
+                    },
+                    "uuid": "52be3e60-2b8b-4ff6-a0bb-c1c492313c94"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R120",
+                    "pos": {
+                        "x": 148.0,
+                        "y": 108.5
+                    },
+                    "uuid": "532f75a7-9a42-4e0d-a641-2e6b867a4efb"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R20",
+                    "pos": {
+                        "x": 129.3,
+                        "y": 91.25
+                    },
+                    "uuid": "5405241e-24ed-471a-91e1-93a60248cb0d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C113",
+                    "pos": {
+                        "x": 134.71,
+                        "y": 91.31
+                    },
+                    "uuid": "553cf623-68e8-4986-8036-b308eea6f66c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R27",
+                    "pos": {
+                        "x": 114.4,
+                        "y": 98.0
+                    },
+                    "uuid": "56768d75-be2e-4815-8700-e5fc75910da3"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R62",
+                    "pos": {
+                        "x": 139.1,
+                        "y": 108.6
+                    },
+                    "uuid": "57ca7a96-0b1e-4576-a2e2-0d67190325d2"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C141",
+                    "pos": {
+                        "x": 81.9,
+                        "y": 105.6
+                    },
+                    "uuid": "58de1e31-3fed-4ec0-bac3-1c2ada9d3ad1"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D42",
+                    "pos": {
+                        "x": 137.8,
+                        "y": 87.45
+                    },
+                    "uuid": "58e4a4cf-eb42-46e5-927c-90fb8cb080ed"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R31",
+                    "pos": {
+                        "x": 114.4,
+                        "y": 100.8
+                    },
+                    "uuid": "595f9e5d-6938-488b-b35e-359a5c471ca3"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint U30",
+                    "pos": {
+                        "x": 131.7,
+                        "y": 108.65
+                    },
+                    "uuid": "5a22ddc0-489a-4bc3-b74a-a5610e890ea4"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint Q13",
+                    "pos": {
+                        "x": 58.1,
+                        "y": 109.2
+                    },
+                    "uuid": "5b53d25c-b276-468f-a61d-2b177702902d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C155",
+                    "pos": {
+                        "x": 80.23,
+                        "y": 91.04
+                    },
+                    "uuid": "5ba7963c-1de0-4b06-8852-bb7b12c98eb0"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C157",
+                    "pos": {
+                        "x": 68.67,
+                        "y": 99.42
+                    },
+                    "uuid": "5c72da16-510b-4617-af04-062a0a96c7e5"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C11",
+                    "pos": {
+                        "x": 113.95,
+                        "y": 86.65
+                    },
+                    "uuid": "5d22abff-9a32-485a-b5d6-0e739e503941"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C67",
+                    "pos": {
+                        "x": 106.3,
+                        "y": 102.65
+                    },
+                    "uuid": "5e1fd173-07b5-4a1e-ae37-0cd9bafab3a0"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C110",
+                    "pos": {
+                        "x": 136.35,
+                        "y": 83.95
+                    },
+                    "uuid": "601bfe97-f3a0-465b-9b70-243cdb95c029"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R228",
+                    "pos": {
+                        "x": 92.8,
+                        "y": 92.2
+                    },
+                    "uuid": "6083b795-eb60-467d-a73d-5d1a87b8ede7"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint S3",
+                    "pos": {
+                        "x": 128.9,
+                        "y": 125.9
+                    },
+                    "uuid": "608ed92a-985a-4bd8-aed9-9e71b07368f1"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint TP8",
+                    "pos": {
+                        "x": 127.905,
+                        "y": 113.22
+                    },
+                    "uuid": "60bdfee6-f0be-4e9b-85cf-1cc2b1e21c48"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R264",
+                    "pos": {
+                        "x": 78.17,
+                        "y": 85.88
+                    },
+                    "uuid": "61254599-c36a-45f5-9dee-7a0317e01efb"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R144",
+                    "pos": {
+                        "x": 60.15,
+                        "y": 106.55
+                    },
+                    "uuid": "61667261-2098-4694-8ae1-42be03058159"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D45",
+                    "pos": {
+                        "x": 147.45,
+                        "y": 84.3
+                    },
+                    "uuid": "623ec256-4e59-42d3-a9b7-d563c215af4c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C143",
+                    "pos": {
+                        "x": 81.9,
+                        "y": 107.0
+                    },
+                    "uuid": "63061166-8519-40e7-b6c8-3fe7542a73b5"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R163",
+                    "pos": {
+                        "x": 96.65,
+                        "y": 98.05
+                    },
+                    "uuid": "631e2d0b-073b-480f-a7e0-6a5bacd86158"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D21",
+                    "pos": {
+                        "x": 136.27,
+                        "y": 92.63
+                    },
+                    "uuid": "65159203-3a13-42bc-8b6f-14e68d2e0440"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R21",
+                    "pos": {
+                        "x": 120.3468,
+                        "y": 112.2
+                    },
+                    "uuid": "65ed6fc3-15a3-4ffd-b2be-612038e54aab"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C44",
+                    "pos": {
+                        "x": 58.18,
+                        "y": 105.21
+                    },
+                    "uuid": "67163a29-778a-44a2-b8ff-2d72ae15f178"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R269",
+                    "pos": {
+                        "x": 66.21,
+                        "y": 99.99
+                    },
+                    "uuid": "676caa3d-7869-4e2e-9584-585ba191de56"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R32",
+                    "pos": {
+                        "x": 114.4,
+                        "y": 90.4
+                    },
+                    "uuid": "684bc30e-e54b-43a1-8025-ab79457a2acc"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint U12",
+                    "pos": {
+                        "x": 67.77,
+                        "y": 115.5
+                    },
+                    "uuid": "68a0dfbc-0148-488b-bce7-87a4710c69aa"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R63",
+                    "pos": {
+                        "x": 139.25,
+                        "y": 105.6
+                    },
+                    "uuid": "6a3a1ceb-e4c8-48b9-9e29-390246f78c09"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D1",
+                    "pos": {
+                        "x": 132.0,
+                        "y": 101.95
+                    },
+                    "uuid": "6c0e772d-765d-440c-a362-0eba0d8d21f8"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint S1",
+                    "pos": {
+                        "x": 104.0,
+                        "y": 125.9
+                    },
+                    "uuid": "6cd8355e-4f36-47a8-9d9f-29f946b00397"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint S5",
+                    "pos": {
+                        "x": 83.9,
+                        "y": 125.9
+                    },
+                    "uuid": "6e283c72-ea58-4431-94e2-b13bf04af169"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C93",
+                    "pos": {
+                        "x": 63.31,
+                        "y": 100.52
+                    },
+                    "uuid": "6ea8d8d9-3b07-4d67-8ec7-801e5352cf9b"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D52",
+                    "pos": {
+                        "x": 130.55,
+                        "y": 101.95
+                    },
+                    "uuid": "6f94b29a-0098-4793-ab72-3839b005b3ff"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint U1",
+                    "pos": {
+                        "x": 62.67,
+                        "y": 97.435
+                    },
+                    "uuid": "6fa65eec-1b9c-46a6-90f6-0866b9c759ab"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint REF**",
+                    "pos": {
+                        "x": 138.6,
+                        "y": 125.3
+                    },
+                    "uuid": "713db625-2533-4b51-aba5-31fe88cb90de"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint U43",
+                    "pos": {
+                        "x": 90.6,
+                        "y": 117.0
+                    },
+                    "uuid": "71ab871b-cac0-427d-869d-76ec0e22a68f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint U23",
+                    "pos": {
+                        "x": 34.048,
+                        "y": 99.491145
+                    },
+                    "uuid": "720ab3d8-b588-493e-a1fb-4565e335791c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C63",
+                    "pos": {
+                        "x": 75.6,
+                        "y": 110.967469
+                    },
+                    "uuid": "724b952a-9752-4611-afa6-490c4c20dc87"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R66",
+                    "pos": {
+                        "x": 134.85,
+                        "y": 112.3
+                    },
+                    "uuid": "737e7fea-c61e-4a36-ae9a-b271fb01df91"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D63",
+                    "pos": {
+                        "x": 83.71,
+                        "y": 122.4
+                    },
+                    "uuid": "73ac77e9-b045-436d-a93d-5b886f224531"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R220",
+                    "pos": {
+                        "x": 91.02,
+                        "y": 103.28
+                    },
+                    "uuid": "769c5c19-9636-41fd-ba0d-8c64fb8a951f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R118",
+                    "pos": {
+                        "x": 108.175,
+                        "y": 110.625
+                    },
+                    "uuid": "7912a946-22dd-436d-99d4-e3c5e85ff563"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C129",
+                    "pos": {
+                        "x": 58.0,
+                        "y": 94.63
+                    },
+                    "uuid": "79cb3516-383f-46d9-b0c5-f3ffdb22de89"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint U19",
+                    "pos": {
+                        "x": 116.55,
+                        "y": 116.178749
+                    },
+                    "uuid": "7acac30c-7750-4dbd-b78d-2d51e0e7aba6"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint H1",
+                    "pos": {
+                        "x": 60.925,
+                        "y": 118.1
+                    },
+                    "uuid": "7b81dda8-3b22-480a-8dc1-734414012c8f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R76",
+                    "pos": {
+                        "x": 61.6,
+                        "y": 105.0
+                    },
+                    "uuid": "7cdbd106-a91a-4509-826b-1fa17ce53d5a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R185",
+                    "pos": {
+                        "x": 44.141,
+                        "y": 104.394
+                    },
+                    "uuid": "7dc36dab-95a6-4eae-97fc-2c3a534dd28c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint U44",
+                    "pos": {
+                        "x": 96.675,
+                        "y": 119.9
+                    },
+                    "uuid": "7faa93ca-d01b-49c4-ad48-446d0c895a0f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R159",
+                    "pos": {
+                        "x": 62.32,
+                        "y": 101.52
+                    },
+                    "uuid": "811418ad-af9a-4878-9c84-d15bdca7a82c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R158",
+                    "pos": {
+                        "x": 65.05,
+                        "y": 113.1
+                    },
+                    "uuid": "81cd952f-1d84-4a49-914d-68be86fca2fa"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint TP58",
+                    "pos": {
+                        "x": 92.1,
+                        "y": 118.6
+                    },
+                    "uuid": "8261319c-ca71-44a2-96fb-496f50210c22"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R209",
+                    "pos": {
+                        "x": 92.59,
+                        "y": 105.41
+                    },
+                    "uuid": "837f6a36-428e-499f-9b92-db14e7de180f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R203",
+                    "pos": {
+                        "x": 105.154938,
+                        "y": 106.045
+                    },
+                    "uuid": "838e07d9-75ca-46cc-aef7-a12245d652cb"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint U17",
+                    "pos": {
+                        "x": 108.889938,
+                        "y": 106.545
+                    },
+                    "uuid": "83bae218-708e-4aa0-89e1-eb730799acfc"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C123",
+                    "pos": {
+                        "x": 80.23,
+                        "y": 89.13
+                    },
+                    "uuid": "83bfb894-4d2c-476f-99b7-124f1dd4834d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R139",
+                    "pos": {
+                        "x": 102.2,
+                        "y": 115.8
+                    },
+                    "uuid": "8423f8b4-d5db-417d-ae58-cef21d8dfcaa"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R172",
+                    "pos": {
+                        "x": 55.34,
+                        "y": 92.59
+                    },
+                    "uuid": "84dd86c2-da58-470d-b7ec-9526f9cb6538"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint U33",
+                    "pos": {
+                        "x": 56.9,
+                        "y": 105.1
+                    },
+                    "uuid": "86124395-84a5-42f4-90ef-17cb1f0cf38b"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C109",
+                    "pos": {
+                        "x": 136.35,
+                        "y": 87.25
+                    },
+                    "uuid": "8669ec48-7f06-400e-9554-1e7ba64232d2"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D27",
+                    "pos": {
+                        "x": 132.8,
+                        "y": 127.2
+                    },
+                    "uuid": "86e7b3dc-422d-43aa-b609-24c989f1e74e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C2",
+                    "pos": {
+                        "x": 63.505,
+                        "y": 88.43
+                    },
+                    "uuid": "87355c87-0a42-4cfc-85e9-022bf8c3883e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R54",
+                    "pos": {
+                        "x": 139.3,
+                        "y": 102.3
+                    },
+                    "uuid": "87a3e8db-634f-45fe-827b-ffefe3c4944f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R208",
+                    "pos": {
+                        "x": 86.55,
+                        "y": 103.8
+                    },
+                    "uuid": "8822a364-071f-40ed-b4ce-93bef1019b7e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint TP9",
+                    "pos": {
+                        "x": 127.905,
+                        "y": 112.21
+                    },
+                    "uuid": "89ab23e7-a237-49e3-b363-7e7a0ffadb30"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R138",
+                    "pos": {
+                        "x": 105.15,
+                        "y": 120.75
+                    },
+                    "uuid": "8a3a7daa-ad0b-41e2-bc56-bb2fb356d95e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R229",
+                    "pos": {
+                        "x": 42.115,
+                        "y": 103.541
+                    },
+                    "uuid": "8ad8e8b9-dea4-4594-93c1-56c75a6f5879"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R29",
+                    "pos": {
+                        "x": 114.4,
+                        "y": 97.0
+                    },
+                    "uuid": "8b6ae188-1da8-4058-ab11-0462ac1dcbe2"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R201",
+                    "pos": {
+                        "x": 105.154938,
+                        "y": 109.0
+                    },
+                    "uuid": "8b9d0303-58e2-46f3-b9e5-90ae2c4f22f4"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C140",
+                    "pos": {
+                        "x": 81.9,
+                        "y": 108.0
+                    },
+                    "uuid": "8dc85257-dd06-4d88-8d64-973f8b8ffc76"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D41",
+                    "pos": {
+                        "x": 137.8,
+                        "y": 86.07
+                    },
+                    "uuid": "8efb2ed9-3066-4003-a51a-52f28063fc7d"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D51",
+                    "pos": {
+                        "x": 129.1,
+                        "y": 101.95
+                    },
+                    "uuid": "8f03e4a8-280f-47ab-b4e1-17e3772cdc3a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C103",
+                    "pos": {
+                        "x": 55.28,
+                        "y": 94.63
+                    },
+                    "uuid": "8f55ea14-2336-4ead-9f3c-790a322ed4c8"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C107",
+                    "pos": {
+                        "x": 140.0,
+                        "y": 113.485
+                    },
+                    "uuid": "8fb4acf2-0c13-4926-bc0f-518907cac4ba"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D39",
+                    "pos": {
+                        "x": 147.45,
+                        "y": 86.9
+                    },
+                    "uuid": "8ff464e7-70d9-4548-87ad-6d79490013d9"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R35",
+                    "pos": {
+                        "x": 96.675,
+                        "y": 118.3
+                    },
+                    "uuid": "908421c8-0b59-4b66-a34f-ede17a3a138f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint U18",
+                    "pos": {
+                        "x": 102.35,
+                        "y": 119.25
+                    },
+                    "uuid": "90b3211d-2c38-4d6d-abc0-7a3f40ee0e93"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R78",
+                    "pos": {
+                        "x": 61.6,
+                        "y": 107.0
+                    },
+                    "uuid": "9125db4c-62da-46fd-814f-3978d20ff826"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R182",
+                    "pos": {
+                        "x": 59.09,
+                        "y": 91.2
+                    },
+                    "uuid": "91492f1f-ba20-420d-b340-f96e06592cc4"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D33",
+                    "pos": {
+                        "x": 68.9,
+                        "y": 87.925
+                    },
+                    "uuid": "921bbeca-de9a-4b6b-8bbf-4d94afe0522e"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint J6",
+                    "pos": {
+                        "x": 33.435,
+                        "y": 108.616397
+                    },
+                    "uuid": "92e1c270-556f-44b4-bb75-489575a2ad56"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R247",
+                    "pos": {
+                        "x": 137.2,
+                        "y": 115.9
+                    },
+                    "uuid": "93018c05-452a-45f0-b450-4dd7eddcd15a"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R4",
+                    "pos": {
+                        "x": 69.69,
+                        "y": 82.31
+                    },
+                    "uuid": "93dcdc33-27b2-4736-8a15-9206592cc58f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C122",
+                    "pos": {
+                        "x": 71.58,
+                        "y": 86.82
+                    },
+                    "uuid": "947f0dd0-e9cc-4287-a4dc-cbc355e01a5c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R335",
+                    "pos": {
+                        "x": 148.0,
+                        "y": 110.5
+                    },
+                    "uuid": "95e1d2a1-a799-4d6e-a508-e9f91ad526f1"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C144",
+                    "pos": {
+                        "x": 81.9,
+                        "y": 104.6
+                    },
+                    "uuid": "996dd61f-fc87-49cf-80a6-e726047b1319"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C106",
+                    "pos": {
+                        "x": 137.4,
+                        "y": 113.1
+                    },
+                    "uuid": "9a7e7875-65c1-48b1-8c20-e8360e60dcd7"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint Q4",
+                    "pos": {
+                        "x": 105.4,
+                        "y": 118.85
+                    },
+                    "uuid": "9b98a952-aa91-4346-8cad-c08ddb9542ba"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D15",
+                    "pos": {
+                        "x": 30.775,
+                        "y": 105.025
+                    },
+                    "uuid": "9b9b0cf8-a144-4a6f-9d1a-5b2e7d61dc39"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint REF**",
+                    "pos": {
+                        "x": 137.8,
+                        "y": 76.8
+                    },
+                    "uuid": "9bbe1a58-7c11-4bce-a72b-701d25c98766"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R176",
+                    "pos": {
+                        "x": 75.42,
+                        "y": 85.34
+                    },
+                    "uuid": "9d81ce44-b365-454b-9b22-c0a4e10d5763"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint Q15",
+                    "pos": {
+                        "x": 58.2,
+                        "y": 112.6
+                    },
+                    "uuid": "9ef95812-7e7f-4a9e-baf3-fb4261bf9eb7"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R101",
+                    "pos": {
+                        "x": 147.85,
+                        "y": 103.12
+                    },
+                    "uuid": "9fb2e200-10bb-4d58-9f46-8772e801a2be"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D43",
+                    "pos": {
+                        "x": 135.1,
+                        "y": 88.47
+                    },
+                    "uuid": "a0008073-4068-411d-a6eb-54c598c4f627"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint U7",
+                    "pos": {
+                        "x": 82.02,
+                        "y": 115.4
+                    },
+                    "uuid": "a0fd472b-6f23-4425-a970-6642026b9389"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint TP27",
+                    "pos": {
+                        "x": 64.475,
+                        "y": 122.485
+                    },
+                    "uuid": "a12fd271-e8ac-4907-9ad8-5a52ac0e22c4"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D62",
+                    "pos": {
+                        "x": 47.0,
+                        "y": 105.025
+                    },
+                    "uuid": "a27609e3-8e03-42c3-9bfa-d61a06a4e78b"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint TP6",
+                    "pos": {
+                        "x": 127.905,
+                        "y": 115.235
+                    },
+                    "uuid": "a2a3a5bd-abe0-46d7-a2c8-02d6eab35f16"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R119",
+                    "pos": {
+                        "x": 107.3,
+                        "y": 102.65
+                    },
+                    "uuid": "a2d8ea78-907b-4462-8ce2-80563eae6cce"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R293",
+                    "pos": {
+                        "x": 87.05,
+                        "y": 114.2
+                    },
+                    "uuid": "a33ff34a-ad19-464b-917a-7c34d2268891"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C105",
+                    "pos": {
+                        "x": 137.115,
+                        "y": 109.05
+                    },
+                    "uuid": "a42f8c6c-55f7-4ee0-89ee-286e7c9e8faa"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R169",
+                    "pos": {
+                        "x": 67.67,
+                        "y": 99.42
+                    },
+                    "uuid": "a58b5ff4-054b-4df4-b20c-45dfc1a76c3f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint U21",
+                    "pos": {
+                        "x": 113.55,
+                        "y": 116.178749
+                    },
+                    "uuid": "a6ae97d4-2e1d-4ab3-b8b2-db5d0034b181"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint A2",
+                    "pos": {
+                        "x": 79.25,
+                        "y": 95.15
+                    },
+                    "uuid": "a71c796f-0071-48fe-8d51-89629175da56"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R99",
+                    "pos": {
+                        "x": 66.5,
+                        "y": 119.0
+                    },
+                    "uuid": "a8d7d73e-90be-4791-b5e9-f4731d82a6f7"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R124",
+                    "pos": {
+                        "x": 110.8,
+                        "y": 102.65
+                    },
+                    "uuid": "aad02384-3610-4ce5-a586-b9573cfc20f8"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C115",
+                    "pos": {
+                        "x": 147.3,
+                        "y": 119.3
+                    },
+                    "uuid": "ab963ffd-8897-4e25-a6c2-895434d677b2"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R140",
+                    "pos": {
+                        "x": 107.64,
+                        "y": 124.8
+                    },
+                    "uuid": "ac7f00d5-277a-46aa-a334-c866d5e2275f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint C45",
+                    "pos": {
+                        "x": 60.7,
+                        "y": 109.4
+                    },
+                    "uuid": "ad006a6e-38ba-45b0-b7cf-729526cdd766"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint TP21",
+                    "pos": {
+                        "x": 102.95,
+                        "y": 86.925
+                    },
+                    "uuid": "ae53d2f3-70fa-43a4-b543-ff7d359eafe9"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D9",
+                    "pos": {
+                        "x": 68.8,
+                        "y": 127.15
+                    },
+                    "uuid": "ae7c6848-7611-4056-ab2e-0d0e469e0b66"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint R136",
+                    "pos": {
+                        "x": 104.2,
+                        "y": 115.8
+                    },
+                    "uuid": "af1c0401-cd98-4d92-b0ca-85e29ba03b31"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint Q10",
+                    "pos": {
+                        "x": 132.1,
+                        "y": 121.34
+                    },
+                    "uuid": "af756dba-d6e2-4615-a77c-75d5e4d53806"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint U14",
+                    "pos": {
+                        "x": 78.0,
+                        "y": 115.5
+                    },
+                    "uuid": "afd8a57b-9d19-4ba2-a3f8-f9c6c28ae8af"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'antmicro-footprints'",
+            "items": [
+                {
+                    "description": "Footprint D50",
+                    "pos": {
+                        "x": 147.45,
+                        "y": 90.8
+                    },
+                    "uuid": "b105f92b-1ced-4f56-86a2-bf8ffaab67d5"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        }
+    ]
+}

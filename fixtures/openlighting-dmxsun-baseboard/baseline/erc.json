@@ -1,0 +1,2775 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-07-29T20:53:25",
+    "ignored_checks": [
+        {
+            "description": "Input Power pin not driven by any Output Power pins",
+            "key": "power_pin_not_driven"
+        },
+        {
+            "description": "Global label only appears once in the schematic",
+            "key": "single_global_label"
+        },
+        {
+            "description": "Four connection points are joined together",
+            "key": "four_way_junction"
+        },
+        {
+            "description": "Conflict problem between pins",
+            "key": "pin_to_pin"
+        },
+        {
+            "description": "SPICE model issue",
+            "key": "simulation_model_issue"
+        },
+        {
+            "description": "Assigned footprint doesn't match footprint filters",
+            "key": "footprint_filter"
+        }
+    ],
+    "included_severities": [
+        "error",
+        "warning"
+    ],
+    "kicad_version": "10.0.4",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/9512a509-4611-45cc-87af-6efa0e009434",
+            "violations": [
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0254 mm",
+                            "pos": {
+                                "x": 0.1524,
+                                "y": 1.28905
+                            },
+                            "uuid": "63cb6b22-f791-45fb-9ef6-fb07b007e6d1"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0121 Hidden pin 1 [GND, Power input, Line]",
+                            "pos": {
+                                "x": 0.1524,
+                                "y": 1.31445
+                            },
+                            "uuid": "fe3162df-43a5-409f-b03b-c33d04111ee7"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0121 [GND]",
+                            "pos": {
+                                "x": 0.1524,
+                                "y": 1.31445
+                            },
+                            "uuid": "5f389a67-d14e-479e-8d69-e9e1028e9d00"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 0.0254 mm",
+                            "pos": {
+                                "x": 0.1778,
+                                "y": 1.28905
+                            },
+                            "uuid": "445fd3af-69b2-48b1-8ba7-98df44077fc6"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol J15 Pin 1 [Pin_1, Passive, Line]",
+                            "pos": {
+                                "x": 0.1778,
+                                "y": 1.28905
+                            },
+                            "uuid": "8f6f6cf7-6917-423f-8867-34e3d41cf5c8"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 0.0254 mm",
+                            "pos": {
+                                "x": 0.1778,
+                                "y": 1.31445
+                            },
+                            "uuid": "5cff75e5-9209-4613-b034-14ef6bdc0a9d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Mechanical'",
+                    "items": [
+                        {
+                            "description": "Symbol H1 [MountingHole]",
+                            "pos": {
+                                "x": 0.1905,
+                                "y": 0.1905
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605bea44"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Mechanical'",
+                    "items": [
+                        {
+                            "description": "Symbol H2 [MountingHole]",
+                            "pos": {
+                                "x": 0.1905,
+                                "y": 0.254
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605bf8e7"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Mechanical'",
+                    "items": [
+                        {
+                            "description": "Symbol H3 [MountingHole]",
+                            "pos": {
+                                "x": 0.1905,
+                                "y": 0.3175
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605c02a5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0103 [GND]",
+                            "pos": {
+                                "x": 0.2032,
+                                "y": 1.8415
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605fb90d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR040 [VDD]",
+                            "pos": {
+                                "x": 0.2159,
+                                "y": 1.5367
+                            },
+                            "uuid": "00000000-0000-0000-0000-000060593ad5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Device'",
+                    "items": [
+                        {
+                            "description": "Symbol C2 [C]",
+                            "pos": {
+                                "x": 0.2159,
+                                "y": 1.5875
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605933c7"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR041 [GND]",
+                            "pos": {
+                                "x": 0.2159,
+                                "y": 1.6383
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006059884d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Connector_Generic'",
+                    "items": [
+                        {
+                            "description": "Symbol J15 [Conn_02x02_Odd_Even]",
+                            "pos": {
+                                "x": 0.2286,
+                                "y": 1.28905
+                            },
+                            "uuid": "96db09bd-2670-4a5f-8926-5856745f0bbd"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Connector_Generic'",
+                    "items": [
+                        {
+                            "description": "Symbol J8 [Conn_02x02_Odd_Even]",
+                            "pos": {
+                                "x": 0.2794,
+                                "y": 1.8161
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000606324de"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 0.0254 mm",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 1.28905
+                            },
+                            "uuid": "05153fca-cfaf-420a-b947-ee3afad95657"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 0.0254 mm",
+                            "pos": {
+                                "x": 0.3048,
+                                "y": 1.31445
+                            },
+                            "uuid": "feb3b120-aacb-4ea1-8c3d-76d4e9896333"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0254 mm",
+                            "pos": {
+                                "x": 0.3302,
+                                "y": 1.28905
+                            },
+                            "uuid": "77233627-9af6-4540-8c10-692ca1da7ff5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0120 Hidden pin 1 [GND, Power input, Line]",
+                            "pos": {
+                                "x": 0.3302,
+                                "y": 1.31445
+                            },
+                            "uuid": "c741589b-c755-4a45-af74-a9c27470c0a1"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0120 [GND]",
+                            "pos": {
+                                "x": 0.3302,
+                                "y": 1.31445
+                            },
+                            "uuid": "559c23e2-e887-4a73-bfea-8327a79ed71b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR01 [+3.3V]",
+                            "pos": {
+                                "x": 0.3429,
+                                "y": 0.6223
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006053ee63"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Device'",
+                    "items": [
+                        {
+                            "description": "Symbol R1 [R]",
+                            "pos": {
+                                "x": 0.3429,
+                                "y": 0.6858
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006053cea4"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR03 Hidden pin 1 [+3.3V, Power input, Line]",
+                            "pos": {
+                                "x": 0.381,
+                                "y": 0.93345
+                            },
+                            "uuid": "b9dbe902-d068-4636-b6ec-915daf2a9a01"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR03 [+3.3V]",
+                            "pos": {
+                                "x": 0.381,
+                                "y": 0.93345
+                            },
+                            "uuid": "00000000-0000-0000-0000-000060776107"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'RF'",
+                    "items": [
+                        {
+                            "description": "Symbol U1 [NRF24L01_Breakout]",
+                            "pos": {
+                                "x": 0.381,
+                                "y": 1.08585
+                            },
+                            "uuid": "00000000-0000-0000-0000-000060745aea"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol U1 Pin 1 [GND, Power input, Line]",
+                            "pos": {
+                                "x": 0.381,
+                                "y": 1.23825
+                            },
+                            "uuid": "4fa65fec-dbbd-4973-9d85-5c9a491cc670"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR04 Hidden pin 1 [GND, Power input, Line]",
+                            "pos": {
+                                "x": 0.381,
+                                "y": 1.23825
+                            },
+                            "uuid": "df4246f5-44da-4eb0-b504-d3230b14baae"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR04 [GND]",
+                            "pos": {
+                                "x": 0.381,
+                                "y": 1.23825
+                            },
+                            "uuid": "00000000-0000-0000-0000-000060769a68"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0101 [GND]",
+                            "pos": {
+                                "x": 0.381,
+                                "y": 1.4224
+                            },
+                            "uuid": "00000000-0000-0000-0000-000060611674"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0102 [VDD]",
+                            "pos": {
+                                "x": 0.381,
+                                "y": 1.4732
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006061584a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR037 [GND]",
+                            "pos": {
+                                "x": 0.381,
+                                "y": 1.4986
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006056d4fd"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0104 [GND]",
+                            "pos": {
+                                "x": 0.381,
+                                "y": 1.8415
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006060211c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Mechanical'",
+                    "items": [
+                        {
+                            "description": "Symbol H5 [MountingHole]",
+                            "pos": {
+                                "x": 0.4445,
+                                "y": 0.1905
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605bee59"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Mechanical'",
+                    "items": [
+                        {
+                            "description": "Symbol H6 [MountingHole]",
+                            "pos": {
+                                "x": 0.4445,
+                                "y": 0.254
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605bfd55"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Mechanical'",
+                    "items": [
+                        {
+                            "description": "Symbol H8 [MountingHole]",
+                            "pos": {
+                                "x": 0.4445,
+                                "y": 0.381
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605c1175"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR02 [+3.3V]",
+                            "pos": {
+                                "x": 0.4445,
+                                "y": 0.6223
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006053e9ef"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Device'",
+                    "items": [
+                        {
+                            "description": "Symbol R2 [R]",
+                            "pos": {
+                                "x": 0.4445,
+                                "y": 0.6858
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006053bed4"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0106 [GND]",
+                            "pos": {
+                                "x": 0.4445,
+                                "y": 1.8415
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006061c33f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0115 [GND]",
+                            "pos": {
+                                "x": 0.4699,
+                                "y": 1.5621
+                            },
+                            "uuid": "72129166-8d2e-4bb4-b9a5-afb396934b1e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0114 [VDD]",
+                            "pos": {
+                                "x": 0.4699,
+                                "y": 1.5875
+                            },
+                            "uuid": "79e6f6ea-efcc-4216-9341-289af00b2504"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Connector_Generic'",
+                    "items": [
+                        {
+                            "description": "Symbol J9 [Conn_02x02_Odd_Even]",
+                            "pos": {
+                                "x": 0.5207,
+                                "y": 1.8161
+                            },
+                            "uuid": "00000000-0000-0000-0000-000060632a27"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR038 [+3.3V]",
+                            "pos": {
+                                "x": 0.5334,
+                                "y": 0.9525
+                            },
+                            "uuid": "00000000-0000-0000-0000-000060580399"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Device'",
+                    "items": [
+                        {
+                            "description": "Symbol C1 [C]",
+                            "pos": {
+                                "x": 0.5334,
+                                "y": 1.016
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006057fc08"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR039 [GND]",
+                            "pos": {
+                                "x": 0.5334,
+                                "y": 1.0795
+                            },
+                            "uuid": "00000000-0000-0000-0000-000060580c0e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0109 [+3.3V]",
+                            "pos": {
+                                "x": 0.5334,
+                                "y": 1.2192
+                            },
+                            "uuid": "d08b1014-4635-4ce6-9489-a6721bb17eaf"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Device'",
+                    "items": [
+                        {
+                            "description": "Symbol C14 [C_Polarized]",
+                            "pos": {
+                                "x": 0.5334,
+                                "y": 1.27
+                            },
+                            "uuid": "39c282be-cbba-4970-9f8d-dabbf0085552"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0108 [GND]",
+                            "pos": {
+                                "x": 0.5334,
+                                "y": 1.3208
+                            },
+                            "uuid": "1da158f8-80b4-4d22-ba4b-2ce005b6c3b1"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Footprint 'TerminalBlock_Altech_AK300-4_P5.00mm' not found in library 'TerminalBlock'",
+                    "items": [
+                        {
+                            "description": "Symbol J7 [Screw_Terminal_01x04]",
+                            "pos": {
+                                "x": 0.5461,
+                                "y": 1.4478
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006056c000"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "footprint_link_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Connector'",
+                    "items": [
+                        {
+                            "description": "Symbol J7 [Screw_Terminal_01x04]",
+                            "pos": {
+                                "x": 0.5461,
+                                "y": 1.4478
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006056c000"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Connector'",
+                    "items": [
+                        {
+                            "description": "Symbol J12 [Conn_01x04_Male]",
+                            "pos": {
+                                "x": 0.5715,
+                                "y": 1.6129
+                            },
+                            "uuid": "fa3f31da-6899-4c4e-9fd2-205d8b4823da"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Device'",
+                    "items": [
+                        {
+                            "description": "Symbol C13 [C]",
+                            "pos": {
+                                "x": 0.6223,
+                                "y": 1.016
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605d4823"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0105 [GND]",
+                            "pos": {
+                                "x": 0.6223,
+                                "y": 1.8415
+                            },
+                            "uuid": "00000000-0000-0000-0000-000060602374"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Connector'",
+                    "items": [
+                        {
+                            "description": "Symbol J10 [Conn_01x04_Male]",
+                            "pos": {
+                                "x": 0.8001,
+                                "y": 1.5875
+                            },
+                            "uuid": "c02c67db-4847-4a54-b279-cd8032b9c102"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Connector'",
+                    "items": [
+                        {
+                            "description": "Symbol J13 [Conn_01x04_Male]",
+                            "pos": {
+                                "x": 0.8001,
+                                "y": 1.7399
+                            },
+                            "uuid": "a6f9f2b3-89d4-4dd8-9e2e-60437451af10"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Graphic'",
+                    "items": [
+                        {
+                            "description": "Symbol SYM1 [Logo_Open_Hardware_Large]",
+                            "pos": {
+                                "x": 0.8255,
+                                "y": 0.2921
+                            },
+                            "uuid": "b1fd892e-1541-4325-b030-d8f43ee7fd0b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0112 [+3.3V]",
+                            "pos": {
+                                "x": 0.8763,
+                                "y": 1.6129
+                            },
+                            "uuid": "3ce9be84-310c-4ed9-adff-8dfdf883d063"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0113 [GND]",
+                            "pos": {
+                                "x": 0.8763,
+                                "y": 1.6383
+                            },
+                            "uuid": "b7654e11-12a3-47bb-b2a4-3cb5c38a0e91"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0116 [+3.3V]",
+                            "pos": {
+                                "x": 0.8763,
+                                "y": 1.7653
+                            },
+                            "uuid": "910b9c0f-b2e5-4a1b-af07-569497d63ce8"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0117 [GND]",
+                            "pos": {
+                                "x": 0.8763,
+                                "y": 1.7907
+                            },
+                            "uuid": "8e07f35c-e467-4e89-885c-d5fff7d80ced"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Connector_Generic'",
+                    "items": [
+                        {
+                            "description": "Symbol J1 [Conn_02x06_Odd_Even]",
+                            "pos": {
+                                "x": 0.9271,
+                                "y": 0.9779
+                            },
+                            "uuid": "00000000-0000-0000-0000-000060575cea"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Connector'",
+                    "items": [
+                        {
+                            "description": "Symbol J11 [Conn_01x04_Male]",
+                            "pos": {
+                                "x": 1.016,
+                                "y": 1.5875
+                            },
+                            "uuid": "358b2a18-c676-4848-9b30-0855a46e4ca3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Connector'",
+                    "items": [
+                        {
+                            "description": "Symbol J14 [Conn_01x04_Male]",
+                            "pos": {
+                                "x": 1.016,
+                                "y": 1.7399
+                            },
+                            "uuid": "fc17ad0a-4385-4007-b57a-87648ba86e1f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR05 [GND]",
+                            "pos": {
+                                "x": 1.0414,
+                                "y": 0.9271
+                            },
+                            "uuid": "00000000-0000-0000-0000-000060575e46"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR08 [VDD]",
+                            "pos": {
+                                "x": 1.0414,
+                                "y": 0.9525
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006056f660"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR07 [+3.3V]",
+                            "pos": {
+                                "x": 1.0414,
+                                "y": 0.9779
+                            },
+                            "uuid": "00000000-0000-0000-0000-000060575e50"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR06 [GND]",
+                            "pos": {
+                                "x": 1.0414,
+                                "y": 1.0287
+                            },
+                            "uuid": "00000000-0000-0000-0000-000060575e6d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0110 [+3.3V]",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 1.6129
+                            },
+                            "uuid": "26b96d27-0813-497c-a473-79ed7bedf112"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0111 [GND]",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 1.6383
+                            },
+                            "uuid": "44cc4906-b1b5-4877-ba2e-fb9e2ec58da7"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0118 [+3.3V]",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 1.7653
+                            },
+                            "uuid": "04613e0a-09ea-4ea5-9abb-496de5aaf196"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0119 [GND]",
+                            "pos": {
+                                "x": 1.0922,
+                                "y": 1.7907
+                            },
+                            "uuid": "8e3b6f36-07d7-4977-a958-c1b95abdffd8"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR09 [GND]",
+                            "pos": {
+                                "x": 1.1303,
+                                "y": 0.2921
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605f2f11"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR010 [GND]",
+                            "pos": {
+                                "x": 1.1303,
+                                "y": 0.4191
+                            },
+                            "uuid": "00000000-0000-0000-0000-000060612b5f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR011 [GND]",
+                            "pos": {
+                                "x": 1.1303,
+                                "y": 0.5461
+                            },
+                            "uuid": "00000000-0000-0000-0000-000060613054"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR012 [GND]",
+                            "pos": {
+                                "x": 1.1303,
+                                "y": 0.6731
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006061349f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 0.0571 mm",
+                            "pos": {
+                                "x": 1.23825,
+                                "y": 0.93345
+                            },
+                            "uuid": "1781f22d-91a2-4440-86f8-b66723c83fb1"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0127 mm",
+                            "pos": {
+                                "x": 1.23825,
+                                "y": 0.94615
+                            },
+                            "uuid": "7e25586f-6a1f-42cf-8949-8ad8a394285a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol C19 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 1.23825,
+                                "y": 0.94615
+                            },
+                            "uuid": "e56fec17-7a6f-4d06-93b4-0e50aa63e2ca"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Device'",
+                    "items": [
+                        {
+                            "description": "Symbol C19 [C_Polarized]",
+                            "pos": {
+                                "x": 1.23825,
+                                "y": 0.98425
+                            },
+                            "uuid": "20d46361-92cd-406f-85e3-964acd6e0b54"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0127 mm",
+                            "pos": {
+                                "x": 1.23825,
+                                "y": 1.02235
+                            },
+                            "uuid": "2dfb9b87-6d15-41ea-a263-0dbae64c668f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 0.0571 mm",
+                            "pos": {
+                                "x": 1.23825,
+                                "y": 1.03505
+                            },
+                            "uuid": "e137e873-0ccd-4ac7-bf9f-e7d1194c4c32"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 0.0635 mm",
+                            "pos": {
+                                "x": 1.2954,
+                                "y": 0.93345
+                            },
+                            "uuid": "c685c1e5-b08e-44f0-a98a-f41e55e270a5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR054 Hidden pin 1 [+3.3V, Power input, Line]",
+                            "pos": {
+                                "x": 1.2954,
+                                "y": 0.93345
+                            },
+                            "uuid": "c7107e10-4118-4a4b-9984-209f0dd4a36a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0127 mm",
+                            "pos": {
+                                "x": 1.2954,
+                                "y": 0.93345
+                            },
+                            "uuid": "ca0b408d-7ca2-431d-aace-f2129916b416"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR054 [+3.3V]",
+                            "pos": {
+                                "x": 1.2954,
+                                "y": 0.93345
+                            },
+                            "uuid": "d539664b-e073-4439-9018-f30fab7ffb05"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol C21 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 1.2954,
+                                "y": 0.94615
+                            },
+                            "uuid": "84f666c0-3df7-4b9f-8dcd-2afc59289284"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Device'",
+                    "items": [
+                        {
+                            "description": "Symbol C21 [C]",
+                            "pos": {
+                                "x": 1.2954,
+                                "y": 0.98425
+                            },
+                            "uuid": "397239e3-1379-4f6f-a66a-ba88ff06135c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0127 mm",
+                            "pos": {
+                                "x": 1.2954,
+                                "y": 1.02235
+                            },
+                            "uuid": "3c437d74-ad04-44ff-a52a-d006194e8301"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR055 Hidden pin 1 [GND, Power input, Line]",
+                            "pos": {
+                                "x": 1.2954,
+                                "y": 1.03505
+                            },
+                            "uuid": "9e20108e-7e6a-437b-901f-d2086e35b02c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR055 [GND]",
+                            "pos": {
+                                "x": 1.2954,
+                                "y": 1.03505
+                            },
+                            "uuid": "93f0f89e-9b19-4b27-8df4-9a7b0d7f4e05"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0127 mm",
+                            "pos": {
+                                "x": 1.3589,
+                                "y": 0.93345
+                            },
+                            "uuid": "bfd91a46-4492-4a8b-92b6-f0084b4e679f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol C23 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 1.3589,
+                                "y": 0.94615
+                            },
+                            "uuid": "f5ec25ed-e050-499d-822a-dca8c7715bfd"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Device'",
+                    "items": [
+                        {
+                            "description": "Symbol C23 [C]",
+                            "pos": {
+                                "x": 1.3589,
+                                "y": 0.98425
+                            },
+                            "uuid": "8cffe713-caf6-4469-b419-fd381228e448"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0127 mm",
+                            "pos": {
+                                "x": 1.3589,
+                                "y": 1.02235
+                            },
+                            "uuid": "2620c55a-d152-4b5a-95fc-b645752348d8"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 0.0635 mm",
+                            "pos": {
+                                "x": 1.3589,
+                                "y": 1.03505
+                            },
+                            "uuid": "a3e3afee-7a77-4dac-a125-2451822fbdb5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'baseboard_4slots-rescue'",
+                    "items": [
+                        {
+                            "description": "Symbol U2 [Pico-MCU_RPi]",
+                            "pos": {
+                                "x": 1.397,
+                                "y": 0.4826
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006052d8f1"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 0.0571 mm",
+                            "pos": {
+                                "x": 1.46685,
+                                "y": 0.93345
+                            },
+                            "uuid": "cd1b8bb9-fed3-42c9-932c-3b9b9dcac4d8"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol C15 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 1.46685,
+                                "y": 0.94615
+                            },
+                            "uuid": "91b0155d-9186-44dc-ab8c-ceb0674c846a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0127 mm",
+                            "pos": {
+                                "x": 1.46685,
+                                "y": 0.94615
+                            },
+                            "uuid": "db1500be-9549-4c17-9abf-b55b094f5bfd"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Device'",
+                    "items": [
+                        {
+                            "description": "Symbol C15 [C_Polarized]",
+                            "pos": {
+                                "x": 1.46685,
+                                "y": 0.98425
+                            },
+                            "uuid": "ed936ef1-e928-40f2-8f2d-b399b58c4ea2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0127 mm",
+                            "pos": {
+                                "x": 1.46685,
+                                "y": 1.02235
+                            },
+                            "uuid": "a6c0ac9e-c36a-49a6-96d8-f2cd3f263891"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 0.0571 mm",
+                            "pos": {
+                                "x": 1.46685,
+                                "y": 1.03505
+                            },
+                            "uuid": "4542abf6-04e3-4e02-9076-8e39ce511432"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR044 Hidden pin 1 [VDD, Power input, Line]",
+                            "pos": {
+                                "x": 1.524,
+                                "y": 0.93345
+                            },
+                            "uuid": "47686d1d-09d3-4351-8a7c-80485571bf78"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0127 mm",
+                            "pos": {
+                                "x": 1.524,
+                                "y": 0.93345
+                            },
+                            "uuid": "712f425d-15c3-4b2d-be3e-f5557ee4a195"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 0.0635 mm",
+                            "pos": {
+                                "x": 1.524,
+                                "y": 0.93345
+                            },
+                            "uuid": "8c795c7c-084b-43aa-bd1a-2367b92d0eb1"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR044 [VDD]",
+                            "pos": {
+                                "x": 1.524,
+                                "y": 0.93345
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605dab43"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol C4 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 1.524,
+                                "y": 0.94615
+                            },
+                            "uuid": "c5fc47d0-db49-49d6-b48e-ad489bdf4860"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Device'",
+                    "items": [
+                        {
+                            "description": "Symbol C4 [C]",
+                            "pos": {
+                                "x": 1.524,
+                                "y": 0.98425
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605daa1b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0127 mm",
+                            "pos": {
+                                "x": 1.524,
+                                "y": 1.02235
+                            },
+                            "uuid": "b50cf7ff-2f93-47b3-b6d6-3a4f6f886ef1"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR045 Hidden pin 1 [GND, Power input, Line]",
+                            "pos": {
+                                "x": 1.524,
+                                "y": 1.03505
+                            },
+                            "uuid": "34cbe435-fa7c-4247-9487-52c289b5ecc0"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR045 [GND]",
+                            "pos": {
+                                "x": 1.524,
+                                "y": 1.03505
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605dab4d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0127 mm",
+                            "pos": {
+                                "x": 1.5875,
+                                "y": 0.93345
+                            },
+                            "uuid": "bdbe24e8-2c0f-4a57-bd0d-a5220bdb5470"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol C9 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 1.5875,
+                                "y": 0.94615
+                            },
+                            "uuid": "67edbfa9-1579-490f-8883-a8c39e2f0385"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Device'",
+                    "items": [
+                        {
+                            "description": "Symbol C9 [C]",
+                            "pos": {
+                                "x": 1.5875,
+                                "y": 0.98425
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006060a6a1"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0127 mm",
+                            "pos": {
+                                "x": 1.5875,
+                                "y": 1.02235
+                            },
+                            "uuid": "d214b643-486c-483d-b26b-a69e5add5e58"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 0.0635 mm",
+                            "pos": {
+                                "x": 1.5875,
+                                "y": 1.03505
+                            },
+                            "uuid": "2727bf6d-3bcc-481f-bec8-7d6c64efc9a0"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR062 [+3.3V]",
+                            "pos": {
+                                "x": 1.5875,
+                                "y": 1.5367
+                            },
+                            "uuid": "187fb50d-a16a-4c94-9a98-713e250d2593"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR063 [GND]",
+                            "pos": {
+                                "x": 1.5875,
+                                "y": 1.8415
+                            },
+                            "uuid": "bcb6241b-568e-468d-90be-e2f8e5b96935"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR018 [VDD]",
+                            "pos": {
+                                "x": 1.651,
+                                "y": 0.2667
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605625a4"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR019 [GND]",
+                            "pos": {
+                                "x": 1.651,
+                                "y": 0.2921
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605da5b4"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR020 [+3.3V]",
+                            "pos": {
+                                "x": 1.651,
+                                "y": 0.3429
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605db42e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR021 [GND]",
+                            "pos": {
+                                "x": 1.651,
+                                "y": 0.4191
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605dc635"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR022 [GND]",
+                            "pos": {
+                                "x": 1.651,
+                                "y": 0.5461
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605ddafa"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR023 [GND]",
+                            "pos": {
+                                "x": 1.651,
+                                "y": 0.6731
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605de0c9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Connector_Generic'",
+                    "items": [
+                        {
+                            "description": "Symbol J2 [Conn_02x06_Odd_Even]",
+                            "pos": {
+                                "x": 1.8415,
+                                "y": 0.9779
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000606cf51a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR052 [+3.3V]",
+                            "pos": {
+                                "x": 1.8669,
+                                "y": 0.254
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006064501b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Device'",
+                    "items": [
+                        {
+                            "description": "Symbol C8 [C]",
+                            "pos": {
+                                "x": 1.8669,
+                                "y": 0.3175
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006063f026"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR053 [GND]",
+                            "pos": {
+                                "x": 1.8669,
+                                "y": 0.3937
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006063f284"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Connector_Generic'",
+                    "items": [
+                        {
+                            "description": "Symbol J3 [Conn_02x04_Odd_Even]",
+                            "pos": {
+                                "x": 1.905,
+                                "y": 0.5969
+                            },
+                            "uuid": "98ccf2a9-157e-4e8e-8a65-3d0157ea5ef7"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR013 [GND]",
+                            "pos": {
+                                "x": 1.9558,
+                                "y": 0.9271
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000606cf676"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR017 [VDD]",
+                            "pos": {
+                                "x": 1.9558,
+                                "y": 0.9525
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605746e9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR016 [+3.3V]",
+                            "pos": {
+                                "x": 1.9558,
+                                "y": 0.9779
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000606cf680"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR014 [+3.3V]",
+                            "pos": {
+                                "x": 1.9558,
+                                "y": 1.0033
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000606f27eb"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR015 [GND]",
+                            "pos": {
+                                "x": 1.9558,
+                                "y": 1.0414
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000606cf694"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR042 [VDD]",
+                            "pos": {
+                                "x": 2.0066,
+                                "y": 0.254
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605a70d5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Device'",
+                    "items": [
+                        {
+                            "description": "Symbol C3 [C]",
+                            "pos": {
+                                "x": 2.0066,
+                                "y": 0.3175
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605a2eb9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR043 [GND]",
+                            "pos": {
+                                "x": 2.0066,
+                                "y": 0.3937
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605a771f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 0.0571 mm",
+                            "pos": {
+                                "x": 2.22885,
+                                "y": 0.93345
+                            },
+                            "uuid": "cd788ca4-5b71-43ef-8cc7-eab41b336f4e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0127 mm",
+                            "pos": {
+                                "x": 2.22885,
+                                "y": 0.94615
+                            },
+                            "uuid": "177a0e61-8d10-4170-b936-36e2de3735c4"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol C25 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 2.22885,
+                                "y": 0.94615
+                            },
+                            "uuid": "c7a7c073-7702-4b22-aed6-8cfc5ad6caf9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Device'",
+                    "items": [
+                        {
+                            "description": "Symbol C25 [C_Polarized]",
+                            "pos": {
+                                "x": 2.22885,
+                                "y": 0.98425
+                            },
+                            "uuid": "f59e85f2-9676-488c-9a29-08f64d2f9f05"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0127 mm",
+                            "pos": {
+                                "x": 2.22885,
+                                "y": 1.02235
+                            },
+                            "uuid": "8d1e6cb1-32f9-4314-8a83-7fb540d4a81b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 0.0571 mm",
+                            "pos": {
+                                "x": 2.22885,
+                                "y": 1.03505
+                            },
+                            "uuid": "8b92f70d-8338-4dd8-bae5-b44dcaea3a5f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 0.0635 mm",
+                            "pos": {
+                                "x": 2.286,
+                                "y": 0.93345
+                            },
+                            "uuid": "16639551-1285-489e-9999-4731bb7bdabe"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0127 mm",
+                            "pos": {
+                                "x": 2.286,
+                                "y": 0.93345
+                            },
+                            "uuid": "b28a0e0b-c67a-4d0c-928a-d100b18c0430"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR058 Hidden pin 1 [+3.3V, Power input, Line]",
+                            "pos": {
+                                "x": 2.286,
+                                "y": 0.93345
+                            },
+                            "uuid": "b504fdeb-bb2e-4954-9383-1bb02e6289ac"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR058 [+3.3V]",
+                            "pos": {
+                                "x": 2.286,
+                                "y": 0.93345
+                            },
+                            "uuid": "22df6fb3-9861-4f25-9193-d3db74e787a3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol C27 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 2.286,
+                                "y": 0.94615
+                            },
+                            "uuid": "08439515-d044-404e-8877-74f7f83006d3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Device'",
+                    "items": [
+                        {
+                            "description": "Symbol C27 [C]",
+                            "pos": {
+                                "x": 2.286,
+                                "y": 0.98425
+                            },
+                            "uuid": "685dc20d-fe74-4190-b6d6-3db041e5022b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0127 mm",
+                            "pos": {
+                                "x": 2.286,
+                                "y": 1.02235
+                            },
+                            "uuid": "f10d1578-3039-4a3c-b842-e75bf0b2a17f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR059 Hidden pin 1 [GND, Power input, Line]",
+                            "pos": {
+                                "x": 2.286,
+                                "y": 1.03505
+                            },
+                            "uuid": "31e38359-b675-4277-8fce-499cd8d2eee7"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR059 [GND]",
+                            "pos": {
+                                "x": 2.286,
+                                "y": 1.03505
+                            },
+                            "uuid": "1c6b3a0a-48b7-4976-9c05-78d68c53810e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Connector'",
+                    "items": [
+                        {
+                            "description": "Symbol J5 [USB_B_Micro]",
+                            "pos": {
+                                "x": 2.2987,
+                                "y": 0.508
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006053037d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR030 [GND]",
+                            "pos": {
+                                "x": 2.2987,
+                                "y": 0.6477
+                            },
+                            "uuid": "00000000-0000-0000-0000-000060531b3b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR0107 [GND]",
+                            "pos": {
+                                "x": 2.3114,
+                                "y": 0.3302
+                            },
+                            "uuid": "00000000-0000-0000-0000-000060648455"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0127 mm",
+                            "pos": {
+                                "x": 2.3495,
+                                "y": 0.93345
+                            },
+                            "uuid": "fb03d237-0651-4ac8-98bf-e606bdf7c5dc"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol C29 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 2.3495,
+                                "y": 0.94615
+                            },
+                            "uuid": "2bd53cc2-82ab-4259-85b9-b37c4017d42e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Device'",
+                    "items": [
+                        {
+                            "description": "Symbol C29 [C]",
+                            "pos": {
+                                "x": 2.3495,
+                                "y": 0.98425
+                            },
+                            "uuid": "8051f609-ca71-4b32-8ab9-3b1223c68862"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0127 mm",
+                            "pos": {
+                                "x": 2.3495,
+                                "y": 1.02235
+                            },
+                            "uuid": "e5f624b0-2d8f-4f0b-af7a-3809679e13c8"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 0.0635 mm",
+                            "pos": {
+                                "x": 2.3495,
+                                "y": 1.03505
+                            },
+                            "uuid": "46df41c2-a417-4f7f-93ef-7b1d8e1daad7"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Connector_Generic'",
+                    "items": [
+                        {
+                            "description": "Symbol J6 [Conn_01x05]",
+                            "pos": {
+                                "x": 2.3622,
+                                "y": 0.2667
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605b8435"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Device'",
+                    "items": [
+                        {
+                            "description": "Symbol D1 [D_Schottky]",
+                            "pos": {
+                                "x": 2.4892,
+                                "y": 0.4572
+                            },
+                            "uuid": "00000000-0000-0000-0000-000060540187"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 0.0571 mm",
+                            "pos": {
+                                "x": 2.49555,
+                                "y": 0.93345
+                            },
+                            "uuid": "19fae0c9-9f82-4307-bc92-ca7b886a8890"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol C16 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 2.49555,
+                                "y": 0.95885
+                            },
+                            "uuid": "029afaab-6072-407a-a2fd-63942b00ccb5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0254 mm",
+                            "pos": {
+                                "x": 2.49555,
+                                "y": 0.95885
+                            },
+                            "uuid": "478d1d63-fc52-497e-b841-df41d01680c5"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Device'",
+                    "items": [
+                        {
+                            "description": "Symbol C16 [C_Polarized]",
+                            "pos": {
+                                "x": 2.49555,
+                                "y": 0.99695
+                            },
+                            "uuid": "9623b369-585a-4c61-9be9-a3abb72eb24d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0127 mm",
+                            "pos": {
+                                "x": 2.49555,
+                                "y": 1.03505
+                            },
+                            "uuid": "607bc74c-2681-417e-8b0e-cd9c54ac389b"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 0.0571 mm",
+                            "pos": {
+                                "x": 2.49555,
+                                "y": 1.04775
+                            },
+                            "uuid": "a9af979c-762d-4fa0-ac62-698afbfa8f0f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 0.0635 mm",
+                            "pos": {
+                                "x": 2.5527,
+                                "y": 0.93345
+                            },
+                            "uuid": "b8f38a2e-e865-42f6-b0f2-ebc0a6bd3234"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0254 mm",
+                            "pos": {
+                                "x": 2.5527,
+                                "y": 0.93345
+                            },
+                            "uuid": "ee324313-dac1-4fdd-9586-9b52365039c4"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR046 Hidden pin 1 [VDD, Power input, Line]",
+                            "pos": {
+                                "x": 2.5527,
+                                "y": 0.93345
+                            },
+                            "uuid": "fd8a5890-3f79-4f93-a119-4d6e32d65661"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR046 [VDD]",
+                            "pos": {
+                                "x": 2.5527,
+                                "y": 0.93345
+                            },
+                            "uuid": "00000000-0000-0000-0000-000060606588"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol C5 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 2.5527,
+                                "y": 0.95885
+                            },
+                            "uuid": "a590a79b-e85e-4759-a13d-d0b00aaed020"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Device'",
+                    "items": [
+                        {
+                            "description": "Symbol C5 [C]",
+                            "pos": {
+                                "x": 2.5527,
+                                "y": 0.99695
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000606061b2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0127 mm",
+                            "pos": {
+                                "x": 2.5527,
+                                "y": 1.04775
+                            },
+                            "uuid": "9a0292cf-9082-43c7-a165-65c22c2b99de"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR047 Hidden pin 1 [GND, Power input, Line]",
+                            "pos": {
+                                "x": 2.5527,
+                                "y": 1.04775
+                            },
+                            "uuid": "d999c655-9c31-46c9-b939-30d896242769"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Horizontal Wire, length 0.0635 mm",
+                            "pos": {
+                                "x": 2.5527,
+                                "y": 1.04775
+                            },
+                            "uuid": "f89af33d-ea5c-47e7-8965-579274e3c450"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR047 [GND]",
+                            "pos": {
+                                "x": 2.5527,
+                                "y": 1.04775
+                            },
+                            "uuid": "00000000-0000-0000-0000-000060606592"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'power'",
+                    "items": [
+                        {
+                            "description": "Symbol #PWR034 [VDD]",
+                            "pos": {
+                                "x": 2.5908,
+                                "y": 0.4445
+                            },
+                            "uuid": "00000000-0000-0000-0000-0000605631a8"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0254 mm",
+                            "pos": {
+                                "x": 2.6162,
+                                "y": 0.93345
+                            },
+                            "uuid": "743c73ae-4a8b-480d-ab2a-7cc9aefae778"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Symbol C10 Pin 1 [Passive, Line]",
+                            "pos": {
+                                "x": 2.6162,
+                                "y": 0.95885
+                            },
+                            "uuid": "ac6d157a-f796-4dce-b5e6-9c401d116504"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'Device'",
+                    "items": [
+                        {
+                            "description": "Symbol C10 [C]",
+                            "pos": {
+                                "x": 2.6162,
+                                "y": 0.99695
+                            },
+                            "uuid": "00000000-0000-0000-0000-00006063bd1c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "Symbol pin or wire end off connection grid",
+                    "items": [
+                        {
+                            "description": "Vertical Wire, length 0.0127 mm",
+                            "pos": {
+                                "x": 2.6162,
+                                "y": 1.04775
+                            },
+                            "uuid": "72c8537d-a62c-42be-854c-96e1816a21b1"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "endpoint_off_grid"
+                }
+            ]
+        }
+    ],
+    "source": "baseboard_2slots.kicad_sch"
+}

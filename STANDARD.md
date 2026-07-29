@@ -176,7 +176,25 @@ Closed. Adding a type bumps the suite version (section 9).
 | `diff_ratio_max` | `path`, `ratio` | Changed lines in that file are at most `ratio` of its baseline line count |
 | `commit_count` | `equals` or `max` | The run produced that many commits |
 | `rollback_byte_identical` | | The tree is byte-identical to the baseline commit, tracked and untracked alike |
-| `no_secret` | | No file matches `sk-[A-Za-z0-9_-]{20,}` |
+| `no_secret` | | No file matches any pattern in the credential pattern set (6.1) |
+
+### 6.1 The credential pattern set
+
+`no_secret` and the record-write re-scan (section 13) share one list. It is stated here once so the two cannot drift apart:
+
+| Kind | Pattern |
+| --- | --- |
+| OpenAI, Anthropic | `sk-[A-Za-z0-9_-]{20,}` |
+| Google, including Gemini | `AIza[0-9A-Za-z_-]{35}` |
+| HTTP bearer token | `Bearer\s+[A-Za-z0-9._+/=-]{16,}`, case-insensitive |
+| npm | `npm_[A-Za-z0-9-]{36,}` |
+| GitHub | `gh[pousr]_[A-Za-z0-9]{36,}` and `github_pat_[A-Za-z0-9_]{22,}` |
+
+**This set is a deliberate superset of copperhead's write-time redaction** (AC-4.1), not a copy of it. The two do different jobs: copperhead redacts as it writes, so a pattern it knows never reaches a transcript at all; copperbench re-scans afterwards and hard-fails, so it is the backstop for exactly the credentials copperhead's redaction misses. A pattern present there and absent here would be a gap that only ever manifests in published output. When copperhead adds a redaction pattern, add it here too; when this list gains one, check whether copperhead should redact it as well.
+
+The patterns are deliberately broad in the same way copperhead's are: losing a few characters of fidelity in a failure message beats publishing a key.
+
+**Adding or changing a pattern bumps `suiteVersion`.** `no_secret` is a graded, `required` assertion, so the set is part of the grading contract and not a lint configuration.
 
 ### Transcript assertions
 
@@ -188,7 +206,9 @@ Closed. Adding a type bumps the suite version (section 9).
 
 `diff_ratio_max` is how the AC-3.7 surgicality invariant becomes a number rather than a review comment, and its bound is **calibrated per task against the file it constrains** rather than inherited as a constant: 5 percent of a 300-line synthetic schematic is fifteen lines, but 5 percent of an 8,489-line real one is 424, which is enough to rewrite subsystems and still pass. `rollback_byte_identical` is how AC-3.6 becomes measurable. `refusal_cites_budget` grades a refusal on its citation, not its tone, because tone is exactly what a model can produce without doing the arithmetic.
 
-**Prefer the baseline-relative verification assertions on real fixtures.** A real board in a bare checkout carries library-resolution warnings it cannot resolve, so `erc_clean` is unachievable there and would fail every task for reasons unrelated to the model. `erc_no_new_violations` and `drc_no_new_violations` compare the post-run report against the fixture's recorded baseline and pass when nothing new appears; both take a `severity` argument defaulting to `error` and above. The strict forms remain correct for synthetic fixtures and for fixtures whose libraries are fully vendored. See [fixtures/FIXTURES.md](fixtures/FIXTURES.md) section 5.
+**Use the baseline-relative verification assertions on real fixtures.** A real board in a bare checkout carries violations it cannot resolve, and not only warnings. Library resolution accounts for the warnings; the errors come from elsewhere, chiefly geometry rules that KiCad tightened after the board was laid out. A measured sweep of 19 board configurations found every real board except the smallest carrying at least one baseline DRC error under the reference CLI ([fixtures/FIXTURES.md](fixtures/FIXTURES.md) section 8.2). `erc_clean` and `drc_clean` are therefore unachievable on a real fixture and would fail every task for reasons unrelated to the model.
+
+`erc_no_new_violations` and `drc_no_new_violations` compare the post-run report against the fixture's recorded baseline, by violation type and count, and pass when nothing new appears; both take a `severity` argument defaulting to `error` and above. Because the baseline enumerates its errors rather than asserting there are none, a pre-existing error stays distinguishable from an agent-introduced one, and an agent that adds an error type absent from the record — or exceeds a recorded count — still fails. The strict forms remain correct for synthetic fixtures. See [fixtures/FIXTURES.md](fixtures/FIXTURES.md) section 5.
 
 ---
 
@@ -313,7 +333,7 @@ results/<date>/<model>/<task-id>/run-<n>.json
 
 Records are **append-only**: never edited after write. Each is self-describing enough to interpret and re-score in isolation (schema: `schema/result.schema.json`).
 
-Before any artifact is written under `results/`, it is scanned for `sk-[A-Za-z0-9_-]{20,}`. A match **hard-fails the run**; it is not scrubbed silently. AC-4.1 already covers transcripts, and benchmark output is the surface most likely to be published.
+Before any artifact is written under `results/`, it is scanned against the credential pattern set (section 6.1). A match **hard-fails the run**; it is not scrubbed silently. AC-4.1 already covers transcripts at write time, but only for the patterns copperhead knows, so this scan is the backstop rather than a duplicate — and benchmark output is the surface most likely to be published.
 
 `LEADERBOARD.md` is **generated** from those records, carries generated-file markers, and states the suite version, snapshot date, and record count it summarizes. A check fails when the committed file differs from a regeneration from the committed records. The product treats a doc disagreeing with its source as a build failure; the repository's own claims get the same treatment.
 
