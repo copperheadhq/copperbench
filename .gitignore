@@ -19,3 +19,7 @@ paper/*.out
 paper/*.pdf
 paper/*.synctex.gz
 paper/*.toc
+
+# Page images rendered from main.pdf on every paper build. Derived output, like
+# the PDF itself.
+paper/render/

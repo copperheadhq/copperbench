@@ -11,8 +11,13 @@ copperhead's whole argument is that a document disagreeing with the thing it des
 ## Building
 
 ```bash
-cd paper && latexmk -pdf main.tex
+npm run paper          # main.pdf, then render/page-NN.png
+npm run paper:pdf      # PDF only
 ```
+
+Every build emits both: `main.pdf` to read or submit, and `render/page-NN.png` so a revision can be eyeballed without a viewer and diffed page by page. Both are derived and gitignored; `generated/` is the only committed emission, and it comes from a result snapshot rather than from the LaTeX run.
+
+The build prefers `latexmk` and falls back to `pdflatex`/`bibtex` directly when it is absent, because a missing convenience wrapper should not be why a paper cannot be built. Page rendering needs `pdftoppm` (poppler-utils) and is skipped with a warning when it is missing.
 
 The checked-in `generated/` files are placeholders using `\providecommand`, so the skeleton compiles before the first live matrix and reads as ungenerated rather than as a plausible-looking zero. A real generation overwrites them.
 

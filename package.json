@@ -28,7 +28,8 @@
     "hash": "node scripts/hash-fixture.mjs",
     "lint:md": "markdownlint-cli2 \"**/*.md\" \"#node_modules/**\" \"#fixtures/**/tree/**\"",
     "typecheck": "tsc --noEmit",
-    "paper": "latexmk -pdf -cd paper/main.tex"
+    "paper": "node scripts/build-paper.mjs",
+    "paper:pdf": "node scripts/build-paper.mjs --no-render"
   },
   "devDependencies": {
     "@types/node": "^22.13.10",
