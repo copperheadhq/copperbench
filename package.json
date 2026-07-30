@@ -1,5 +1,5 @@
 {
-  "name": "copperhead-benchmarks",
+  "name": "copperbench",
   "version": "0.1.0",
   "private": true,
   "description": "copperbench: a benchmark for language-model agents on verified KiCad hardware design edits",
@@ -7,7 +7,7 @@
   "author": "Animesh Chouhan <animeshchouhan@outlook.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chouhanindustries/copperhead-benchmarks.git"
+    "url": "git+https://github.com/chouhanindustries/copperbench.git"
   },
   "keywords": [
     "benchmark",

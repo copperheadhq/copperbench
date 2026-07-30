@@ -1,8 +1,8 @@
-copperhead-benchmarks (copperbench)
+copperbench
 Copyright 2026 Chouhan Industries
 
 This product includes software developed at Chouhan Industries
-(<https://github.com/chouhanindustries/copperhead-benchmarks>).
+(<https://github.com/chouhanindustries/copperbench>).
 
 It benchmarks copperhead (<https://github.com/chouhanindustries/copperhead>),
 which is distributed separately under the same license.

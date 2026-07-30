@@ -344,8 +344,8 @@ Before any artifact is written under `results/`, it is scanned against the crede
 Without any API key or network access:
 
 ```bash
-git clone https://github.com/chouhanindustries/copperhead-benchmarks
-cd copperhead-benchmarks && npm install
+git clone https://github.com/chouhanindustries/copperbench
+cd copperbench && npm install
 npm run benchmark -- --rescore results/<date>
 ```
 
