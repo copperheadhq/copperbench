@@ -40,9 +40,9 @@ export async function resolveCopperheadInstall(): Promise<CopperheadInstall> {
   const root = path.dirname(pkgPath);
   const pkg = JSON.parse(await readFile(pkgPath, 'utf8')) as {
     version: string;
-    bin: string | Record<string, string>;
+    bin?: string | Record<string, string>;
   };
-  const binRel = typeof pkg.bin === 'string' ? pkg.bin : pkg.bin.copperhead;
+  const binRel = typeof pkg.bin === 'string' ? pkg.bin : pkg.bin?.copperhead;
   if (!binRel) {
     throw new Error(`copperhead's package.json at ${pkgPath} has no "copperhead" bin entry`);
   }

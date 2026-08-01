@@ -50,8 +50,17 @@ export async function materializeSandbox(
   await run('git', ['config', 'user.name', GIT_AUTHOR_NAME], { cwd: sandboxDir });
   await run('git', ['config', 'user.email', GIT_AUTHOR_EMAIL], { cwd: sandboxDir });
 
+  const commands = task.setup?.commands ?? [];
+  const initCount = commands.filter((c) => c === 'init').length;
+  if (initCount !== 1 || commands.length !== initCount) {
+    throw new Error(
+      `task "${task.id}" declares setup.commands ${JSON.stringify(commands)}, but exactly one "init" is required — ` +
+        'writeSandboxConfig() below depends on copperhead init having scaffolded .copperhead/config.json exactly ' +
+        'once (zero would leave it missing, more than one would just repeat a no-op).',
+    );
+  }
   const copperhead = await resolveCopperheadInstall();
-  for (const command of task.setup?.commands ?? []) {
+  for (const command of commands) {
     if (!ALLOWED_SETUP_COMMANDS.has(command)) {
       throw new Error(
         `setup command "${command}" is not in the LLM-free/network-free allowlist (${[...ALLOWED_SETUP_COMMANDS].join(', ')})`,

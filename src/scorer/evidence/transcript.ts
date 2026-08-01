@@ -29,10 +29,22 @@ export async function readTranscript(transcriptDir: string | null): Promise<Tran
   } catch {
     return { events: [], runStart: null, runEnd: null };
   }
+  // A wall-clock SIGKILL can land mid-write of the final line, leaving a
+  // truncated/unparseable JSON fragment — real evidence of an interrupted
+  // run (this module's own reason for treating a missing run-end as valid,
+  // see above), not a reason to throw out of readTranscript entirely and
+  // crash the rest of scoring. A line that fails to parse is dropped rather
+  // than surfaced as an event.
   const events: TranscriptEvent[] = raw
     .split('\n')
     .filter((line) => line.trim().length > 0)
-    .map((line) => JSON.parse(line) as TranscriptEvent);
+    .flatMap((line) => {
+      try {
+        return [JSON.parse(line) as TranscriptEvent];
+      } catch {
+        return [];
+      }
+    });
   return {
     events,
     runStart: events.find((e) => e.type === 'run-start') ?? null,

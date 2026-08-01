@@ -1,4 +1,5 @@
 import { readFile, readdir } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
 import type { AssertionManifest, FixtureManifest } from '../types.js';
 import { loadTask } from '../runner/plan.js';
@@ -6,15 +7,18 @@ import { scoreRun, type ScoreResult } from './score.js';
 
 /**
  * Minimal shape read back out of a written result record — only the fields
- * rescoring actually needs, kept in lockstep with schema/result.schema.json.
- * A full result-record type belongs to the record writer (tasks.md 5.1),
- * which hasn't landed yet; this is deliberately narrower.
+ * rescoring actually needs, deliberately narrower than the full ResultRecord
+ * type (src/records/build.ts), and kept in lockstep with
+ * schema/result.schema.json by hand rather than importing that type, since
+ * rescoring only ever reads a record, never builds one.
  */
 export interface ResultRecordForRescore {
   task: { id: string };
   run: { baselineCommit: string };
   verdict: { pass: boolean; partialCredit: number };
   stats: { exitPath: string };
+  failure: { category: string } | null;
+  assertions: { id: string; passed: boolean }[];
   artifacts: { transcriptPath: string; sandboxPreserved: boolean; sandboxPath: string | null };
 }
 
@@ -24,6 +28,11 @@ export interface RescoreOutcome {
   originalVerdict: { pass: boolean; partialCredit: number };
   recomputed: ScoreResult;
   matches: boolean;
+}
+
+export interface RescoreFailure {
+  resultPath: string;
+  error: string;
 }
 
 /** Recursively finds every `run-<n>.json` under a results directory
@@ -50,8 +59,7 @@ export async function findResultFiles(resultsPath: string): Promise<string[]> {
  * "cap-exceeded"` is how a runner-enforced wall-clock kill (STANDARD.md
  * section 3.3) is expected to surface in a written record (design decision
  * from the 3.2/4.4 write-ups) — rescoring derives `killedForWallClock` from
- * that stored value rather than needing a separate raw field, since the
- * record-writer (tasks.md 5.1) hasn't landed yet to define one.
+ * that stored value rather than needing a separate raw field.
  */
 export async function rescoreResult(repoRoot: string, resultPath: string): Promise<RescoreOutcome> {
   const record = JSON.parse(await readFile(resultPath, 'utf8')) as ResultRecordForRescore;
@@ -67,7 +75,13 @@ export async function rescoreResult(repoRoot: string, resultPath: string): Promi
   if (!record.artifacts.sandboxPreserved || !record.artifacts.sandboxPath) {
     throw new Error(`result ${resultPath} has no preserved sandbox; rescoring is not possible for it`);
   }
-  const sandboxPath = record.artifacts.sandboxPath;
+  // artifacts.sandboxPath stores only the mkdtemp basename (never the full
+  // host path — that would leak a local username into a committed record),
+  // reconstructed here against this machine's own temp root. Rescoring a
+  // preserved sandbox therefore only works on the machine that wrote it,
+  // which was already true in practice: the sandbox itself is never
+  // published, only the record referencing it.
+  const sandboxPath = path.join(tmpdir(), record.artifacts.sandboxPath);
   const transcriptDir = record.artifacts.transcriptPath ? path.join(sandboxPath, record.artifacts.transcriptPath) : null;
 
   const recomputed = await scoreRun({
@@ -80,6 +94,16 @@ export async function rescoreResult(repoRoot: string, resultPath: string): Promi
     killedForWallClock: record.stats.exitPath === 'cap-exceeded',
   });
 
+  // Comparing only pass/partialCredit would miss a classifier change that
+  // reassigns the SAME failing run to a different failure category, or an
+  // assertion that flips outcome while another flips the opposite way and
+  // the aggregate credit happens to land unchanged — both are genuine
+  // reproducibility breaks that STANDARD.md section 14 exists to catch.
+  const sameFailureCategory = (record.failure?.category ?? null) === (recomputed.failure?.category ?? null);
+  const sameAssertionOutcomes =
+    record.assertions.length === recomputed.assertions.length &&
+    record.assertions.every((a) => recomputed.assertions.find((r) => r.id === a.id)?.passed === a.passed);
+
   return {
     resultPath,
     taskId: record.task.id,
@@ -87,13 +111,29 @@ export async function rescoreResult(repoRoot: string, resultPath: string): Promi
     recomputed,
     matches:
       recomputed.verdict.pass === record.verdict.pass &&
-      recomputed.verdict.partialCredit === record.verdict.partialCredit,
+      recomputed.verdict.partialCredit === record.verdict.partialCredit &&
+      sameFailureCategory &&
+      sameAssertionOutcomes,
   };
 }
 
-export async function rescoreAll(repoRoot: string, resultsPath: string): Promise<RescoreOutcome[]> {
+export async function rescoreAll(
+  repoRoot: string,
+  resultsPath: string,
+): Promise<{ outcomes: RescoreOutcome[]; failures: RescoreFailure[] }> {
   const files = await findResultFiles(resultsPath);
   const outcomes: RescoreOutcome[] = [];
-  for (const f of files) outcomes.push(await rescoreResult(repoRoot, f));
-  return outcomes;
+  const failures: RescoreFailure[] = [];
+  for (const f of files) {
+    try {
+      outcomes.push(await rescoreResult(repoRoot, f));
+    } catch (err) {
+      // One record with a pruned/missing sandbox (a realistic state for
+      // anything preserved long enough — the OS temp-cleaner eventually
+      // takes it) must not abort every other record's rescore in the same
+      // batch; report it and keep going.
+      failures.push({ resultPath: f, error: (err as Error).message });
+    }
+  }
+  return { outcomes, failures };
 }

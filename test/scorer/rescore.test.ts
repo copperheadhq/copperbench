@@ -14,10 +14,10 @@ import {
 
 /**
  * STANDARD.md section 14: re-scoring a preserved sandbox and transcript
- * reproduces the verdict, with no provider credential and no network. No
- * result-record writer exists yet (tasks.md 5.1), so this test hand-builds a
- * record matching schema/result.schema.json's shape — the same contract
- * 5.1's writer will produce.
+ * reproduces the verdict, with no provider credential and no network. This
+ * test hand-builds a record matching ResultRecordForRescore's shape rather
+ * than going through buildResultRecord, to isolate rescoreResult from the
+ * rest of the write pipeline.
  */
 describe('rescoreResult', () => {
   let sandbox: Sandbox;
@@ -45,7 +45,28 @@ describe('rescoreResult', () => {
       run: { baselineCommit: sandbox.baselineCommit },
       verdict: { pass: true, partialCredit: 1 },
       stats: { exitPath: 'done' },
-      artifacts: { transcriptPath: transcriptRel, sandboxPreserved: true, sandboxPath: sandbox.path },
+      failure: null,
+      // Matches the full passing assertion set for this exact edit (see
+      // test/scorer/rename-net.test.ts's happy-path list) — rescoreResult
+      // now compares per-assertion outcomes, not just the aggregate verdict.
+      assertions: [
+        'new-net-exists',
+        'old-net-gone',
+        'sibling-nets-untouched',
+        'no-new-erc-violations',
+        'no-new-drc-violations',
+        'pinout-updated',
+        'pinout-old-name-gone',
+        'surgical-schematic-edit',
+        'board-untouched',
+        'touched-files-bounded',
+        'one-commit',
+        'finished-cleanly',
+        'no-secret',
+      ].map((id) => ({ id, passed: true })),
+      // Basename only, resolved against this machine's tmpdir() by
+      // rescoreResult — matches the format src/records/build.ts writes.
+      artifacts: { transcriptPath: transcriptRel, sandboxPreserved: true, sandboxPath: path.basename(sandbox.path) },
     };
     const resultsDir = path.join(repoRoot, 'test', '.tmp-results');
     await mkdir(resultsDir, { recursive: true });

@@ -210,7 +210,21 @@ export async function evaluateAssertion(
       const maxRatio = a.ratio as number;
       const delta = ctx.diff.changedFiles.find((f) => f.path === p);
       const changedLines = delta ? delta.added + delta.removed : 0;
-      const baseline = await baselineLineCount(ctx.sandboxPath, ctx.baselineCommit, p);
+      let baseline: number;
+      try {
+        baseline = await baselineLineCount(ctx.sandboxPath, ctx.baselineCommit, p);
+      } catch (err) {
+        // A file the agent created outright (never present at the baseline
+        // commit) is real, valid evidence for this assertion to fail on, not
+        // a reason to crash the rest of scoreRun's assertion loop — every
+        // other evidence read in this file (getNets/getSymbols/etc.) already
+        // returns a tagged failure instead of throwing, for the same reason.
+        return {
+          passed: false,
+          detail: `baseline for ${p} unreadable at ${ctx.baselineCommit}: ${(err as Error).message}`,
+          evidenceSource: 'diff',
+        };
+      }
       const ratio = baseline === 0 ? (changedLines === 0 ? 0 : Number.POSITIVE_INFINITY) : changedLines / baseline;
       return {
         passed: ratio <= maxRatio,

@@ -34,7 +34,12 @@ export async function loadTask(repoRoot: string, taskId: string): Promise<TaskMa
  * explicit CLI override always wins over both.
  */
 export function resolveRepeatCount(task: TaskManifest, override?: number): number {
-  if (override !== undefined) return override;
+  if (override !== undefined) {
+    if (!Number.isInteger(override) || override < 1) {
+      throw new Error(`repeat count override must be a positive integer, got ${override}`);
+    }
+    return override;
+  }
   return task.repeats ?? DEFAULT_REPEATS;
 }
 

@@ -1,13 +1,22 @@
-import { access, mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { scanForSecrets } from '../scorer/secrets.js';
 import type { ResultRecord } from '../types.js';
 
 /** Characters illegal in a Windows path component, plus ':' specifically
  * because compat model ids look like "compat:qwen2.5-coder:7b" — replaced
- * rather than stripped, so two distinct ids never collide into one path. */
+ * rather than stripped, so two distinct ids never collide into one path.
+ * Trailing dots/spaces are stripped too (both are silently dropped by
+ * Windows path components, so leaving them in would make two different
+ * inputs collide on disk); the result is then rejected outright if it comes
+ * out empty, "." or ".." — any of which would resolve outside resultsRoot or
+ * collapse a path segment entirely rather than naming a real component. */
 export function sanitizeForPath(s: string): string {
-  return s.replace(/[<>:"/\\|?*]/g, '-');
+  const sanitized = s.replace(/[<>:"/\\|?*]/g, '-').replace(/[. ]+$/, '');
+  if (sanitized === '' || sanitized === '.' || sanitized === '..') {
+    throw new Error(`"${s}" sanitizes to an unusable path component ("${sanitized}")`);
+  }
+  return sanitized;
 }
 
 export function resultRecordPath(resultsRoot: string, record: ResultRecord): string {
@@ -55,14 +64,18 @@ export async function writeResultRecord(resultsRoot: string, record: ResultRecor
   }
 
   const filePath = resultRecordPath(resultsRoot, record);
-  const exists = await access(filePath)
-    .then(() => true)
-    .catch(() => false);
-  if (exists) {
-    throw new RecordAlreadyExistsError(filePath);
-  }
-
   await mkdir(path.dirname(filePath), { recursive: true });
-  await writeFile(filePath, serialized, 'utf8');
+  try {
+    // 'wx': fails with EEXIST if the file is already there, atomically —
+    // an access()-then-writeFile() check has a window where two concurrent
+    // writers could both pass the check and one would silently clobber the
+    // other's append-only record.
+    await writeFile(filePath, serialized, { encoding: 'utf8', flag: 'wx' });
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code === 'EEXIST') {
+      throw new RecordAlreadyExistsError(filePath);
+    }
+    throw err;
+  }
   return filePath;
 }

@@ -4,6 +4,7 @@ import path from 'node:path';
 import type { Sandbox } from './sandbox.js';
 import type { CopperheadInstall } from './copperhead-install.js';
 import type { TaskManifest } from '../types.js';
+import { run } from '../util/exec.js';
 
 export interface CompatEndpoint {
   /** OpenAI-compatible base URL, e.g. http://localhost:11434/v1 for Ollama. */
@@ -56,6 +57,33 @@ export interface RunExecutionResult {
 }
 
 const MODES_IMPLEMENTED = new Set(['do']);
+
+/**
+ * child.kill() only signals the direct child (copperhead's cli.js) — it does
+ * not reach kicad-cli or any other descendant copperhead itself spawns, so a
+ * plain SIGKILL on wall-clock timeout can leave a grandchild process running
+ * against the sandbox after the runner has already moved on (the same class
+ * of orphaned-process bug observed firsthand earlier in this project: a
+ * killed parent left a child alive and still touching the filesystem).
+ * `detached: true` at spawn time puts the child in its own process group on
+ * POSIX so `-pid` reaches the whole tree; on Windows, group membership has no
+ * such signal-targeting effect, so `taskkill /T` is used instead to walk the
+ * process tree by PID. Best-effort: the child may have already exited by the
+ * time this runs, which both platforms report as a failure that is safe to
+ * ignore here.
+ */
+async function killProcessTree(pid: number): Promise<void> {
+  try {
+    if (process.platform === 'win32') {
+      await run('taskkill', ['/PID', String(pid), '/T', '/F']);
+    } else {
+      process.kill(-pid, 'SIGKILL');
+    }
+  } catch {
+    // Already exited, or exited between the timeout firing and this call —
+    // not a failure worth surfacing.
+  }
+}
 
 /**
  * STANDARD.md section 3.2 / design D5: drive copperhead against an
@@ -124,21 +152,27 @@ async function executeDoRun(opts: RunExecutionOptions): Promise<RunExecutionResu
     // guarantees is false regardless of whether this process is itself
     // attached to a terminal.
     stdio: ['ignore', 'pipe', 'pipe'],
+    // Own process group on POSIX so a wall-clock kill can reach descendant
+    // processes (kicad-cli) via killProcessTree, not just this direct child.
+    detached: process.platform !== 'win32',
   });
 
   let stdout = '';
   let stderr = '';
-  child.stdout?.on('data', (chunk: Buffer) => {
-    stdout += chunk.toString('utf8');
+  child.stdout?.setEncoding('utf8');
+  child.stderr?.setEncoding('utf8');
+  child.stdout?.on('data', (chunk: string) => {
+    stdout += chunk;
   });
-  child.stderr?.on('data', (chunk: Buffer) => {
-    stderr += chunk.toString('utf8');
+  child.stderr?.on('data', (chunk: string) => {
+    stderr += chunk;
   });
 
   let killedForWallClock = false;
   const timer = setTimeout(() => {
     killedForWallClock = true;
-    child.kill('SIGKILL');
+    if (child.pid) void killProcessTree(child.pid);
+    else child.kill('SIGKILL');
   }, task.caps.wallClockSec * 1000);
   timer.unref();
 
