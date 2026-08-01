@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { parseArgs } from 'node:util';
+import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { discoverTaskIds, buildRunPlan, type RunPlanEntry } from '../src/runner/plan.js';
@@ -7,6 +8,9 @@ import { classifyModel } from '../src/runner/cost.js';
 import { resolveCopperheadInstall } from '../src/runner/copperhead-install.js';
 import { materializeSandbox } from '../src/runner/sandbox.js';
 import { executeRun } from '../src/runner/run.js';
+import { scoreRun } from '../src/scorer/score.js';
+import { rescoreAll } from '../src/scorer/rescore.js';
+import type { AssertionManifest, FixtureManifest } from '../src/types.js';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -21,6 +25,7 @@ interface CliArgs {
   model: string;
   baseURL: string;
   dryRun: boolean;
+  rescore: string | undefined;
 }
 
 function parseCliArgs(argv: string[]): CliArgs {
@@ -32,6 +37,7 @@ function parseCliArgs(argv: string[]): CliArgs {
       model: { type: 'string' },
       'base-url': { type: 'string' },
       'dry-run': { type: 'boolean', default: false },
+      rescore: { type: 'string' },
     },
   });
   return {
@@ -40,6 +46,7 @@ function parseCliArgs(argv: string[]): CliArgs {
     model: values.model ?? DEFAULT_MODEL,
     baseURL: values['base-url'] ?? DEFAULT_BASE_URL,
     dryRun: values['dry-run'] ?? false,
+    rescore: values.rescore,
   };
 }
 
@@ -69,8 +76,37 @@ function printPlan(plan: RunPlanEntry[], model: string, baseURL: string): void {
   );
 }
 
+async function runRescore(rescorePath: string): Promise<void> {
+  console.log(`copperbench --rescore ${rescorePath}`);
+  console.log('(no provider credential or network reachable from this path — evidence is files on disk)\n');
+  const outcomes = await rescoreAll(repoRoot, rescorePath);
+  if (!outcomes.length) {
+    console.log('no run-*.json result records found under that path.');
+    return;
+  }
+  let mismatches = 0;
+  for (const o of outcomes) {
+    const status = o.matches ? 'MATCH' : 'MISMATCH';
+    if (!o.matches) mismatches++;
+    console.log(
+      `[${status}] ${o.resultPath} (${o.taskId}): ` +
+        `stored pass=${o.originalVerdict.pass} credit=${o.originalVerdict.partialCredit.toFixed(3)} | ` +
+        `recomputed pass=${o.recomputed.verdict.pass} credit=${o.recomputed.verdict.partialCredit.toFixed(3)}` +
+        (o.recomputed.failure ? ` | failure=${o.recomputed.failure.category}` : ''),
+    );
+  }
+  console.log(`\n${outcomes.length - mismatches}/${outcomes.length} records reproduced identically.`);
+  if (mismatches > 0) process.exitCode = 1;
+}
+
 async function main(): Promise<void> {
   const args = parseCliArgs(process.argv.slice(2));
+
+  if (args.rescore) {
+    await runRescore(args.rescore);
+    return;
+  }
+
   const taskIds = args.taskIds ?? (await discoverTaskIds(repoRoot));
   const plan = await buildRunPlan(repoRoot, taskIds, args.repeats);
 
@@ -82,8 +118,8 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    '\nExecuting plan. This orchestrates sandbox materialization + run execution only — scoring ' +
-      'and result-record writing land in later steps (4.x/5.1), so no results/ file is written yet.\n',
+    '\nExecuting plan. This orchestrates sandbox materialization + run execution + scoring — result-record ' +
+      'writing lands in a later step (tasks.md 5.1), so no results/ file is written yet.\n',
   );
 
   const copperhead = await resolveCopperheadInstall();
@@ -93,7 +129,7 @@ async function main(): Promise<void> {
     const sandbox = await materializeSandbox(entry.task, { repoRoot });
     console.log(`${label} sandbox: ${sandbox.path}`);
     console.log(`${label} running...`);
-    const result = await executeRun({
+    const run = await executeRun({
       sandbox,
       task: entry.task,
       model: args.model,
@@ -101,10 +137,34 @@ async function main(): Promise<void> {
       compat: { baseURL: args.baseURL },
     });
     console.log(
-      `${label} done: exitCode=${result.processExitCode} signal=${result.processSignal} ` +
-        `killedForWallClock=${result.killedForWallClock} durationMs=${result.durationMs} ` +
-        `transcript=${result.transcriptDir ?? '(none)'}`,
+      `${label} run done: exitCode=${run.processExitCode} signal=${run.processSignal} ` +
+        `killedForWallClock=${run.killedForWallClock} durationMs=${run.durationMs} ` +
+        `transcript=${run.transcriptDir ?? '(none)'}`,
     );
+
+    const assertions = JSON.parse(
+      await readFile(path.join(repoRoot, 'tasks', entry.taskId, 'assertions.json'), 'utf8'),
+    ) as AssertionManifest[];
+    const fixture = JSON.parse(
+      await readFile(path.join(repoRoot, entry.task.fixture.path, 'fixture.json'), 'utf8'),
+    ) as FixtureManifest;
+
+    const score = await scoreRun({
+      task: entry.task,
+      assertions,
+      fixture,
+      sandboxPath: sandbox.path,
+      baselineCommit: sandbox.baselineCommit,
+      transcriptDir: run.transcriptDir,
+      killedForWallClock: run.killedForWallClock,
+    });
+    console.log(
+      `${label} verdict: pass=${score.verdict.pass} partialCredit=${score.verdict.partialCredit.toFixed(3)}` +
+        (score.failure ? ` failure=${score.failure.category}` : ''),
+    );
+    for (const a of score.assertions) {
+      if (!a.passed) console.log(`${label}   [FAIL] ${a.id} (${a.type}) — ${a.detail ?? ''}`);
+    }
   }
 }
 

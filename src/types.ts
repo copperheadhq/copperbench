@@ -23,3 +23,45 @@ export interface TaskManifest {
   variantOf?: string;
   rubric?: string;
 }
+
+/**
+ * Assertion manifest entry, kept in lockstep with schema/assertions.schema.json.
+ * `args` is typed loosely (per-type shape is enforced by the schema, not
+ * re-validated here) since the scorer dispatches on `type` and reads only
+ * the fields that type declares.
+ */
+export interface AssertionManifest {
+  id: string;
+  type: string;
+  args?: Record<string, unknown>;
+  weight: number;
+  required: boolean;
+  note?: string;
+}
+
+/**
+ * Minimal fixture-manifest shape, kept in lockstep with schema/fixture.schema.json.
+ * Only the fields the scorer actually reads (paths and baseline violation
+ * counts for the baseline-relative ERC/DRC assertions).
+ */
+export interface FixtureManifest {
+  id: string;
+  artifacts: { schematic: string; board: string | null; project?: string | null };
+  baseline: {
+    erc: {
+      errors: number;
+      errorTypes?: Record<string, number>;
+      warnings: number;
+      warningTypes?: Record<string, number>;
+    };
+    drc?: {
+      errors: number;
+      errorTypes?: Record<string, number>;
+      warnings: number;
+      warningTypes?: Record<string, number>;
+      unconnectedItems: number;
+      schematicParity: number;
+      schematicParityTypes?: Record<string, number>;
+    };
+  };
+}

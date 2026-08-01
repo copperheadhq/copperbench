@@ -28,6 +28,7 @@
     "hash": "node scripts/hash-fixture.mjs",
     "lint:md": "markdownlint-cli2 \"**/*.md\" \"#node_modules/**\" \"#fixtures/**/tree/**\"",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
     "paper": "node scripts/build-paper.mjs",
     "paper:pdf": "node scripts/build-paper.mjs --no-render",
     "benchmark": "tsx scripts/benchmark.ts"

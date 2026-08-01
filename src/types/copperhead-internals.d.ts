@@ -17,3 +17,63 @@ declare module 'copperhead/dist/config.js' {
    */
   export function isLocalEndpoint(baseURL: string | undefined): boolean;
 }
+
+declare module 'copperhead/dist/kicad/sexp.js' {
+  export interface SchematicSymbol {
+    ref: string;
+    value: string;
+    footprint: string;
+    libId: string;
+    sheet: string;
+    at: { x: number; y: number; rot: number };
+    uuid: string;
+  }
+
+  export function listSymbols(rootSch: string): Promise<SchematicSymbol[]>;
+  export function listNets(rootSch: string): Promise<string[]>;
+}
+
+declare module 'copperhead/dist/kicad/report.js' {
+  export interface ViolationItem {
+    description: string;
+    x?: number;
+    y?: number;
+  }
+
+  export interface Violation {
+    severity: 'error' | 'warning' | string;
+    type: string;
+    description: string;
+    sheet?: string;
+    items: ViolationItem[];
+  }
+
+  export interface CheckReport {
+    ok: boolean;
+    source: 'erc' | 'drc';
+    violations: Violation[];
+  }
+}
+
+declare module 'copperhead/dist/kicad/cli.js' {
+  import type { CheckReport } from 'copperhead/dist/kicad/report.js';
+
+  export function runErc(schPath: string): Promise<CheckReport>;
+  export function runDrc(pcbPath: string): Promise<CheckReport>;
+}
+
+declare module 'copperhead/dist/memory/constraints.js' {
+  export interface Constraint {
+    min?: number;
+    max?: number;
+    forbidden?: string[];
+    value?: string | number;
+    source: string;
+    affects: string[];
+    deferred?: string[];
+  }
+
+  export type ConstraintRegistry = Record<string, Constraint>;
+
+  export function loadConstraints(repoRoot: string): Promise<ConstraintRegistry>;
+}
