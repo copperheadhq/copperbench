@@ -1,5 +1,4 @@
-import { readFile } from 'node:fs/promises';
-import { rm } from 'node:fs/promises';
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { materializeSandbox, type Sandbox } from '../src/runner/sandbox.js';
@@ -44,11 +43,16 @@ export async function writeSyntheticTranscript(
   sandbox: Sandbox,
   events: { type: string; data: unknown }[],
 ): Promise<string> {
-  const { mkdir, writeFile } = await import('node:fs/promises');
   const ts = `2026-08-01T12-00-00-${String(syntheticRunCounter++).padStart(3, '0')}Z`;
   const dir = path.join(sandbox.path, '.copperhead', 'runs', ts);
   await mkdir(dir, { recursive: true });
-  const lines = events.map((e, i) => JSON.stringify({ ts: `2026-08-01T12:00:0${i}.000Z`, ...e }));
+  // Date.UTC, not a hand-formatted template: a template like
+  // `12:00:0${i}` produces an invalid instant ("12:00:010.000Z") once a
+  // transcript needs 10+ synthetic events, since the seconds field stops
+  // being zero-padded to two digits.
+  const lines = events.map((e, i) =>
+    JSON.stringify({ ts: new Date(Date.UTC(2026, 7, 1, 12, 0, i)).toISOString(), ...e }),
+  );
   await writeFile(path.join(dir, 'transcript.jsonl'), lines.join('\n') + '\n', 'utf8');
   return dir;
 }

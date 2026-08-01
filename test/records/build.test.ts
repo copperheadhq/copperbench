@@ -122,13 +122,10 @@ describe('buildResultRecord', () => {
 
   it('translates a runner wall-clock kill to stats.exitPath "cap-exceeded", with no evidence fabricated', async () => {
     const transcriptDir = await writeTranscript(sandbox.path, '2026-08-01T12-00-00-200Z', runStartFixture, null);
-    const { assertions, fixture } = await loadTaskFixtures('do-rename-net');
-    // Every net_present/net_absent-style assertion would fail here (nothing
-    // relevant was scored), but classifyFailure has no mapping for
-    // cap-exceeded — so this must reach buildResultRecord() only via a
-    // scoreRun() call whose verdict happens to be constructed without
-    // triggering that path. We only need buildResultRecord's exitPath
-    // translation here, so call it with a synthetic passing score directly.
+    // We only need buildResultRecord's exitPath translation here, so this
+    // calls it directly with a synthetic passing score rather than a real
+    // scoreRun() — every net_present/net_absent-style assertion would fail
+    // in this state anyway (nothing relevant was scored).
     const run: RunExecutionResult = {
       transcriptDir,
       processExitCode: null,

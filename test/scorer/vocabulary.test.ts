@@ -1,7 +1,6 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { describe, it, expect, beforeAll } from 'vitest';
 import { evaluateAssertion, type ScoreContext } from '../../src/scorer/assertions.js';
-import type { Sandbox } from '../../src/runner/sandbox.js';
-import { loadTaskFixtures, materializeTestSandbox, cleanupSandbox } from '../helpers.js';
+import { loadTaskFixtures } from '../helpers.js';
 
 /**
  * STANDARD.md section 2.2: an assertion type outside the closed vocabulary
@@ -9,25 +8,28 @@ import { loadTaskFixtures, materializeTestSandbox, cleanupSandbox } from '../hel
  * pass hasn't implemented yet, which is also an error but a different one
  * (a scorer limitation, not a malformed assertions.json) — both must fail
  * loudly rather than silently passing or being skipped.
+ *
+ * Every case here rejects before touching any evidence (either the
+ * NOT_IMPLEMENTED check or the default "outside the vocabulary" branch, both
+ * ahead of any sandbox read in evaluateAssertion), so ctx.sandboxPath never
+ * needs to resolve to a real, materialized sandbox — a placeholder is
+ * enough, and skips the git-init/copperhead-init subprocess cost a real one
+ * would add to every test run.
  */
 describe('assertion vocabulary boundaries', () => {
-  let sandbox: Sandbox;
   let ctx: ScoreContext;
 
   beforeAll(async () => {
     const { task, fixture } = await loadTaskFixtures('do-rename-net');
-    sandbox = await materializeTestSandbox(task);
     ctx = {
-      sandboxPath: sandbox.path,
-      baselineCommit: sandbox.baselineCommit,
+      sandboxPath: '/nonexistent-sandbox-never-read',
+      baselineCommit: '0000000000000000000000000000000000000000',
       task,
       fixture,
       diff: { changedFiles: [], untrackedFiles: [], commitCount: 0 },
       transcript: { events: [], runStart: null, runEnd: null },
     };
   });
-
-  afterAll(() => cleanupSandbox(sandbox));
 
   it.each([
     'erc_clean',
