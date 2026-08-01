@@ -65,3 +65,98 @@ export interface FixtureManifest {
     };
   };
 }
+
+/**
+ * One append-only result record, kept in lockstep with
+ * schema/result.schema.json. `rubric` (the fenced, off-by-default
+ * model-judged tier, STANDARD.md section 12) is out of scope for this pass
+ * and always omitted.
+ */
+export interface ResultRecord {
+  schemaVersion: string;
+  suiteVersion: string;
+  task: {
+    id: string;
+    tier: 'simple' | 'medium' | 'hard';
+    mode: 'do' | 'create' | 'sync' | 'check';
+    expectedOutcome: 'edit' | 'refusal' | 'flag';
+    manifestSha256: string;
+    fixtureSha256: string;
+    variantOf: string | null;
+    tags: string[];
+  };
+  model: {
+    id: string;
+    provider: string;
+    selectionSource: 'flag' | 'env' | 'config' | 'openai-key' | 'anthropic-key' | 'picker';
+    segment: 'api-frontier' | 'api-cheap' | 'open-weight-hosted' | 'open-weight-self-hosted' | 'saved-login';
+    pinning: 'strong' | 'weak';
+  };
+  environment: {
+    copperheadVersion: string;
+    copperheadCommit: string;
+    kicadCliVersion: string | null;
+    node: string;
+    platform: string;
+  };
+  run: {
+    repeatIndex: number;
+    repeatsPlanned: number;
+    startedAt: string;
+    baselineCommit: string;
+    llmCacheDisabled: true;
+    allowDirty: false;
+  };
+  assertions: {
+    id: string;
+    type: string;
+    required: boolean;
+    weight: number;
+    passed: boolean;
+    evidenceSource: 'end-state' | 'diff' | 'transcript';
+    detail: string | null;
+  }[];
+  verdict: { pass: boolean; partialCredit: number };
+  stats: {
+    exitPath:
+      | 'done'
+      | 'refused'
+      | 'turn-budget-exhausted'
+      | 'repair-cycles-exhausted'
+      | 'commit-failed'
+      | 'provider-error'
+      | 'session-limit'
+      | 'stalled'
+      | 'cap-exceeded';
+    turnsUsed: number;
+    maxTurns: number;
+    repairCyclesUsed: number;
+    maxRepairCycles: number;
+    tokensIn: number;
+    tokensOut: number;
+    durationMs: number;
+    filesTouched?: string[];
+  };
+  cost: { usd: number | null; priceTableVersion: string | null };
+  failure: {
+    category:
+      | 'tool-protocol'
+      | 'file-revert'
+      | 'turn-budget'
+      | 'repair-exhausted'
+      | 'obligation-open'
+      | 'drift-left'
+      | 'constraint-violation'
+      | 'false-refusal'
+      | 'stalled'
+      | 'commit-failed'
+      | 'wrong-target';
+    firstFailedAssertion: string | null;
+    dominantToolError: string | null;
+  } | null;
+  artifacts: {
+    transcriptPath: string;
+    sandboxPreserved: boolean;
+    sandboxPath: string | null;
+  };
+}

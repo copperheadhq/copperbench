@@ -10,9 +10,13 @@ import { materializeSandbox } from '../src/runner/sandbox.js';
 import { executeRun } from '../src/runner/run.js';
 import { scoreRun } from '../src/scorer/score.js';
 import { rescoreAll } from '../src/scorer/rescore.js';
+import { buildResultRecord } from '../src/records/build.js';
+import { writeResultRecord } from '../src/records/write.js';
+import { findExistingRecord } from '../src/records/resume.js';
 import type { AssertionManifest, FixtureManifest } from '../src/types.js';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const resultsRoot = path.join(repoRoot, 'results');
 
 // This pass targets one hardcoded/CLI-supplied model, not a matrix
 // (migration step 4 is out of scope) — see openspec design.md.
@@ -26,6 +30,7 @@ interface CliArgs {
   baseURL: string;
   dryRun: boolean;
   rescore: string | undefined;
+  force: boolean;
 }
 
 function parseCliArgs(argv: string[]): CliArgs {
@@ -38,6 +43,7 @@ function parseCliArgs(argv: string[]): CliArgs {
       'base-url': { type: 'string' },
       'dry-run': { type: 'boolean', default: false },
       rescore: { type: 'string' },
+      force: { type: 'boolean', default: false },
     },
   });
   return {
@@ -47,10 +53,34 @@ function parseCliArgs(argv: string[]): CliArgs {
     baseURL: values['base-url'] ?? DEFAULT_BASE_URL,
     dryRun: values['dry-run'] ?? false,
     rescore: values.rescore,
+    force: values.force ?? false,
   };
 }
 
-function printPlan(plan: RunPlanEntry[], model: string, baseURL: string): void {
+function planKey(entry: RunPlanEntry): string {
+  return `${entry.taskId}#${entry.repeatIndex}`;
+}
+
+/** tasks.md 3.5: resolves which plan entries already have a written record,
+ * once up front — reused for both the printed plan and the execution loop,
+ * so an interrupted expensive suite is visibly resumable before it runs,
+ * not just discovered mid-execution. */
+async function resolveSkips(
+  plan: RunPlanEntry[],
+  resultsRoot: string,
+  model: string,
+  force: boolean,
+): Promise<Map<string, string>> {
+  const skips = new Map<string, string>();
+  if (force) return skips;
+  for (const entry of plan) {
+    const existing = await findExistingRecord(resultsRoot, model, entry.taskId, entry.repeatIndex);
+    if (existing) skips.set(planKey(entry), existing);
+  }
+  return skips;
+}
+
+function printPlan(plan: RunPlanEntry[], model: string, baseURL: string, skips: Map<string, string>): void {
   const profile = classifyModel(model, baseURL);
   const byTask = new Map<string, number>();
   for (const entry of plan) byTask.set(entry.taskId, (byTask.get(entry.taskId) ?? 0) + 1);
@@ -65,13 +95,18 @@ function printPlan(plan: RunPlanEntry[], model: string, baseURL: string): void {
     console.log(`  ${taskId}: ${count} repeat(s)`);
   }
 
-  const totalTurnCapBudget = plan.reduce((sum, e) => sum + e.task.caps.turns, 0);
-  const totalWallClockBudgetSec = plan.reduce((sum, e) => sum + e.task.caps.wallClockSec, 0);
+  const toRun = plan.filter((e) => !skips.has(planKey(e)));
+  const totalTurnCapBudget = toRun.reduce((sum, e) => sum + e.task.caps.turns, 0);
+  const totalWallClockBudgetSec = toRun.reduce((sum, e) => sum + e.task.caps.wallClockSec, 0);
   console.log('');
   console.log(`  total runs planned: ${plan.length}`);
-  console.log(`  worst-case turn budget (sum of caps.turns across all runs): ${totalTurnCapBudget}`);
+  if (skips.size > 0) {
+    console.log(`  already have a record (skipped unless --force): ${skips.size}`);
+  }
+  console.log(`  runs that will actually execute: ${toRun.length}`);
+  console.log(`  worst-case turn budget (sum of caps.turns, runs that will execute): ${totalTurnCapBudget}`);
   console.log(
-    `  worst-case wall-clock budget (sum of caps.wallClockSec): ${totalWallClockBudgetSec}s ` +
+    `  worst-case wall-clock budget (sum of caps.wallClockSec, runs that will execute): ${totalWallClockBudgetSec}s ` +
       `(${(totalWallClockBudgetSec / 60).toFixed(1)} min)`,
   );
 }
@@ -109,22 +144,28 @@ async function main(): Promise<void> {
 
   const taskIds = args.taskIds ?? (await discoverTaskIds(repoRoot));
   const plan = await buildRunPlan(repoRoot, taskIds, args.repeats);
+  const skips = await resolveSkips(plan, resultsRoot, args.model, args.force);
 
-  printPlan(plan, args.model, args.baseURL);
+  printPlan(plan, args.model, args.baseURL, skips);
 
   if (args.dryRun) {
     console.log('\n--dry-run: executing nothing.');
     return;
   }
 
-  console.log(
-    '\nExecuting plan. This orchestrates sandbox materialization + run execution + scoring — result-record ' +
-      'writing lands in a later step (tasks.md 5.1), so no results/ file is written yet.\n',
-  );
+  console.log('\nExecuting plan: sandbox + run + score + write result record.\n');
 
+  const pkg = JSON.parse(await readFile(path.join(repoRoot, 'package.json'), 'utf8')) as { suiteVersion: string };
   const copperhead = await resolveCopperheadInstall();
   for (const entry of plan) {
     const label = `[${entry.taskId} repeat ${entry.repeatIndex}/${entry.repeatsPlanned}]`;
+
+    const existing = skips.get(planKey(entry));
+    if (existing) {
+      console.log(`${label} skipped: record already exists at ${path.relative(repoRoot, existing)} (--force to redo)`);
+      continue;
+    }
+
     console.log(`${label} materializing sandbox...`);
     const sandbox = await materializeSandbox(entry.task, { repoRoot });
     console.log(`${label} sandbox: ${sandbox.path}`);
@@ -165,6 +206,20 @@ async function main(): Promise<void> {
     for (const a of score.assertions) {
       if (!a.passed) console.log(`${label}   [FAIL] ${a.id} (${a.type}) — ${a.detail ?? ''}`);
     }
+
+    const record = await buildResultRecord({
+      repoRoot,
+      suiteVersion: pkg.suiteVersion,
+      entry,
+      model: args.model,
+      baseURL: args.baseURL,
+      copperhead,
+      sandbox,
+      run,
+      score,
+    });
+    const recordPath = await writeResultRecord(resultsRoot, record);
+    console.log(`${label} wrote ${path.relative(repoRoot, recordPath)}`);
   }
 }
 

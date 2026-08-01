@@ -28,7 +28,7 @@
 - [x] 3.2 Implement run execution per (task, model, repeat): config overrides written to `.copperhead/config.json` with `llmCache: false`, no `--allow-dirty`, per-task turn and wall-clock caps enforced with termination and a recorded exit path
 - [x] 3.3 Implement the run plan and cost estimator (trimmed to a single target model, per migration step 2 — see design.md migration plan): `--task`/repeat-count selection, printed estimate before execution, `--dry-run` that prints plan and estimate and executes nothing. `--suite smoke|full` and model-matrix selection are step-4 scope, not built here.
 - [ ] 3.4 Implement ablation overrides (`--prompt-variant`, `--max-turns`, `--tool-subset`, `--max-repair-cycles`) applied to the run and stamped into the record
-- [ ] 3.5 Implement resumability: a completed (task, model, repeat) with an existing record is skipped unless `--force`, so an interrupted expensive suite continues rather than restarting
+- [x] 3.5 Implement resumability (`src/records/resume.ts`, unblocked once 5.1's writer existed): a completed (task, model, repeat) with an existing record is skipped unless `--force`. `findExistingRecord` searches every `results/<date>/` directory rather than one predictable path, since a record's date reflects when its run *started*, not when the resuming suite happens to check — a record from a previous day still counts. Sanitizes the model id identically to the writer, so lookup and write never disagree. Wired into `scripts/benchmark.ts`: skip counts are visible in `--dry-run`'s plan output before anything executes, not just discovered mid-run. 5 checked-in tests
 
 ## 4. Scorer
 
@@ -41,7 +41,7 @@
 
 ## 5. Records, report, and gating
 
-- [ ] 5.1 Implement result-record writing with the full comparability stamp, the secret re-scan that hard-fails on a match against the STANDARD.md 6.1 credential pattern set (shared with the `no_secret` assertion, so both read one list), and append-only semantics
+- [x] 5.1 Implement result-record writing (`src/records/build.ts`, `src/records/write.ts`) with the full comparability stamp, the secret re-scan that hard-fails on a match against the STANDARD.md 6.1 credential pattern set (shared with the `no_secret` assertion via `src/scorer/secrets.ts`, so both read one list), and append-only semantics (refuses to overwrite an existing `run-<n>.json`). `provider`/`selectionSource`/`kicadCliVersion`/`node`/`platform` are read from the transcript's `run-start` event rather than re-probed, per the evidence-only stance elsewhere in the scorer. Wired into `scripts/benchmark.ts`'s real-run path and into `npm run benchmark`. Verified against the real `schema/result.schema.json` via `ajv-cli` (structurally valid, `additionalProperties: false` satisfied) and with 9 checked-in vitest tests covering the comparability stamp, the `cap-exceeded` translation with no fabricated evidence, the missing-run-start refusal, the credential hard-fail (never scrub-and-continue), and append-only refusal
 - [ ] 5.2 Implement the aggregate report: strict pass rate and cost per passing task per tier and model, pass@1 and pass^k with spread, correct-refusal and false-refusal rates, surgicality and process-discipline detail, variant gap
 - [ ] 5.3 Implement the failure work queue: categories ranked by frequency times mean cost, with affected tasks and models
 - [ ] 5.4 Implement `LEADERBOARD.md` generation with generated-file markers, comparability segregation of mismatched records, and a consistency check that fails on a hand edit
