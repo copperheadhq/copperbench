@@ -1,7 +1,7 @@
 {
   "$schema": "../../schema/fixture.schema.json",
   "id": "antmicro-microphone-board",
-  "sha256": "dad443ad059b7cd2ec57313967db7c511caa8bcfd1ba72dc2f02cd3560249529",
+  "sha256": "b4332d44964cab0323746e3a74e60b5636ff30775fb7c2133b18339b13bb2ac6",
   "complexity": "simple",
   "upstream": {
     "name": "Antmicro PDM Microphone Board",
