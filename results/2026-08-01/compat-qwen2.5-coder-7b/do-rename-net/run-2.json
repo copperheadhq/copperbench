@@ -6,7 +6,7 @@
     "tier": "simple",
     "mode": "do",
     "expectedOutcome": "edit",
-    "manifestSha256": "35a31b52dbb404aed0be3fbc535c76523277f33db3d3936a5697fc2c5ff1c000",
+    "manifestSha256": "f94354b3a0e87a7254b7320fd06290706613f7eb057547c48e0dfdd5d97fc911",
     "fixtureSha256": "b4332d44964cab0323746e3a74e60b5636ff30775fb7c2133b18339b13bb2ac6",
     "variantOf": null,
     "tags": [
@@ -26,16 +26,16 @@
   },
   "environment": {
     "copperheadVersion": "0.9.0",
-    "copperheadCommit": "73a2e97d53bf7e9690d5de38de1e4f75fd4e3b77",
+    "copperheadCommit": "48af48667bc5e8a0f324cd8b378fc94c6bc110b5",
     "kicadCliVersion": "10.0.4",
     "node": "v22.17.0",
     "platform": "win32-x64"
   },
   "run": {
-    "repeatIndex": 1,
-    "repeatsPlanned": 1,
-    "startedAt": "2026-08-01T13:56:44.899Z",
-    "baselineCommit": "658364b8c6240db4d6ecbdb8437f5eb68d38a1a4",
+    "repeatIndex": 2,
+    "repeatsPlanned": 2,
+    "startedAt": "2026-08-01T15:52:11.435Z",
+    "baselineCommit": "8bfa16ee4b7bfdc556f7254dca1d295e417408fc",
     "llmCacheDisabled": true,
     "allowDirty": false
   },
@@ -146,7 +146,7 @@
       "weight": 2,
       "passed": false,
       "evidenceSource": "transcript",
-      "detail": "exit path: stalled"
+      "detail": "exit path: turn-budget-exhausted"
     },
     {
       "id": "no-secret",
@@ -163,27 +163,27 @@
     "partialCredit": 0.5
   },
   "stats": {
-    "exitPath": "stalled",
-    "turnsUsed": 3,
-    "maxTurns": 40,
+    "exitPath": "turn-budget-exhausted",
+    "turnsUsed": 1,
+    "maxTurns": 1,
     "repairCyclesUsed": 0,
     "maxRepairCycles": 5,
-    "tokensIn": 9551,
-    "tokensOut": 210,
-    "durationMs": 270809
+    "tokensIn": 3044,
+    "tokensOut": 99,
+    "durationMs": 243710
   },
   "cost": {
     "usd": null,
     "priceTableVersion": null
   },
   "failure": {
-    "category": "stalled",
+    "category": "turn-budget",
     "firstFailedAssertion": "new-net-exists",
     "dominantToolError": null
   },
   "artifacts": {
-    "transcriptPath": ".copperhead/runs/2026-08-01T13-56-44-818Z",
+    "transcriptPath": ".copperhead/runs/2026-08-01T15-52-11-298Z",
     "sandboxPreserved": true,
-    "sandboxPath": "copperbench-ZrCM79"
+    "sandboxPath": "copperbench-XRLgJe"
   }
 }

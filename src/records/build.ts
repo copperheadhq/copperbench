@@ -101,10 +101,12 @@ export async function buildResultRecord(opts: {
       provider: runStart.provider ?? 'unknown',
       selectionSource: (runStart.modelSource as ResultRecord['model']['selectionSource']) ?? 'flag',
       segment: profile.segment,
-      // A compat model pinned to a specific tag (e.g. "qwen2.5-coder:7b") is
-      // a strong pin — unlike a saved-login CLI route, the exact model id is
-      // named, not left to whatever the login currently resolves to.
-      pinning: 'strong',
+      // A compat model id names an explicit tag (e.g. "compat:qwen2.5-coder:7b")
+      // often enough to be worth a real check: with the tag, the exact model
+      // is pinned; without one (e.g. "compat:qwen2.5-coder"), it resolves to
+      // whatever the endpoint currently serves under that name, same as an
+      // unpinned CLI route.
+      pinning: /^compat:.+:.+$/.test(model) ? 'strong' : 'weak',
     },
     environment: {
       copperheadVersion: copperhead.version,
@@ -148,7 +150,13 @@ export async function buildResultRecord(opts: {
       // path anywhere other than the machine that wrote it.
       transcriptPath: run.transcriptDir ? path.relative(sandbox.path, run.transcriptDir).replace(/\\/g, '/') : '',
       sandboxPreserved: true,
-      sandboxPath: sandbox.path,
+      // The mkdtemp basename only, never the full host path: sandbox.path is
+      // always `<os.tmpdir()>/copperbench-XXXXXX` (materializeSandbox), and
+      // the full absolute form embeds the local username on every platform
+      // this actually runs on — meaningless on another machine and a real
+      // PII leak in a committed, published record. --rescore reconstructs
+      // the full path against its own tmpdir() (src/scorer/rescore.ts).
+      sandboxPath: path.basename(sandbox.path),
     },
   };
 }
