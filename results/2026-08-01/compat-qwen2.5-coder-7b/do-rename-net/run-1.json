@@ -1,0 +1,189 @@
+{
+  "schemaVersion": "1.0.0",
+  "suiteVersion": "1.0.1",
+  "task": {
+    "id": "do-rename-net",
+    "tier": "simple",
+    "mode": "do",
+    "expectedOutcome": "edit",
+    "manifestSha256": "35a31b52dbb404aed0be3fbc535c76523277f33db3d3936a5697fc2c5ff1c000",
+    "fixtureSha256": "b4332d44964cab0323746e3a74e60b5636ff30775fb7c2133b18339b13bb2ac6",
+    "variantOf": null,
+    "tags": [
+      "AC-3.1",
+      "AC-3.7",
+      "propagation",
+      "surgicality",
+      "docs-memory"
+    ]
+  },
+  "model": {
+    "id": "compat:qwen2.5-coder:7b",
+    "provider": "openai-compat",
+    "selectionSource": "flag",
+    "segment": "open-weight-self-hosted",
+    "pinning": "strong"
+  },
+  "environment": {
+    "copperheadVersion": "0.9.0",
+    "copperheadCommit": "73a2e97d53bf7e9690d5de38de1e4f75fd4e3b77",
+    "kicadCliVersion": "10.0.4",
+    "node": "v22.17.0",
+    "platform": "win32-x64"
+  },
+  "run": {
+    "repeatIndex": 1,
+    "repeatsPlanned": 1,
+    "startedAt": "2026-08-01T13:56:44.899Z",
+    "baselineCommit": "658364b8c6240db4d6ecbdb8437f5eb68d38a1a4",
+    "llmCacheDisabled": true,
+    "allowDirty": false
+  },
+  "assertions": [
+    {
+      "id": "new-net-exists",
+      "type": "net_present",
+      "required": true,
+      "weight": 3,
+      "passed": false,
+      "evidenceSource": "end-state",
+      "detail": "net \"PDM_DATA\" not found"
+    },
+    {
+      "id": "old-net-gone",
+      "type": "net_absent",
+      "required": true,
+      "weight": 3,
+      "passed": false,
+      "evidenceSource": "end-state",
+      "detail": "net \"DATA\" still present"
+    },
+    {
+      "id": "sibling-nets-untouched",
+      "type": "net_present",
+      "required": true,
+      "weight": 1,
+      "passed": true,
+      "evidenceSource": "end-state",
+      "detail": null
+    },
+    {
+      "id": "no-new-erc-violations",
+      "type": "erc_no_new_violations",
+      "required": true,
+      "weight": 2,
+      "passed": true,
+      "evidenceSource": "end-state",
+      "detail": null
+    },
+    {
+      "id": "no-new-drc-violations",
+      "type": "drc_no_new_violations",
+      "required": true,
+      "weight": 1,
+      "passed": true,
+      "evidenceSource": "end-state",
+      "detail": null
+    },
+    {
+      "id": "pinout-updated",
+      "type": "doc_contains",
+      "required": true,
+      "weight": 1,
+      "passed": false,
+      "evidenceSource": "end-state",
+      "detail": "pattern not found in PINOUT.md"
+    },
+    {
+      "id": "pinout-old-name-gone",
+      "type": "doc_contains",
+      "required": true,
+      "weight": 1,
+      "passed": false,
+      "evidenceSource": "end-state",
+      "detail": "pattern unexpectedly found in PINOUT.md"
+    },
+    {
+      "id": "surgical-schematic-edit",
+      "type": "diff_ratio_max",
+      "required": true,
+      "weight": 3,
+      "passed": true,
+      "evidenceSource": "diff",
+      "detail": "0 line(s) changed of 8489 baseline (ratio 0.0000, max 0.01)"
+    },
+    {
+      "id": "board-untouched",
+      "type": "file_unchanged",
+      "required": true,
+      "weight": 1,
+      "passed": true,
+      "evidenceSource": "diff",
+      "detail": null
+    },
+    {
+      "id": "touched-files-bounded",
+      "type": "files_touched_subset",
+      "required": true,
+      "weight": 2,
+      "passed": true,
+      "evidenceSource": "diff",
+      "detail": null
+    },
+    {
+      "id": "one-commit",
+      "type": "commit_count",
+      "required": true,
+      "weight": 1,
+      "passed": false,
+      "evidenceSource": "diff",
+      "detail": "commit count 0"
+    },
+    {
+      "id": "finished-cleanly",
+      "type": "exit_path_in",
+      "required": true,
+      "weight": 2,
+      "passed": false,
+      "evidenceSource": "transcript",
+      "detail": "exit path: stalled"
+    },
+    {
+      "id": "no-secret",
+      "type": "no_secret",
+      "required": true,
+      "weight": 1,
+      "passed": true,
+      "evidenceSource": "diff",
+      "detail": null
+    }
+  ],
+  "verdict": {
+    "pass": false,
+    "partialCredit": 0.5
+  },
+  "stats": {
+    "exitPath": "stalled",
+    "turnsUsed": 3,
+    "maxTurns": 40,
+    "repairCyclesUsed": 0,
+    "maxRepairCycles": 5,
+    "tokensIn": 9551,
+    "tokensOut": 210,
+    "durationMs": 270809
+  },
+  "cost": {
+    "usd": null,
+    "priceTableVersion": null
+  },
+  "failure": {
+    "category": "stalled",
+    "firstFailedAssertion": "new-net-exists",
+    "dominantToolError": null
+  },
+  "artifacts": {
+    "transcriptPath": ".copperhead/runs/2026-08-01T13-56-44-818Z",
+    "sandboxPreserved": true,
+    "sandboxPath": "C:\\Users\\meeta\\AppData\\Local\\Temp\\copperbench-ZrCM79"
+  }
+}
