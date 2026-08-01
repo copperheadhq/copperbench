@@ -24,9 +24,9 @@
 
 ## 3. Runner
 
-- [ ] 3.1 Implement sandbox materialization: temp directory outside the repo, fixture copy, `git init`, baseline commit, recorded baseline SHA, teardown that preserves the sandbox on failure for later re-scoring
-- [ ] 3.2 Implement run execution per (task, model, repeat): config overrides written to `.copperhead/config.json` with `llmCache: false`, no `--allow-dirty`, per-task turn and wall-clock caps enforced with termination and a recorded exit path
-- [ ] 3.3 Implement the run plan and cost estimator: `--suite smoke|full`, model matrix selection, repeat count, printed estimate before execution, `--dry-run` that prints plan and estimate and executes nothing
+- [x] 3.1 Implement sandbox materialization: temp directory outside the repo, fixture copy, `git init`, baseline commit, recorded baseline SHA, teardown that preserves the sandbox on failure for later re-scoring
+- [x] 3.2 Implement run execution per (task, model, repeat): config overrides written to `.copperhead/config.json` with `llmCache: false`, no `--allow-dirty`, per-task turn and wall-clock caps enforced with termination and a recorded exit path
+- [x] 3.3 Implement the run plan and cost estimator (trimmed to a single target model, per migration step 2 — see design.md migration plan): `--task`/repeat-count selection, printed estimate before execution, `--dry-run` that prints plan and estimate and executes nothing. `--suite smoke|full` and model-matrix selection are step-4 scope, not built here.
 - [ ] 3.4 Implement ablation overrides (`--prompt-variant`, `--max-turns`, `--tool-subset`, `--max-repair-cycles`) applied to the run and stamped into the record
 - [ ] 3.5 Implement resumability: a completed (task, model, repeat) with an existing record is skipped unless `--force`, so an interrupted expensive suite continues rather than restarting
 
