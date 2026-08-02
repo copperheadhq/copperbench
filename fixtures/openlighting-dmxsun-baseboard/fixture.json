@@ -1,7 +1,7 @@
 {
   "$schema": "../../schema/fixture.schema.json",
   "id": "openlighting-dmxsun-baseboard",
-  "sha256": "f055e9296dc769d4ef037919ab6752711b6163242f8d8c8f105a960d39ae93f4",
+  "sha256": "37373e30db6f1eb97150294eded318687b3b61c2e8146a0c23ed99bcddcda3a8",
   "complexity": "simple",
   "upstream": {
     "name": "Open Lighting Project rp2040-dmxsun (2-slot baseboard)",

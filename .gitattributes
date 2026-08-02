@@ -1,0 +1,19 @@
+# Force LF on checkout regardless of platform. Without this, a Windows
+# machine with core.autocrlf=true checks fixture files out with CRLF line
+# endings, which silently breaks scripts/hash-fixture.mjs --check (STANDARD.md
+# section 3.2's canonical hash is defined over exact bytes) even though git
+# itself reports a clean working tree, since autocrlf normalizes the
+# comparison on the fly. Every tracked file in this repo is plain text (no
+# binaries), so a blanket rule is safe.
+* text=auto eol=lf
+
+# Explicit for the file types the hash and the benchmark's fixture pipeline
+# most directly depend on.
+*.kicad_sch text eol=lf
+*.kicad_pcb text eol=lf
+*.kicad_pro text eol=lf
+*.kicad_prl text eol=lf
+*.kicad_sym text eol=lf
+*.kicad_mod text eol=lf
+*.kicad_dru text eol=lf
+*.kicad_wks text eol=lf

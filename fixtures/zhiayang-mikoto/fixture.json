@@ -1,7 +1,7 @@
 {
   "$schema": "../../schema/fixture.schema.json",
   "id": "zhiayang-mikoto",
-  "sha256": "85e81c58af200cc3fb39c8ec0e711acbc02fa4929ad9d9ffeddcfa8aff9dae42",
+  "sha256": "f5f78df3e1505ff86edfbfaf5b7022b280e92b57581cf472e41db5ea09956981",
   "complexity": "medium",
   "upstream": {
     "name": "mikoto nRF52840 module",

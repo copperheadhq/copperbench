@@ -1,6 +1,7 @@
 {
   "name": "copperbench",
   "version": "0.1.0",
+  "suiteVersion": "1.0.1",
   "private": true,
   "description": "copperbench: a benchmark for language-model agents on verified KiCad hardware design edits",
   "license": "Apache-2.0",
@@ -28,8 +29,10 @@
     "hash": "node scripts/hash-fixture.mjs",
     "lint:md": "markdownlint-cli2 \"**/*.md\" \"#node_modules/**\" \"#fixtures/**/tree/**\"",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
     "paper": "node scripts/build-paper.mjs",
-    "paper:pdf": "node scripts/build-paper.mjs --no-render"
+    "paper:pdf": "node scripts/build-paper.mjs --no-render",
+    "benchmark": "tsx scripts/benchmark.ts"
   },
   "devDependencies": {
     "@types/node": "^22.13.10",
@@ -47,7 +50,8 @@
     }
   },
   "comments": {
-    "copperhead-dependency": "The runner drives the copperhead CLI as a user would, and the scorer reads artifacts it writes. Grading needs the read-only sexp parser, report normalizer, and drift check from copperhead's src/, which are published in its npm package but are NOT a stable public API. Pin an exact copperhead version when the runner lands, record it in every result record's comparability stamp, and treat an internals change as a suite-version event.",
-    "not-yet-wired": "benchmark, rescore, validate, paper:generate, and paper:check-claims scripts land with the runner, scorer, and paper generator. They are deliberately absent rather than present and broken."
+    "copperhead-dependency": "The runner drives the copperhead CLI as a user would, and the scorer reads artifacts it writes. Grading needs the read-only sexp parser, report normalizer, and drift check from copperhead's src/, which are published in its npm package but are NOT a stable public API. environment.copperheadCommit (stamped by every result record) is the actual comparability guarantee, not this semver range: resolveCopperheadInstall() requires copperhead installed from a git checkout (npm link) and hard-errors otherwise, so a plain `>=0.8.1` from the registry was never a supported install path in practice. The range is left wide because a peerDependency's semver check can't distinguish 'built from this exact commit' from 'labeled with this version string' anyway — cost.ts's isLocalEndpoint import, for one, exists in the git history that record's copperheadCommit values point to but is not present in any 0.8.1/0.9.0 tarball actually published to the registry.",
+    "not-yet-wired": "rescore, validate, paper:generate, and paper:check-claims scripts land with the scorer, validator, and paper generator. They are deliberately absent rather than present and broken. benchmark (added) currently covers sandbox materialization, run execution, the run plan, and --dry-run (tasks.md sections 3.1-3.3); it does not yet score a run or write results/ (sections 4.x/5.1).",
+    "suite-version": "First formalized value (STANDARD.md section 9 / design D8 define the field but nothing previously stored a concrete number). 1.0.0 is the implied baseline matching STANDARD.md's own 'Standard version: 1.0.0' header, covering the state as of the two worked tasks and first four fixtures. Bumped to 1.0.1 for the fixture.json sha256 corrections in fixtures/antmicro-microphone-board, openlighting-dmxsun-baseboard, and zhiayang-mikoto (and the matching task.json fixture.sha256 fields) — the recorded hashes had been computed against a CRLF-corrupted checkout and never matched the actual (LF) vendored content; STANDARD.md section 9 bumps the version on any fixture/task edit without a bugfix carve-out. Future result-writer code (tasks.md 5.1) reads this field to stamp suiteVersion into every record."
   }
 }
