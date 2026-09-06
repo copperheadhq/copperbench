@@ -13,12 +13,12 @@ The copperbench website: one generated page, leaderboard first. An [Astro](https
 | Setting | Value |
 | --- | --- |
 | Root directory | `/` |
-| Build command | `npm run site` |
+| Build command | leave empty (`wrangler.jsonc` runs `npm run site` before every deploy) |
 | Deploy command | `npx wrangler deploy` |
 | Non-production branch deploy command | `npx wrangler versions upload` |
 | Production branch | `main` |
 
-Cloudflare installs with `npm ci`, reads the Node version from [.node-version](../.node-version) (Astro needs 22.12 or newer; the rest of the repository runs on 20), and takes the Worker name and asset directory from `wrangler.jsonc`. Every push to `main` deploys. Every other branch and pull request gets a preview version on its own workers.dev URL, reported as a check on the commit. No custom domain is configured yet; `wrangler.jsonc` shows where one goes. `npm run site:deploy` deploys from a machine after `npx wrangler login`.
+Cloudflare installs with `npm ci`, runs the build through wrangler's `build.command`, reads the Node version from [.node-version](../.node-version) (Astro needs 22.12 or newer; the rest of the repository runs on 20), and takes the Worker name and asset directory from `wrangler.jsonc`. Every push to `main` deploys. Every other branch and pull request gets a preview version on its own workers.dev URL, reported as a check on the commit. No custom domain is configured yet; `wrangler.jsonc` shows where one goes. `npm run site:deploy` deploys from a machine after `npx wrangler login`.
 
 `npm run site:dev` runs Astro's dev server with live reload. `npm run site:serve` builds and previews `site/dist/`. The rendered page loads nothing from any CDN and ships no client JavaScript beyond the tier tabs and the route filter. The typefaces are the Fontsource packages the copperhead docs ship, Inter Variable and IBM Plex Mono, copied into `public/fonts/` by [copy-fonts.mjs](copy-fonts.mjs) before each build.
 
