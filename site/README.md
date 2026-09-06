@@ -13,7 +13,7 @@ The copperbench website: one generated page, leaderboard first. An [Astro](https
 | Setting | Value |
 | --- | --- |
 | Root directory | `/` |
-| Build command | leave empty (`wrangler.jsonc` runs `npm run site` before every deploy) |
+| Build command | leave empty |
 | Deploy command | `npx wrangler deploy` |
 | Non-production branch deploy command | `npx wrangler versions upload` |
 | Production branch | `main` |
