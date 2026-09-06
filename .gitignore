@@ -2,6 +2,9 @@ node_modules/
 dist/
 .env
 
+# Astro's build cache for the website (site/); site/dist/ is covered by dist/ above.
+.astro/
+
 # Sandboxes are materialized outside this repository and are never committed.
 # Preserved evidence belongs under results/ as records, not as raw trees.
 .sandboxes/

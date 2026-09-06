@@ -1,0 +1,33 @@
+---
+import Icon from './Icon.astro';
+import { facts, tree } from '../lib/facts';
+---
+
+<section class="section" id="fixtures">
+  <h2 class="section-title">Fixtures</h2>
+  <p class="section-lead">
+    Real boards, vendored verbatim from permissively licensed open-hardware projects, frozen at a pinned upstream commit and
+    content-hashed. Each keeps its LICENSE and is listed in NOTICE. Only the design tree is copied into a sandbox. Provenance and
+    baseline reports stay outside it so the agent under test cannot read the bookkeeping.
+  </p>
+  <div class="table-card">
+    <table class="table">
+      <thead>
+        <tr><th>Fixture</th><th>Upstream</th><th>Tier</th><th class="right">Sheets</th><th class="right">Symbols</th><th class="right">Schematic lines</th><th>License</th></tr>
+      </thead>
+      <tbody>
+        {facts.fixtures.map((f) => (
+          <tr>
+            <td><a class="model" href={tree(`fixtures/${f.id}`)}>{f.id}</a></td>
+            <td class="secondary"><a href={f.url}>{f.name} <Icon name="ext" /></a></td>
+            <td class="secondary">{f.complexity}</td>
+            <td class="right secondary num">{f.sheets}</td>
+            <td class="right secondary num">{f.symbols}</td>
+            <td class="right secondary num">{f.schematicLines.toLocaleString('en-US')}</td>
+            <td class="mono muted">{f.license}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section>

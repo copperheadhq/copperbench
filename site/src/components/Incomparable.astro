@@ -1,0 +1,32 @@
+---
+// Records whose stamps disagree with the checked-out suite. Listed, with the
+// reason and never averaged in. Renders nothing when there are none.
+import { blob, facts } from '../lib/facts';
+
+const rows = facts.leaderboard.incomparable;
+---
+
+{rows.length > 0 && (
+  <section class="section" id="incomparable">
+    <h2 class="section-title">Not comparable</h2>
+    <p class="section-lead">
+      These records disagree with the checked-out suite on at least one comparability stamp. They are still valid evidence about
+      the suite they ran under. They are not evidence about this one.
+    </p>
+    <div class="table-card">
+      <table class="table">
+        <thead><tr><th>Record</th><th>Model</th><th>Task</th><th>Reason</th></tr></thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr>
+              <td class="mono"><a href={blob(`results/${r.relPath}`)}>{r.relPath}</a></td>
+              <td class="secondary">{r.model}</td>
+              <td class="secondary">{r.task}</td>
+              <td class="secondary">{r.reasons.join('; ')}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+)}

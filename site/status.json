@@ -1,0 +1,45 @@
+[
+  {
+    "state": "done",
+    "title": "Standard",
+    "text": "JSON Schemas, the closed assertion vocabulary, fixture policy and cost accounting rules.",
+    "link": "STANDARD.md",
+    "label": "STANDARD.md"
+  },
+  {
+    "state": "done",
+    "title": "Fixtures",
+    "text": "Real open-hardware boards, permissively licensed, frozen at a pinned upstream commit and content-hashed. Baseline ERC and DRC are measured, not assumed.",
+    "link": "fixtures/FIXTURES.md",
+    "label": "FIXTURES.md"
+  },
+  {
+    "state": "done",
+    "title": "Worked tasks",
+    "text": "An edit task with a calibrated surgicality bound and a refusal task graded on its citation rather than its tone.",
+    "link": "tasks",
+    "label": "tasks/"
+  },
+  {
+    "state": "done",
+    "title": "Validator, sandbox, scorer, records",
+    "text": "The loop runs offline end to end: schema checks, hash verification, the three evidence adapters, verdicts, append-only records and re-scoring with no provider and no network.",
+    "link": "scripts",
+    "label": "scripts/"
+  },
+  {
+    "state": "next",
+    "title": "Agent mode",
+    "text": "A provider-backed run needs a credential and is not implemented. The kicad-cli-backed assertion types report unevaluable rather than guessing, so no verdict is ever manufactured."
+  },
+  {
+    "state": "next",
+    "title": "Aggregate report and LEADERBOARD.md",
+    "text": "pass@k with spread, correct and false refusal rates, the failure work queue and the generated markdown leaderboard with its consistency check."
+  },
+  {
+    "state": "pending",
+    "title": "First smoke matrix",
+    "text": "Direct API models at three repeats. This page and the paper tables are regenerated from its records."
+  }
+]
