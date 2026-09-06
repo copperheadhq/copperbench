@@ -44,7 +44,7 @@ The runner SHALL materialize one sandbox per (task, model, repeat): copy the pin
 
 A fixture SHALL be a KiCad project taken from a real open-hardware project at a pinned upstream commit, stored as `fixtures/<id>/` containing a `tree/` subdirectory holding the project itself, plus `fixture.json`, the verbatim upstream `LICENSE`, a `README.md` stating attribution, and `baseline/` verification reports. Only `tree/` SHALL be copied into a sandbox and only `tree/` SHALL be hashed. `fixture.json` SHALL record upstream name, URL, full commit SHA, retrieval date, license, copyright, and a description of what was and was not copied, together with the KiCad format version, the reference `kicad-cli` version, scale (schematic and board line counts, symbol and sheet counts), and baseline verification counts.
 
-Fixtures SHALL use modern s-expression `.kicad_sch` format; legacy `.sch` projects SHALL be rejected. Fixtures SHALL carry zero baseline ERC errors, zero baseline DRC errors, zero unconnected items, and zero schematic-parity issues. Only permissive licenses SHALL be vendored; reciprocal, share-alike, and non-commercial licensed designs SHALL NOT be redistributed as fixtures. Every vendored fixture SHALL have a corresponding entry in the repository `NOTICE`.
+Fixtures SHALL use modern s-expression `.kicad_sch` format; legacy `.sch` projects SHALL be rejected. A fixture's baseline SHALL be **accounted for rather than clean** (design decision D23): a non-zero baseline error count is permitted, but every error type SHALL be enumerated in `fixture.json` as `errorTypes` with its count, and that enumeration SHALL function as an allowlist — an unrecorded error type, or a recorded type exceeding its recorded count, is a new violation. Unconnected items and structural schematic-parity issues SHALL be zero. Only permissive licenses SHALL be vendored; reciprocal, share-alike, and non-commercial licensed designs SHALL NOT be redistributed as fixtures. Every vendored fixture SHALL have a corresponding entry in the repository `NOTICE`.
 
 #### Scenario: A fixture is traceable to its upstream
 
@@ -56,10 +56,20 @@ Fixtures SHALL use modern s-expression `.kicad_sch` format; legacy `.sch` projec
 - **WHEN** a candidate project ships KiCad legacy `.sch` files rather than s-expression `.kicad_sch`
 - **THEN** it is rejected as a fixture rather than converted
 
-#### Scenario: A design with baseline errors is rejected
+#### Scenario: A design with unaccounted baseline errors is rejected
 
-- **WHEN** a candidate's baseline ERC or DRC report contains any error-severity violation, unconnected item, or schematic-parity issue
-- **THEN** it is rejected as a fixture, because a pre-existing error is indistinguishable from an agent-introduced one
+- **WHEN** a candidate's baseline ERC or DRC report contains an error-severity violation whose type is not enumerated in `fixture.json` as an `errorTypes` entry
+- **THEN** it is rejected as a fixture, because an unenumerated pre-existing error is indistinguishable from an agent-introduced one
+
+#### Scenario: An accounted-for baseline error does not disqualify a real board
+
+- **WHEN** a candidate carries baseline DRC errors that are each enumerated by type and count in `fixture.json` and explained in its README
+- **THEN** it is admissible as a fixture, and `drc_no_new_violations` grades against that enumeration as an allowlist
+
+#### Scenario: A design with unconnected items or structural parity issues is rejected
+
+- **WHEN** a candidate's baseline reports a non-zero unconnected-item count or a structural schematic-parity issue
+- **THEN** it is rejected as a fixture, because those are precisely what a bad edit breaks
 
 #### Scenario: A reciprocally licensed design is not vendored
 
