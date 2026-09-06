@@ -30,7 +30,7 @@
   {
     "state": "next",
     "title": "Agent mode",
-    "text": "A provider-backed run needs a credential and is not implemented. The kicad-cli-backed assertion types report unevaluable rather than guessing, so no verdict is ever manufactured."
+    "text": "A provider-backed run needs a credential and is not implemented. An assertion whose evidence needs kicad-cli reports unevaluable when the tool is absent rather than guessing, so no verdict is ever manufactured."
   },
   {
     "state": "next",

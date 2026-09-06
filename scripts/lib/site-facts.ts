@@ -8,10 +8,10 @@
 // the root tsconfig and the root tests, means the page cannot compute a number
 // the rest of the repository does not.
 
-import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 
+import { gitCapture } from './git.ts';
 import { buildLeaderboard, type Leaderboard, type Tier } from './leaderboard.ts';
 
 export interface TaskFact {
@@ -88,12 +88,9 @@ function subdirs(dir: string): string[] {
 
 function gitCommit(repoRoot: string): string | null {
   try {
-    return execFileSync('git', ['rev-parse', '--short', 'HEAD'], {
-      cwd: repoRoot,
-      encoding: 'utf8',
-      stdio: ['ignore', 'pipe', 'ignore'],
-    }).trim();
+    return gitCapture(repoRoot, ['rev-parse', '--short', 'HEAD']).trim();
   } catch {
+    // Not a git checkout, or git is absent. The page says so instead of guessing.
     return null;
   }
 }

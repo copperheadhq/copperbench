@@ -3,6 +3,8 @@
 // rather than a dependency.
 
 import { execFileSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
 
 export function gitCapture(cwd: string, args: string[]): string {
   return execFileSync('git', args, { cwd, encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 });
@@ -30,8 +32,24 @@ export function commitsSince(cwd: string, sha: string): number {
   return Number.parseInt(out, 10) || 0;
 }
 
+/**
+ * Lines counted the way `wc -l` counts them, by newline, so a denominator here
+ * matches the figure a task README calibrated its bound against.
+ */
+function countLines(body: string): number {
+  if (body === '') return 0;
+  const newlines = body.split('\n').length - 1;
+  return body.endsWith('\n') ? newlines : newlines + 1;
+}
+
 /** Line counts changed in one path, against the baseline. Untracked counts whole. */
 export function diffStatFor(cwd: string, sha: string, filePath: string): number {
+  // `git diff` only knows tracked paths. A file the run created is not in the
+  // baseline at all, so every line of it is a change; without this a
+  // `file_unchanged` on a path the run authored would pass as byte-identical.
+  const untracked = gitCapture(cwd, ['ls-files', '--others', '--exclude-standard', '--', filePath]).trim();
+  if (untracked !== '') return countLines(readFileSync(path.join(cwd, filePath), 'utf8'));
+
   // --numstat gives added and deleted counts; their sum is what a surgicality
   // bound constrains, since a rewritten line is one of each.
   const out = gitCapture(cwd, ['diff', '--numstat', sha, '--', filePath]).trim();
@@ -56,9 +74,7 @@ export function treeIsByteIdenticalTo(cwd: string, sha: string): boolean {
 /** Line count of a path as it stood at the baseline commit. */
 export function baselineLineCount(cwd: string, sha: string, filePath: string): number {
   try {
-    const body = gitCapture(cwd, ['show', `${sha}:${filePath}`]);
-    if (body === '') return 0;
-    return body.split('\n').length;
+    return countLines(gitCapture(cwd, ['show', `${sha}:${filePath}`]));
   } catch {
     return 0;
   }

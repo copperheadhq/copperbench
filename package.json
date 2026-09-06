@@ -52,7 +52,7 @@
     "wrangler": "^4.129.0"
   },
   "peerDependencies": {
-    "copperhead": ">=0.8.1"
+    "copperhead": "0.8.1"
   },
   "peerDependenciesMeta": {
     "copperhead": {
@@ -60,8 +60,8 @@
     }
   },
   "comments": {
-    "copperhead-dependency": "The runner drives the copperhead CLI as a user would, and the scorer reads artifacts it writes. Grading needs the read-only sexp parser, report normalizer, and drift check from copperhead's src/, which are published in its npm package but are NOT a stable public API. Pin an exact copperhead version when the runner lands, record it in every result record's comparability stamp, and treat an internals change as a suite-version event.",
-    "not-yet-wired": "benchmark, rescore, paper:generate, and paper:check-claims land with the runner, scorer, and paper generator. They are deliberately absent rather than present and broken. Suite validation ships ahead of the runner as npm run validate; benchmark --validate will delegate to it when the runner lands.",
+    "copperhead-dependency": "The runner drives the copperhead CLI as a user would, and the scorer reads artifacts it writes. Grading imports the read-only sexp parser from copperhead/dist, which is published in its npm package but is NOT a stable public API, so the peer version is pinned exactly, recorded in every result record comparability stamp, and moved only as a suite-version event.",
+    "not-yet-wired": "paper:generate and paper:check-claims land with the paper generator. They are deliberately absent rather than present and broken. benchmark --validate delegates to validateSuite() rather than reimplementing it, and benchmark --rescore replaces the separately planned rescore script.",
     "cookie-hoist": "cookie is not used by this project. It is pinned at the root so Node resolves astro's ESM cookie@2 instead of the CommonJS cookie@0.7 that express (under copperhead's agent SDK) hoists; without it astro's prerenderer fails to import parseCookie. Drop it when either side moves on."
   }
 }

@@ -86,7 +86,7 @@ const barWidth = (r: Row) => (r.strictPassRate === null ? 0 : r.strictPassRate *
               </tr>
             ) : (
               lb.tiers[t].map((r, rank) => (
-                <tr data-segment={r.segment ?? ''}>
+                <tr data-segment={r.segment ?? ''} data-costed={isCosted(r.segment) ? 'true' : 'false'}>
                   <td class="rank num">{rank + 1}</td>
                   <td>
                     <div class="model-cell">
@@ -161,11 +161,11 @@ const barWidth = (r: Row) => (r.strictPassRate === null ? 0 : r.strictPassRate *
       for (const p of panels) p.hidden = p.id !== tab.getAttribute('aria-controls');
     });
   }
-  const costed = new Set(['api-frontier', 'api-cheap', 'open-weight-hosted']);
+  // Which routes are costed is decided once, in the frontmatter, and carried on each row.
   for (const box of document.querySelectorAll<HTMLInputElement>('[data-filter="costed"]')) {
     box.addEventListener('change', () => {
-      const rows = box.closest('.panel')?.querySelectorAll<HTMLTableRowElement>('tbody tr[data-segment]') ?? [];
-      for (const row of rows) row.hidden = box.checked && !costed.has(row.dataset.segment ?? '');
+      const rows = box.closest('.panel')?.querySelectorAll<HTMLTableRowElement>('tbody tr[data-costed]') ?? [];
+      for (const row of rows) row.hidden = box.checked && row.dataset.costed !== 'true';
     });
   }
 </script>

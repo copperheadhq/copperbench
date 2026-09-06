@@ -146,10 +146,12 @@ function kicadMajor(version: string | null): string {
 /**
  * Split records into those that may share a table and those that may not.
  *
- * The kicad-cli reference is the major version of the most recent record whose
- * other four stamps already agree, so a suite that has only ever run under one
- * KiCad never segregates on it. A KiCad upgrade segregates the old records
- * rather than the new ones.
+ * The kicad-cli reference is the highest major version any stamp-matched
+ * record was verified under, so a KiCad upgrade segregates the old records
+ * rather than the new ones. A record written without kicad-cli carries no
+ * version and could evaluate no ERC or DRC assertion; it is comparable only
+ * while no record has a version, and it never dethrones a verified record,
+ * however recent it is.
  */
 export function segregate(
   records: LoadedRecord[],
@@ -173,16 +175,18 @@ export function segregate(
     else stampMatched.push(rec);
   }
 
-  // Most recent by date, then path, so the reference is deterministic.
-  const newest = [...stampMatched].sort((a, b) => b.date.localeCompare(a.date) || b.relPath.localeCompare(a.relPath))[0];
-  const major = newest === undefined ? null : kicadMajor(newest.record.comparability.kicadCliVersion);
+  const verified = stampMatched
+    .map((r) => kicadMajor(r.record.comparability.kicadCliVersion))
+    .filter((m) => m !== 'none')
+    .sort((a, b) => (Number.parseInt(b, 10) || 0) - (Number.parseInt(a, 10) || 0) || b.localeCompare(a));
+  const major = stampMatched.length === 0 ? null : (verified[0] ?? 'none');
 
   const comparable: LoadedRecord[] = [];
   for (const rec of stampMatched) {
     const m = kicadMajor(rec.record.comparability.kicadCliVersion);
-    if (major !== null && m !== major) {
-      incomparable.push({ rec, reasons: [`kicad-cli major version ${m} ≠ ${major}`] });
-    } else comparable.push(rec);
+    if (major === null || m === major) comparable.push(rec);
+    else if (m === 'none') incomparable.push({ rec, reasons: [`run without kicad-cli; the shared table is verified under kicad-cli ${major}`] });
+    else incomparable.push({ rec, reasons: [`kicad-cli major version ${m} ≠ ${major}`] });
   }
 
   return { comparable, incomparable, kicadMajor: major };

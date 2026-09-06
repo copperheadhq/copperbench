@@ -144,8 +144,24 @@ describe('segregate', () => {
   });
 
   it('treats a missing kicad-cli as one value rather than a wildcard', () => {
-    const { comparable } = segregate([rec({ kicad: null }), rec({ kicad: null })], ref);
+    const { comparable, kicadMajor } = segregate([rec({ kicad: null }), rec({ kicad: null })], ref);
     expect(comparable).toHaveLength(2);
+    expect(kicadMajor).toBe('none');
+  });
+
+  it('never lets a run without kicad-cli dethrone a verified record, however recent', () => {
+    const { comparable, incomparable, kicadMajor } = segregate(
+      [rec({ kicad: '10.0.6', date: '2026-01-01' }), rec({ kicad: null, date: '2026-09-06' })],
+      ref,
+    );
+    expect(kicadMajor).toBe('10');
+    expect(comparable.map((r) => r.record.comparability.kicadCliVersion)).toEqual(['10.0.6']);
+    expect(incomparable[0]?.reasons.join()).toMatch(/without kicad-cli/);
+  });
+
+  it('picks the highest verified major regardless of record order', () => {
+    const { kicadMajor } = segregate([rec({ kicad: '10.0.6', date: '2026-01-01' }), rec({ kicad: '9.0.2', date: '2026-09-06' })], ref);
+    expect(kicadMajor).toBe('10');
   });
 });
 

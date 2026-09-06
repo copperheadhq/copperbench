@@ -5,7 +5,7 @@
 // tree. Repeats never share a sandbox: a repeat that inherited a previous
 // attempt's partial work would measure something other than the task.
 
-import { cpSync, existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 
@@ -38,10 +38,40 @@ export interface Sandbox {
  */
 export function materialize(opts: SandboxOptions): Sandbox {
   const dir = mkdtempSync(path.join(tmpdir(), 'copperbench-run-'));
+  try {
+    return populate(dir, opts);
+  } catch (err) {
+    // A copy of a fixture tree is tens of megabytes; a failure between the
+    // copy and the baseline commit must not leave it behind.
+    rmSync(dir, { recursive: true, force: true });
+    throw err;
+  }
+}
 
+/**
+ * Paths a tool writes that are not the agent's edit. copperhead appends
+ * `.history/` to the root .gitignore before every commit it makes, and
+ * kicad-cli writes a per-user .kicad_prl beside any project it opens
+ * (fixtures/FIXTURES.md). Ignored from the baseline on, so neither appears as
+ * an untracked path or as a changed .gitignore in the diff evidence, which
+ * would otherwise fail `files_touched_subset` and `rollback_byte_identical`
+ * on every real run for something no model did.
+ */
+const TOOL_TRANSIENTS = ['.history/', '*.kicad_prl'];
+
+function populate(dir: string, opts: SandboxOptions): Sandbox {
   // Only tree/ is ever copied: provenance, license, and baseline reports live
   // outside it so the agent under test cannot read our bookkeeping.
   cpSync(opts.treeDir, dir, { recursive: true });
+
+  const ignoreFile = path.join(dir, '.gitignore');
+  const ignored = existsSync(ignoreFile) ? readFileSync(ignoreFile, 'utf8') : '';
+  const present = new Set(ignored.split('\n').map((l) => l.trim()));
+  const missing = TOOL_TRANSIENTS.filter((e) => !present.has(e));
+  if (missing.length > 0) {
+    const sep = ignored.length > 0 && !ignored.endsWith('\n') ? '\n' : '';
+    writeFileSync(ignoreFile, `${ignored}${sep}${missing.join('\n')}\n`);
+  }
 
   git(dir, ['init', '-q']);
   // Identity is set locally so the runner works on a machine with no git config.
