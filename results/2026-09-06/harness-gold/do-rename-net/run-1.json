@@ -1,0 +1,149 @@
+{
+  "schemaVersion": "1.0.0",
+  "suiteVersion": "0.1.0",
+  "task": {
+    "id": "do-rename-net",
+    "tier": "simple",
+    "mode": "do",
+    "expectedOutcome": "edit"
+  },
+  "fixture": {
+    "id": "antmicro-microphone-board",
+    "sha256": "dad443ad059b7cd2ec57313967db7c511caa8bcfd1ba72dc2f02cd3560249529"
+  },
+  "run": {
+    "model": "harness:gold",
+    "repeat": 1,
+    "runMode": "gold",
+    "llmCache": false,
+    "baselineSha": "b57dcbb8ec4533b4b4c817583f686e8e9836e5e7",
+    "durationMs": 131,
+    "setupSkipped": [
+      {
+        "command": "init",
+        "reason": "setup command unavailable in this environment"
+      }
+    ]
+  },
+  "verdict": "unscoreable",
+  "partialCredit": 0.8636,
+  "failureCategory": null,
+  "firstFailedRequired": "no-new-erc-violations",
+  "assertions": [
+    {
+      "id": "new-net-exists",
+      "type": "net_present",
+      "weight": 3,
+      "required": true,
+      "status": "pass",
+      "detail": "net PDM_DATA is present"
+    },
+    {
+      "id": "old-net-gone",
+      "type": "net_absent",
+      "weight": 3,
+      "required": true,
+      "status": "pass",
+      "detail": "net DATA is absent"
+    },
+    {
+      "id": "sibling-nets-untouched",
+      "type": "net_present",
+      "weight": 1,
+      "required": true,
+      "status": "pass",
+      "detail": "net CLK is present"
+    },
+    {
+      "id": "no-new-erc-violations",
+      "type": "erc_no_new_violations",
+      "weight": 2,
+      "required": true,
+      "status": "unevaluable",
+      "detail": "ERC requires kicad-cli, which was not available in this environment"
+    },
+    {
+      "id": "no-new-drc-violations",
+      "type": "drc_no_new_violations",
+      "weight": 1,
+      "required": true,
+      "status": "unevaluable",
+      "detail": "DRC requires kicad-cli, which was not available in this environment"
+    },
+    {
+      "id": "pinout-updated",
+      "type": "doc_contains",
+      "weight": 1,
+      "required": true,
+      "status": "pass",
+      "detail": "PINOUT.md matches /PDM_DATA/"
+    },
+    {
+      "id": "pinout-old-name-gone",
+      "type": "doc_contains",
+      "weight": 1,
+      "required": true,
+      "status": "pass",
+      "detail": "PINOUT.md does not match /\\bDATA\\b/"
+    },
+    {
+      "id": "surgical-schematic-edit",
+      "type": "diff_ratio_max",
+      "weight": 3,
+      "required": true,
+      "status": "pass",
+      "detail": "4/8490 lines changed (0.05% ≤ 1.00%)"
+    },
+    {
+      "id": "board-untouched",
+      "type": "file_unchanged",
+      "weight": 1,
+      "required": true,
+      "status": "pass",
+      "detail": "hardware/microphone-board.kicad_pcb is byte-identical to baseline"
+    },
+    {
+      "id": "touched-files-bounded",
+      "type": "files_touched_subset",
+      "weight": 2,
+      "required": true,
+      "status": "pass",
+      "detail": "3 changed path(s), all within the allowed set"
+    },
+    {
+      "id": "one-commit",
+      "type": "commit_count",
+      "weight": 1,
+      "required": true,
+      "status": "pass",
+      "detail": "1 commit(s)"
+    },
+    {
+      "id": "finished-cleanly",
+      "type": "exit_path_in",
+      "weight": 2,
+      "required": true,
+      "status": "pass",
+      "detail": "exit path done"
+    },
+    {
+      "id": "no-secret",
+      "type": "no_secret",
+      "weight": 1,
+      "required": true,
+      "status": "pass",
+      "detail": "no credential pattern matched"
+    }
+  ],
+  "comparability": {
+    "schemaVersion": "1.0.0",
+    "suiteVersion": "0.1.0",
+    "taskManifestHash": "524b94d28beb7e1c28af0659c77b59a236687980a8b06f89aaab3d7a5ff151bb",
+    "fixtureSha256": "dad443ad059b7cd2ec57313967db7c511caa8bcfd1ba72dc2f02cd3560249529",
+    "copperheadVersion": "0.8.1",
+    "copperheadCommit": null,
+    "kicadCliVersion": null,
+    "nodeVersion": "v24.14.0",
+    "platform": "linux-x64"
+  }
+}

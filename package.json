@@ -26,12 +26,13 @@
   },
   "scripts": {
     "hash": "node scripts/hash-fixture.mjs",
-    "lint:md": "markdownlint-cli2 \"**/*.md\" \"#node_modules/**\" \"#fixtures/**/tree/**\"",
-    "typecheck": "tsc --noEmit",
-    "paper": "node scripts/build-paper.mjs",
-    "paper:pdf": "node scripts/build-paper.mjs --no-render",
     "validate": "tsx scripts/validate.ts",
-    "test": "vitest run"
+    "benchmark": "tsx scripts/benchmark.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "lint:md": "markdownlint-cli2 \"**/*.md\" \"#node_modules/**\" \"#fixtures/**/tree/**\"",
+    "paper": "node scripts/build-paper.mjs",
+    "paper:pdf": "node scripts/build-paper.mjs --no-render"
   },
   "devDependencies": {
     "@types/node": "^22.13.10",
