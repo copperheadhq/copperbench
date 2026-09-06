@@ -10,9 +10,15 @@ copperbench: a benchmark measuring language models on verified KiCad hardware ed
 
 ## Current state
 
-Mostly specification and data. The standard, JSON Schemas, fixture policy, one real fixture, two worked tasks, and the paper skeleton exist. **The runner, scorer, validator, and paper generator are specified but not implemented** — there is no TypeScript source yet, no `tsconfig.json`, and no `results/` or `LEADERBOARD.md`. [openspec/changes/add-model-benchmark-suite/tasks.md](openspec/changes/add-model-benchmark-suite/tasks.md) is the authoritative checklist of what is done and what is next; keep its checkboxes current when landing work.
+A working end-to-end loop, minus the agent. Validation, sandbox materialization, the three evidence adapters, 15 of the 23 assertion types, verdict computation, result-record writing, and `--rescore` are implemented and tested offline. `results/` holds real records from the provider-free run modes.
 
-`package.json` deliberately omits `benchmark`, `rescore`, `validate`, `paper:generate`, and `paper:check-claims` — absent rather than present and broken. Add each only when its implementation lands.
+**Not implemented:** `--mode agent` (needs a provider credential), the eight assertion types backed by `kicad-cli`, the aggregate report, `LEADERBOARD.md`, and the paper generator.
+
+**The run modes.** `--mode noop` does nothing and every discriminating assertion must fail; `--mode gold` applies a reference solution from `test/gold/<task-id>.json` and every evaluable assertion must pass. Together they are the two-sided invariant: an assertion set that passes on a no-op grades nothing, and one that fails on a correct solution is not gradable. Both run at zero provider cost, so a task can be proven to discriminate before a credential is spent.
+
+**`unevaluable` is a third assertion outcome, and `unscoreable` a third verdict.** When an assertion's evidence is unavailable — ERC without `kicad-cli`, say — it is never recorded as a pass, and a run with an unevaluable *required* assertion is `unscoreable` rather than `pass` or `fail`. Silently passing an unrunnable required check is the one failure mode that would make every published number meaningless. [openspec/changes/add-model-benchmark-suite/tasks.md](openspec/changes/add-model-benchmark-suite/tasks.md) is the authoritative checklist of what is done and what is next; keep its checkboxes current when landing work.
+
+`package.json` deliberately omits `paper:generate` and `paper:check-claims` — absent rather than present and broken. Add each only when its implementation lands. `benchmark -- --validate` delegates to `validateSuite()` rather than reimplementing it, and `benchmark -- --rescore` replaces the separately planned `rescore` script.
 
 ## Commands
 
@@ -20,6 +26,13 @@ Mostly specification and data. The standard, JSON Schemas, fixture policy, one r
 npm install                                              # nothing is installed by default
 npm run hash -- fixtures/<id>/tree                        # compute a fixture tree hash
 npm run hash -- --check fixtures/<id>                     # verify tree against fixture.json
+npm run validate                                          # validate every task and fixture (add --json for machine output)
+npm run benchmark -- --mode gold                          # run reference solutions; every evaluable assertion must pass
+npm run benchmark -- --mode noop                          # run nothing; every discriminating assertion must fail
+npm run benchmark -- --rescore results                    # reproduce recorded verdicts offline
+npm run benchmark -- --dry-run                            # plan and cost estimate, executes nothing
+npm test                                                  # vitest, offline: no provider, no network
+npm run typecheck                                         # tsc --noEmit
 npm run lint:md                                           # markdownlint-cli2 over all docs
 npm run paper                                             # paper/main.pdf + paper/render/page-NN.png
 npm run paper:pdf                                         # PDF only, no page render
@@ -27,7 +40,7 @@ npm run paper:pdf                                         # PDF only, no page re
 
 Every paper build renders page images alongside the PDF ([scripts/build-paper.mjs](scripts/build-paper.mjs)), so a revision can be inspected without a viewer. Both outputs are derived and gitignored. The build prefers `latexmk` and falls back to `pdflatex`/`bibtex`; page rendering needs `pdftoppm`.
 
-`npm run typecheck` (`tsc --noEmit`) is wired but has nothing to check until `scripts/*.ts` and a `tsconfig.json` land. Verification today needs no provider credential, no network, and no build step.
+Verification needs no provider credential, no network, and no build step. `ajv` is the single non-dev-tooling dependency, used only to compile the JSON Schemas at validation time; `scripts/hash-fixture.mjs` stays dependency-free so a third party can verify a published hash without installing anything, and `test/hash.test.ts` asserts it never diverges from the TypeScript promotion.
 
 ## The two rules everything derives from
 
@@ -51,7 +64,7 @@ Every paper build renders page images alongside the PDF ([scripts/build-paper.mj
 
 **Comparability is stamped, not assumed.** Every result record carries `schemaVersion`, `suiteVersion`, task manifest hash, fixture hash, copperhead version/commit, `kicad-cli` version, Node version, platform. Mismatched records segregate into a labeled section instead of averaging into a shared row. **Editing any task manifest, fixture, or the assertion vocabulary bumps `suiteVersion`.**
 
-**Generated files are never hand-edited.** `LEADERBOARD.md` is regenerated from `results/`; `paper/generated/*.tex` is emitted from a result snapshot. A committed file differing from a regeneration is a build failure — the same anti-drift stance copperhead takes toward docs, applied to this repo's own claims. `results/` records are append-only and never edited after write.
+**Generated files are never hand-edited.** `LEADERBOARD.md` is regenerated from `results/`; `paper/generated/*.tex` is emitted from a result snapshot; `site/dist/` is built by Astro from [site/](site/), reading the repository through [scripts/lib/site-facts.ts](scripts/lib/site-facts.ts), and deployed to Cloudflare Workers by Cloudflare's GitHub integration ([wrangler.jsonc](wrangler.jsonc), settings in [site/README.md](site/README.md)). All three read `results/` through one aggregation, [scripts/lib/leaderboard.ts](scripts/lib/leaderboard.ts), so a number cannot differ between surfaces. A committed file differing from a regeneration is a build failure — the same anti-drift stance copperhead takes toward docs, applied to this repo's own claims. `results/` records are append-only and never edited after write.
 
 **No hand-typed numbers in the paper's results-bearing sections** (5–8). Quantities appear only through generated macros or tables; a literal numeral there fails the claim check. The checked-in `paper/generated/` placeholders use `\providecommand` so the skeleton reads as ungenerated rather than as a plausible zero.
 

@@ -25,6 +25,7 @@ Start with [STANDARD.md](STANDARD.md). It is normative: it defines the task form
 | `results/` | Append-only result records, one JSON per run |
 | `LEADERBOARD.md` | Generated from `results/`, never hand-edited |
 | [paper/](paper/) | The arXiv-style whitepaper, whose every number is generated from `results/` |
+| [site/](site/) | The website, built by Astro from `results/`, `tasks/` and `fixtures/` with `npm run site`. Deployed to Cloudflare Workers on push, never hand-edited |
 | [openspec/](openspec/changes/add-model-benchmark-suite/) | Planning artifacts: proposal, design decisions, delta specs, task list |
 
 ## Relationship to copperhead
@@ -35,7 +36,9 @@ Because the two repositories version independently, every result record stamps t
 
 ## Status
 
-The standard, schemas, fixture policy, the first real fixture, and two worked tasks are in place. The runner, scorer, and report generator are specified but not yet implemented; see the [task list](openspec/changes/add-model-benchmark-suite/tasks.md).
+The standard, schemas, fixture policy, four real fixtures, two worked tasks, suite validation, the sandbox, the scorer, and result records are in place, and the whole loop runs offline. What is missing is the agent: `--mode agent` needs a provider credential and is not implemented, and the eight `kicad-cli`-backed assertion types report `unevaluable` rather than guessing. The aggregate report, `LEADERBOARD.md`, and the paper generator are still to come; see the [task list](openspec/changes/add-model-benchmark-suite/tasks.md).
+
+The suite ships two provider-free run modes that prove it discriminates before any credential is spent: `--mode noop` does nothing and every discriminating assertion must fail, and `--mode gold` applies a reference solution and every evaluable assertion must pass.
 
 Worked examples to read before writing a task:
 
@@ -45,7 +48,13 @@ Worked examples to read before writing a task:
 ## Verifying a fixture today
 
 ```bash
-npm run hash -- --check fixtures/antmicro-microphone-board
+npm install
+npm run hash -- --check fixtures/antmicro-microphone-board   # one fixture's tree hash
+npm run validate                                             # every task and fixture
+npm run benchmark -- --mode gold                             # run the reference solutions
+npm run benchmark -- --rescore results                       # reproduce recorded verdicts
+npm test                                                     # the offline test suite
+npm run site                                                 # render the website into site/dist/
 ```
 
 No provider credential, no network, no build step.

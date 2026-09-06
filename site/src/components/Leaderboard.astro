@@ -1,0 +1,171 @@
+---
+// The main content: the two headline numbers per tier and per model, with the
+// comparability, unscoreable and cost-segmentation rules stated where the
+// reader meets the numbers. Rows come from leaderboard.ts; nothing is computed
+// here beyond formatting.
+import { TIERS, type Row, type Segment, type Tier } from '../../../scripts/lib/leaderboard.ts';
+import Icon from './Icon.astro';
+import { blob, capitalize, facts, plural, tree } from '../lib/facts';
+
+const lb = facts.leaderboard;
+const tierCount = (t: Tier) => facts.tasks.filter((x) => x.tier === t).length;
+const variants = facts.tasks.filter((t) => t.id.includes('variant')).length;
+
+const TIER_BLURB: Record<Tier, string> = {
+  simple: 'Single-sheet boards, one edit, one propagation trap.',
+  medium: 'Constraint-aware edits and refusals graded on their citation.',
+  hard: 'Hierarchical sheets, where a rename has somewhere to fail to propagate.',
+};
+
+const pct = (x: number | null) => (x === null ? 'n/a' : (x * 100).toFixed(1));
+const usd = (x: number | null) => (x === null ? 'n/a' : `$${x.toFixed(2)}`);
+
+const COSTED = new Set<Segment>(['api-frontier', 'api-cheap', 'open-weight-hosted']);
+const isCosted = (s: Segment | null) => s !== null && COSTED.has(s);
+const isOpenWeight = (s: Segment | null) => s === 'open-weight-hosted' || s === 'open-weight-self-hosted';
+
+const SEGMENT_LABEL: Record<Segment, string> = {
+  'api-frontier': 'Direct API, frontier',
+  'api-cheap': 'Direct API, cheap',
+  'open-weight-hosted': 'Open-weight, hosted',
+  'open-weight-self-hosted': 'Open-weight, self-hosted',
+  'saved-login': 'Saved login',
+};
+const segmentLabel = (s: Segment | null) => (s === null ? 'not recorded' : SEGMENT_LABEL[s]);
+const barWidth = (r: Row) => (r.strictPassRate === null ? 0 : r.strictPassRate * 100).toFixed(1);
+---
+
+<section class="section" id="leaderboard">
+  <div class="tabs" role="tablist" aria-label="Tier">
+    {TIERS.map((t, i) => (
+      <button class="tab" role="tab" id={`tab-${t}`} aria-controls={`panel-${t}`} aria-selected={i === 0 ? 'true' : 'false'}>
+        {capitalize(t)}<span class="count num">{lb.tiers[t].length}</span>
+      </button>
+    ))}
+  </div>
+
+  {TIERS.map((t, i) => (
+    <div class="panel" id={`panel-${t}`} role="tabpanel" aria-labelledby={`tab-${t}`} hidden={i !== 0}>
+      <div class="leaderboard-head">
+        <p>
+          Strict pass rate and cost per passing task, per model, on the <b>{t}</b> tier ({plural(tierCount(t), 'task')}).
+          Every row is regenerated from <code>results/</code>. A record joins this table only when its suite version, task manifest hash,
+          fixture hash and <code>kicad-cli</code> major version agree with the suite as checked out. Records that disagree are
+          listed separately and never averaged in.
+        </p>
+        <div class="filters">
+          <label><input type="checkbox" data-filter="costed"><span>Costed routes only</span></label>
+          <span class="hint">Direct API and hosted open-weight routes carry an exact cost. Self-hosted and saved-login routes report null, so they never share a cost column.</span>
+        </div>
+      </div>
+      <div class="table-card">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="rank">#</th>
+              <th>Model</th>
+              <th>Route</th>
+              <th class="right">Strict pass %</th>
+              <th class="right">$ / pass</th>
+              <th class="right" title="passes / scoreable runs; +n unscoreable">Passes</th>
+              <th class="right">Repeats</th>
+              <th class="center">Records</th>
+              <th>copperhead</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {lb.tiers[t].length === 0 ? (
+              <tr>
+                <td class="empty" colspan="10">
+                  No agent records on the {t} tier yet.{' '}
+                  {lb.snapshot.harnessRecords > 0
+                    ? <>{plural(lb.snapshot.harnessRecords, 'harness record')} show the suite discriminates. See <a href="#discrimination">the check below</a>.</>
+                    : 'The first smoke matrix lands once agent mode exists.'}
+                </td>
+              </tr>
+            ) : (
+              lb.tiers[t].map((r, rank) => (
+                <tr data-segment={r.segment ?? ''} data-costed={isCosted(r.segment) ? 'true' : 'false'}>
+                  <td class="rank num">{rank + 1}</td>
+                  <td>
+                    <div class="model-cell">
+                      <span class="model">{r.model}</span>
+                      {isOpenWeight(r.segment) && <span class="tag tag-open" title="Open-weights model"><Icon name="unlock" /></span>}
+                    </div>
+                  </td>
+                  <td class="secondary">
+                    <span class="model-cell">
+                      {isCosted(r.segment)
+                        ? <span class="tag tag-api" title="Costed route: exact price-table cost"><Icon name="check" /></span>
+                        : <span class="tag tag-null" title="Uncosted route: cost is null"><Icon name="dash" /></span>}
+                      <span>{segmentLabel(r.segment)}</span>
+                    </span>
+                  </td>
+                  <td class="right">
+                    <span class="meter">
+                      <span class="value num">{pct(r.strictPassRate)}</span>
+                      <span class="track"><span class="fill" style={`width: ${barWidth(r)}%`}></span></span>
+                    </span>
+                  </td>
+                  <td class="right secondary num">{usd(r.costPerPass)}</td>
+                  <td class="right secondary num">{r.passes}/{r.passes + r.fails}{r.unscoreable > 0 && <span class="muted"> +{r.unscoreable}</span>}</td>
+                  <td class="right secondary num">{r.repeats}</td>
+                  <td class="center"><a class="records" href={tree('results')} title={plural(r.records, 'record')}><Icon name="ext" /></a></td>
+                  <td class="mono muted">{r.copperheadVersions.join(', ')}</td>
+                  <td class="num muted">{r.latestDate}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  ))}
+
+  <div class="notes">
+    <p>
+      Each entry reports two numbers. <b>Strict pass rate</b> is the share of scoreable runs in which every required assertion passed.
+      <b>Cost per passing task</b> is total USD across the model's runs divided by its passes. Nothing else is a headline.
+      Unscoreable runs, where a required assertion's evidence was unavailable, are left out of the rate and counted after the plus sign.
+    </p>
+    <ul class="legend">
+      <li><span class="tag tag-open"><Icon name="unlock" /></span>Open-weights model</li>
+      <li><span class="tag tag-api"><Icon name="check" /></span>Costed route: exact cost from the price table, strong model pinning</li>
+      <li><span class="tag tag-null"><Icon name="dash" /></span>Uncosted route: cost reported as null, never in a shared cost column</li>
+    </ul>
+    <div class="cards">
+      {TIERS.map((t) => (
+        <div class="card">
+          <div class="card-header"><h4>{capitalize(t)}</h4><span class="card-count num">{plural(tierCount(t), 'task')}</span></div>
+          <p>{TIER_BLURB[t]}</p>
+          <a href={blob('STANDARD.md#2-the-unit-of-evaluation')}>Tier definition <Icon name="arrow" /></a>
+        </div>
+      ))}
+      <div class="card">
+        <div class="card-header"><h4>Variants</h4><span class="card-count num">{plural(variants, 'task')}</span></div>
+        <p>Deterministically mutated fixtures. The gap between a task and its variant is the memorization signal.</p>
+        <a href={blob('STANDARD.md#111-memorization-variants')}>Memorization variants <Icon name="arrow" /></a>
+      </div>
+    </div>
+  </div>
+  <a class="wide-button" href={blob('STANDARD.md#14-reproducing-a-published-number')}>Re-score the published records offline, with no API key and no network</a>
+</section>
+
+<script>
+  const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+  const panels = Array.from(document.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
+  for (const tab of tabs) {
+    tab.addEventListener('click', () => {
+      for (const t of tabs) t.setAttribute('aria-selected', String(t === tab));
+      for (const p of panels) p.hidden = p.id !== tab.getAttribute('aria-controls');
+    });
+  }
+  // Which routes are costed is decided once, in the frontmatter, and carried on each row.
+  for (const box of document.querySelectorAll<HTMLInputElement>('[data-filter="costed"]')) {
+    box.addEventListener('change', () => {
+      const rows = box.closest('.panel')?.querySelectorAll<HTMLTableRowElement>('tbody tr[data-costed]') ?? [];
+      for (const row of rows) row.hidden = box.checked && row.dataset.costed !== 'true';
+    });
+  }
+</script>

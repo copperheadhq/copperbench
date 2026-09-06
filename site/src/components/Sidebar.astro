@@ -1,0 +1,32 @@
+---
+import Icon from './Icon.astro';
+import { blob, facts, tree } from '../lib/facts';
+---
+
+<aside class="sidebar" aria-label="Sidebar">
+  <div class="sidebar-header">
+    <a href="./" class="sidebar-logo"><img src="mark.svg" alt="" width="26" height="26">copperbench</a>
+  </div>
+  <nav class="sidebar-nav">
+    <ul>
+      <li><a href="#leaderboard" class="active">Leaderboard</a></li>
+      <li class="section">Benchmark</li>
+      <li><a href={blob('STANDARD.md')}>Standard</a></li>
+      <li><a href={tree('tasks')}>Tasks</a></li>
+      <li><a href="#fixtures">Fixtures</a></li>
+      <li><a href={tree('results')}>Result records</a></li>
+      <li><a href={blob('pricing.json')}>Pricing table</a></li>
+      <li class="section">About</li>
+      <li><a href={tree('paper')}>Paper <Icon name="ext" /></a></li>
+      <li><a href={facts.repoUrl}>Repository <Icon name="ext" /></a></li>
+      <li><a href={blob('STANDARD.md#14-reproducing-a-published-number')}>Reproduce a number</a></li>
+      <li><a href={blob('STANDARD.md#15-adding-a-task')}>Add a task</a></li>
+      <li class="section">Related</li>
+      <li><a href="https://docs.copperhead.sh/">copperhead <Icon name="ext" /></a></li>
+    </ul>
+  </nav>
+  <div class="sidebar-footer">
+    <a href={facts.repoUrl} aria-label="copperbench on GitHub"><Icon name="github" /></a>
+    <span class="version">v{facts.version}</span>
+  </div>
+</aside>

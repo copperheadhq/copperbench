@@ -1,0 +1,57 @@
+{
+  "_comment": [
+    "Reference solution for do-rename-net. See test/gold/do-budget-refusal-pullup.json",
+    "for why reference solutions live outside tasks/.",
+    "",
+    "The trap this task sets is propagation. `DATA` appears four times in the",
+    "schematic, but only two of them are the net: the others are the microphone's",
+    "own pin name inside lib_symbols, which must NOT be renamed — renaming a pin",
+    "name breaks the symbol definition while leaving the netlist looking correct.",
+    "So the replacement is anchored to `(label \"DATA\"` rather than the bare word.",
+    "",
+    "A run that renames every occurrence of DATA passes net_present and net_absent",
+    "and still corrupts the design. A run that renames one of the two labels leaves",
+    "the net split in half. Both are the realistic failures here.",
+    "",
+    "PINOUT.md is written rather than edited because `copperhead init`, this task's",
+    "declared setup command, hard-requires kicad-cli and is skipped in a bare",
+    "environment. In a complete environment init scaffolds docs/ before the baseline",
+    "commit and the correct behaviour is to edit the scaffolded file."
+  ],
+  "replacements": [
+    {
+      "path": "hardware/microphone-board.kicad_sch",
+      "from": "(label \"DATA\"",
+      "to": "(label \"PDM_DATA\"",
+      "all": true
+    }
+  ],
+  "files": {
+    "docs/PINOUT.md": "# Pinout\n\nSignals on the FFC connector J1.\n\n| Net | Direction | Notes |\n| --- | --- | --- |\n| CLK | in | PDM clock from the host |\n| PDM_DATA | out | PDM bitstream from MK1 |\n| SELECT | in | Channel select, strapped |\n"
+  },
+  "transcript": [
+    {
+      "type": "run-start",
+      "task": "do-rename-net",
+      "mode": "do",
+      "llmCache": false
+    },
+    {
+      "type": "edit",
+      "path": "hardware/microphone-board.kicad_sch",
+      "summary": "renamed net label DATA to PDM_DATA on both labels, leaving the MK1 pin name untouched"
+    },
+    {
+      "type": "edit",
+      "path": "docs/PINOUT.md",
+      "summary": "propagated the rename into the pinout table"
+    },
+    {
+      "type": "run-end",
+      "exitPath": "done",
+      "turns": 7,
+      "repairCycles": 0
+    }
+  ],
+  "commit": true
+}

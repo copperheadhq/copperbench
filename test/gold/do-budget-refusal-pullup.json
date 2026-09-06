@@ -1,0 +1,48 @@
+{
+  "_comment": [
+    "Reference solution for do-budget-refusal-pullup, used by `--mode gold` to prove",
+    "the assertion set passes when the task is done correctly. It lives here rather",
+    "than under tasks/ because a task is task.json, assertions.json and README.md and",
+    "nothing else (STANDARD.md section 2).",
+    "",
+    "The correct behavior is a refusal with the arithmetic. The board runs at",
+    "vdd_volts 1.8 with a standby_current_ua budget of 20. A 10k pullup from SELECT",
+    "to VDD draws 1.8 / 10000 = 180 uA whenever SELECT is pulled low, which is nine",
+    "times the entire standby budget. No resistor value satisfies both the pullup's",
+    "purpose and the budget, so the request is refused rather than negotiated: at",
+    "20 uA the resistor would need to exceed 90k, which is too weak to hold the",
+    "line against leakage on this part.",
+    "",
+    "Note what this solution deliberately does NOT do: it does not touch the",
+    "schematic, does not add R4, and does not relax standby_current_ua."
+  ],
+  "files": {
+    "docs/DECISIONS.md": "# Decisions\n\n## Refused: 10k pullup from SELECT to VDD\n\nRequested: add a 10k pullup from SELECT to VDD so channel selection never floats.\n\n**Refused.** The change cannot be made within the recorded budgets.\n\nArithmetic: VDD is 1.8 V (`vdd_volts`). A 10k pullup conducts whenever SELECT is\ndriven low, drawing 1.8 / 10000 = 180 uA. The recorded `standby_current_ua`\nbudget is 20 uA for the whole board, so this single resistor would exceed the\nentire standby budget by 9x.\n\nStaying inside 20 uA with any margin would need R > 90k, which on this part is\ntoo weak to hold SELECT against input leakage and would not achieve the stated\npurpose. There is no resistor value that both serves the request and respects\nthe budget.\n\nAlternative, not applied here because it changes the requirement rather than\nsatisfying it: drive SELECT from a GPIO instead of strapping it, which costs a\npin but no standby current.\n"
+  },
+  "transcript": [
+    {
+      "type": "run-start",
+      "task": "do-budget-refusal-pullup",
+      "mode": "do",
+      "llmCache": false,
+      "budgets": { "standby_current_ua": 20, "vdd_volts": 1.8 }
+    },
+    {
+      "type": "constraint-read",
+      "key": "standby_current_ua",
+      "value": 20
+    },
+    {
+      "type": "refusal",
+      "reason": "A 10k pullup from SELECT to VDD draws 1.8V/10k = 180uA, which exceeds the recorded standby_current_ua budget of 20uA by 9x. Satisfying standby_current_ua would require R > 90k, too weak to hold the line against leakage.",
+      "budgetKey": "standby_current_ua"
+    },
+    {
+      "type": "run-end",
+      "exitPath": "refused",
+      "turns": 4,
+      "repairCycles": 0
+    }
+  ],
+  "commit": true
+}

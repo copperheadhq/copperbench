@@ -1,0 +1,23 @@
+---
+// The one editorial input, site/status.json. Kept free of numerals. A
+// quantity belongs in a generated cell, not in prose that goes stale.
+import { blob, facts } from '../lib/facts';
+---
+
+{facts.status.length > 0 && (
+  <section class="section" id="status">
+    <h2 class="section-title">Status</h2>
+    <ol class="timeline">
+      {facts.status.map((e) => (
+        <li>
+          <span class={`marker marker-${e.state}`}></span>
+          <span class="state">{e.state}</span>
+          <span class="text">
+            <b>{e.title}</b>: {e.text}
+            {e.link && <a href={blob(e.link)}>{e.label ?? e.link} →</a>}
+          </span>
+        </li>
+      ))}
+    </ol>
+  </section>
+)}

@@ -1,0 +1,25 @@
+---
+import { blob, facts, plural, tree } from '../lib/facts';
+
+const lb = facts.leaderboard;
+const stamp = [
+  `suite ${lb.suiteVersion}`,
+  `schema ${lb.schemaVersion}`,
+  plural(lb.snapshot.records, 'record'),
+  lb.snapshot.dates.length > 0 ? `latest ${lb.snapshot.dates.at(-1)}` : 'no records',
+  facts.commit ? `built at ${facts.commit}` : 'built outside git',
+].join(' · ');
+---
+
+<footer class="footer">
+  <div class="container">
+    <span>Apache-2.0. Vendored boards keep their own licenses.</span>
+    <span class="stamp">{stamp}</span>
+    <span class="links">
+      <a href={facts.repoUrl}>GitHub</a>
+      <a href={tree('paper')}>Paper</a>
+      <a href={blob('STANDARD.md')}>Standard</a>
+      <a href="https://docs.copperhead.sh/">copperhead</a>
+    </span>
+  </div>
+</footer>

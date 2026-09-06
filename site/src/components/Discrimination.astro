@@ -1,0 +1,53 @@
+---
+// The two-sided invariant, per task: the no-op run must not pass, the
+// reference solution must. Each cell names the assertion that blocked it.
+import type { HarnessCell } from '../../../scripts/lib/leaderboard.ts';
+import { blob, facts } from '../lib/facts';
+
+const rows = facts.leaderboard.harness;
+
+function cellClass(cell: HarnessCell, expected: string): string {
+  return `verdict verdict-${cell.verdict} ${cell.verdict === expected ? 'verdict-expected' : 'verdict-unexpected'}`;
+}
+---
+
+<section class="section" id="discrimination">
+  <h2 class="section-title">Discrimination check</h2>
+  <p class="section-lead">
+    Before a token is spent, each task is run twice without a model. The <b>no-op</b> run does nothing. Every discriminating
+    assertion must fail, because an assertion set that passes on a no-op grades nothing. The <b>reference solution</b> applies a recorded
+    correct edit. Every evaluable assertion must pass. A run whose required assertion could not be evaluated, ERC without
+    <code>kicad-cli</code> for instance, is <b>unscoreable</b> rather than a pass or a fail. The assertion that blocked it is named.
+  </p>
+  {rows.length === 0 ? (
+    <p class="section-lead">No harness records yet.</p>
+  ) : (
+    <div class="table-card">
+      <table class="table">
+        <thead>
+          <tr><th>Task</th><th>Tier</th><th>Expected</th><th>No-op run</th><th>Reference solution</th><th>Date</th></tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => {
+            const noop = r.modes['noop'];
+            const gold = r.modes['gold'];
+            return (
+              <tr>
+                <td><a class="model" href={blob(`tasks/${r.taskId}/README.md`)}>{r.taskId}</a></td>
+                <td class="secondary">{r.tier}</td>
+                <td class="secondary">{r.expectedOutcome}</td>
+                {noop === undefined
+                  ? <td class="muted">not run</td>
+                  : <td><span class={cellClass(noop, 'fail')}>{noop.verdict}</span>{noop.verdict !== 'pass' && <span class="mono muted"> {noop.firstFailedRequired}</span>}</td>}
+                {gold === undefined
+                  ? <td class="muted">not run</td>
+                  : <td><span class={cellClass(gold, 'pass')}>{gold.verdict}</span>{gold.verdict !== 'pass' && <span class="mono muted"> {gold.firstFailedRequired}</span>}</td>}
+                <td class="num muted">{gold?.date ?? noop?.date ?? ''}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  )}
+</section>

@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import Sidebar from '../components/Sidebar.astro';
+import Hero from '../components/Hero.astro';
+import Leaderboard from '../components/Leaderboard.astro';
+import Discrimination from '../components/Discrimination.astro';
+import Incomparable from '../components/Incomparable.astro';
+import Status from '../components/Status.astro';
+import Fixtures from '../components/Fixtures.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base
+  title="copperbench"
+  description="A benchmark for language-model agents on verified KiCad hardware design edits. Real boards, kicad-cli as the oracle, cost reported beside pass rate."
+>
+  <Sidebar />
+  <div class="main">
+    <Hero />
+    <div class="container">
+      <Leaderboard />
+      <Discrimination />
+      <Incomparable />
+      <Status />
+      <Fixtures />
+    </div>
+    <Footer />
+  </div>
+</Base>
