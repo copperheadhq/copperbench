@@ -10,8 +10,11 @@
 
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+import { Ajv2020 } from 'ajv/dist/2020.js';
 
 import type { Score } from './score.ts';
 import { scanForSecrets } from './secrets.ts';
@@ -60,12 +63,36 @@ export function taskManifestHash(taskDir: string): string {
   return h.digest('hex');
 }
 
+let kicadCliVersion: string | null | undefined;
+
+/**
+ * The installed kicad-cli version, or null when it is absent. Probed once per
+ * process: the answer cannot change mid-run, and every record, every
+ * verification assertion, and the runner's own environment check read it.
+ */
 export function detectKicadCliVersion(): string | null {
+  if (kicadCliVersion !== undefined) return kicadCliVersion;
   try {
-    return execFileSync('kicad-cli', ['version'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    kicadCliVersion = execFileSync('kicad-cli', ['version'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
   } catch {
-    return null;
+    kicadCliVersion = null;
   }
+  return kicadCliVersion;
+}
+
+/**
+ * The next free run number under `<resultsDir>/<relDir>`, so a second run of
+ * the same task and model on the same day appends `run-2.json` rather than
+ * colliding with the append-only rule and aborting the whole matrix.
+ */
+export function nextRunIndex(resultsDir: string, relDir: string): number {
+  const dir = path.join(resultsDir, relDir);
+  if (!existsSync(dir)) return 1;
+  const used = readdirSync(dir)
+    .map((name) => /^run-(\d+)\.json$/.exec(name))
+    .filter((m): m is RegExpExecArray => m !== null)
+    .map((m) => Number.parseInt(m[1] as string, 10));
+  return used.length === 0 ? 1 : Math.max(...used) + 1;
 }
 
 export function copperheadVersion(repoRoot: string): string {
@@ -121,10 +148,23 @@ export function buildRecord(repoRoot: string, input: RecordInput): Record<string
 }
 
 export class SecretInRecordError extends Error {}
+export class RecordSchemaError extends Error {}
+
+const SCHEMA_FILE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', 'schema', 'result.schema.json');
+
+let validator: ((r: unknown) => boolean) & { errors?: Array<{ instancePath: string; message?: string }> | null };
+
+/** schema/result.schema.json, compiled once. It is the record's contract (STANDARD.md section 13). */
+function validateRecord(record: unknown): string[] {
+  validator ??= new Ajv2020({ allErrors: true, strict: false }).compile(JSON.parse(readFileSync(SCHEMA_FILE, 'utf8')) as object);
+  if (validator(record)) return [];
+  return (validator.errors ?? []).map((e) => `${e.instancePath || '/'} ${e.message ?? ''}`.trim());
+}
 
 /**
  * Write a record. Scans the serialized record first; a match hard-fails the run
- * rather than being silently scrubbed.
+ * rather than being silently scrubbed. Then validates against the schema, so a
+ * record on disk and schema/result.schema.json cannot disagree.
  */
 export function writeRecord(resultsDir: string, record: Record<string, unknown>, relPath: string): string {
   const body = `${JSON.stringify(record, null, 2)}\n`;
@@ -134,6 +174,11 @@ export function writeRecord(resultsDir: string, record: Record<string, unknown>,
     throw new SecretInRecordError(
       `refusing to write ${relPath}: matched credential pattern(s) ${hits.map((h) => h.kind).join(', ')}`,
     );
+  }
+
+  const problems = validateRecord(record);
+  if (problems.length > 0) {
+    throw new RecordSchemaError(`refusing to write ${relPath}: record does not satisfy schema/result.schema.json: ${problems.join('; ')}`);
   }
 
   const abs = path.join(resultsDir, relPath);

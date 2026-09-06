@@ -2,22 +2,21 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://copperhead.sh/schema/result.schema.json",
   "title": "copperbench result record",
-  "description": "One append-only record per run. Self-describing: readable and re-scorable in isolation, without the runner (STANDARD.md section 13).",
+  "description": "One append-only record per run, exactly as scripts/lib/record.ts writes it. Self-describing: readable and re-scorable in isolation, without the runner (STANDARD.md section 13). Every record is validated against this schema before it is written, so a record on disk and this document cannot disagree.",
   "type": "object",
   "additionalProperties": false,
   "required": [
     "schemaVersion",
     "suiteVersion",
     "task",
-    "model",
-    "environment",
+    "fixture",
     "run",
-    "assertions",
     "verdict",
-    "stats",
-    "cost",
-    "failure",
-    "artifacts"
+    "partialCredit",
+    "failureCategory",
+    "firstFailedRequired",
+    "assertions",
+    "comparability"
   ],
   "properties": {
     "schemaVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
@@ -29,21 +28,74 @@
     "task": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "tier", "mode", "expectedOutcome", "manifestSha256", "fixtureSha256", "tags"],
+      "required": ["id", "tier", "mode", "expectedOutcome"],
       "properties": {
         "id": { "type": "string" },
         "tier": { "enum": ["simple", "medium", "hard"] },
         "mode": { "enum": ["do", "create", "sync", "check"] },
         "expectedOutcome": { "enum": ["edit", "refusal", "flag"] },
-        "manifestSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
-        "fixtureSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
-        "variantOf": { "type": ["string", "null"] },
-        "tags": { "type": "array", "items": { "type": "string" } }
+        "variantOf": { "type": ["string", "null"] }
+      }
+    },
+    "fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "sha256"],
+      "properties": {
+        "id": { "type": "string" },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      }
+    },
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model", "repeat", "runMode", "llmCache", "baselineSha", "durationMs", "setupSkipped"],
+      "properties": {
+        "model": {
+          "type": "string",
+          "description": "The model id for an agent run; `harness:noop` or `harness:gold` for the provider-free modes."
+        },
+        "repeat": { "type": "integer", "minimum": 1 },
+        "runMode": {
+          "enum": ["noop", "gold", "agent"],
+          "description": "noop and gold are the suite's own discrimination check and never enter a model row."
+        },
+        "llmCache": {
+          "const": false,
+          "description": "Always false: a cached turn would manufacture determinism the model does not have."
+        },
+        "baselineSha": { "type": "string", "pattern": "^[a-f0-9]{40}$" },
+        "durationMs": { "type": "integer", "minimum": 0 },
+        "setupSkipped": {
+          "type": "array",
+          "description": "Setup commands that could not run. A run with skipped setup did not start from the state the task assumes.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["command", "reason"],
+            "properties": {
+              "command": { "type": "string" },
+              "reason": { "type": "string" }
+            }
+          }
+        },
+        "ablations": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Recorded overrides rather than forked tasks, so the same task is comparable across conditions.",
+          "properties": {
+            "promptVariant": { "type": ["string", "null"] },
+            "maxTurns": { "type": ["integer", "null"] },
+            "maxRepairCycles": { "type": ["integer", "null"] },
+            "toolSubset": { "type": ["array", "null"], "items": { "type": "string" } }
+          }
+        }
       }
     },
     "model": {
       "type": "object",
       "additionalProperties": false,
+      "description": "Provider identity for an agent run. Required when run.runMode is agent.",
       "required": ["id", "provider", "selectionSource", "segment", "pinning"],
       "properties": {
         "id": { "type": "string" },
@@ -61,81 +113,24 @@
         }
       }
     },
-    "environment": {
+    "cost": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["copperheadVersion", "copperheadCommit", "kicadCliVersion", "node", "platform"],
+      "description": "Required when run.runMode is agent.",
+      "required": ["usd", "priceTableVersion"],
       "properties": {
-        "copperheadVersion": { "type": "string" },
-        "copperheadCommit": { "type": "string" },
-        "kicadCliVersion": { "type": ["string", "null"] },
-        "node": { "type": "string" },
-        "platform": { "type": "string" }
-      }
-    },
-    "run": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["repeatIndex", "repeatsPlanned", "startedAt", "baselineCommit", "llmCacheDisabled", "allowDirty"],
-      "properties": {
-        "repeatIndex": { "type": "integer", "minimum": 1 },
-        "repeatsPlanned": { "type": "integer", "minimum": 1 },
-        "startedAt": { "type": "string", "format": "date-time" },
-        "baselineCommit": { "type": "string" },
-        "llmCacheDisabled": {
-          "const": true,
-          "description": "Always true: a cached turn would manufacture determinism the model does not have."
+        "usd": {
+          "type": ["number", "null"],
+          "description": "null for self-hosted open-weight and saved-login routes. Stored alongside the price-table version so a later price change never rewrites history."
         },
-        "allowDirty": { "const": false },
-        "ablations": {
-          "type": "object",
-          "additionalProperties": false,
-          "description": "Recorded overrides rather than forked tasks, so the same task is comparable across conditions.",
-          "properties": {
-            "promptVariant": { "type": ["string", "null"] },
-            "maxTurns": { "type": ["integer", "null"] },
-            "maxRepairCycles": { "type": ["integer", "null"] },
-            "toolSubset": { "type": ["array", "null"], "items": { "type": "string" } }
-          }
-        }
-      }
-    },
-    "assertions": {
-      "type": "array",
-      "minItems": 1,
-      "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": ["id", "type", "required", "weight", "passed", "evidenceSource"],
-        "properties": {
-          "id": { "type": "string" },
-          "type": { "type": "string" },
-          "required": { "type": "boolean" },
-          "weight": { "type": "number" },
-          "passed": { "type": "boolean" },
-          "evidenceSource": { "enum": ["end-state", "diff", "transcript"] },
-          "detail": { "type": ["string", "null"], "description": "Observed value, for reading a failure without the sandbox." }
-        }
-      }
-    },
-    "verdict": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["pass", "partialCredit"],
-      "properties": {
-        "pass": { "type": "boolean", "description": "True only when every required assertion passed." },
-        "partialCredit": {
-          "type": "number",
-          "minimum": 0,
-          "maximum": 1,
-          "description": "Diagnostic only. Never a headline number."
-        }
+        "priceTableVersion": { "type": ["string", "null"] }
       }
     },
     "stats": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["exitPath", "turnsUsed", "maxTurns", "repairCyclesUsed", "maxRepairCycles", "tokensIn", "tokensOut", "durationMs"],
+      "description": "The run-end figures. Required when run.runMode is agent.",
+      "required": ["exitPath", "turnsUsed", "maxTurns", "repairCyclesUsed", "maxRepairCycles", "tokensIn", "tokensOut"],
       "properties": {
         "exitPath": {
           "enum": [
@@ -156,29 +151,24 @@
         "maxRepairCycles": { "type": "integer", "minimum": 0 },
         "tokensIn": { "type": "integer", "minimum": 0 },
         "tokensOut": { "type": "integer", "minimum": 0 },
-        "durationMs": { "type": "integer", "minimum": 0 },
         "filesTouched": { "type": "array", "items": { "type": "string" } }
       }
     },
-    "cost": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["usd", "priceTableVersion"],
-      "properties": {
-        "usd": {
-          "type": ["number", "null"],
-          "description": "null for self-hosted open-weight and saved-login routes. Stored alongside the price-table version so a later price change never rewrites history."
-        },
-        "priceTableVersion": { "type": ["string", "null"] }
-      }
+    "verdict": {
+      "enum": ["pass", "fail", "unscoreable"],
+      "description": "pass only when every required assertion passed; unscoreable when a required assertion could not be evaluated and none failed. Unscoreable runs never enter a pass rate."
     },
-    "failure": {
-      "type": ["object", "null"],
-      "additionalProperties": false,
-      "description": "Present exactly when verdict.pass is false. Derived deterministically; no LLM participates.",
-      "required": ["category"],
-      "properties": {
-        "category": {
+    "partialCredit": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Diagnostic only. Never a headline number."
+    },
+    "failureCategory": {
+      "description": "Present exactly when verdict is fail. Derived deterministically; no LLM participates.",
+      "oneOf": [
+        { "type": "null" },
+        {
           "enum": [
             "tool-protocol",
             "file-revert",
@@ -192,9 +182,58 @@
             "commit-failed",
             "wrong-target"
           ]
+        }
+      ]
+    },
+    "firstFailedRequired": {
+      "type": ["string", "null"],
+      "description": "The first required assertion that did not pass, whether it failed or was unevaluable."
+    },
+    "assertions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "type", "status", "weight", "required", "detail"],
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "type": "string" },
+          "status": { "enum": ["pass", "fail", "unevaluable"] },
+          "weight": { "type": "number" },
+          "required": { "type": "boolean" },
+          "detail": { "type": "string", "description": "Observed value, for reading a failure without the sandbox." }
+        }
+      }
+    },
+    "comparability": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Records merge into a shared table only when schemaVersion, suiteVersion, taskManifestHash, fixtureSha256, and the kicad-cli major version all agree (STANDARD.md section 9).",
+      "required": [
+        "schemaVersion",
+        "suiteVersion",
+        "taskManifestHash",
+        "fixtureSha256",
+        "copperheadVersion",
+        "copperheadCommit",
+        "kicadCliVersion",
+        "nodeVersion",
+        "platform"
+      ],
+      "properties": {
+        "schemaVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "suiteVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "taskManifestHash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "fixtureSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "copperheadVersion": { "type": "string" },
+        "copperheadCommit": { "type": ["string", "null"] },
+        "kicadCliVersion": {
+          "type": ["string", "null"],
+          "description": "null when kicad-cli was absent, in which case every verification assertion is unevaluable and the record is comparable only with other kicad-less records."
         },
-        "firstFailedAssertion": { "type": ["string", "null"] },
-        "dominantToolError": { "type": ["string", "null"] }
+        "nodeVersion": { "type": "string" },
+        "platform": { "type": "string" }
       }
     },
     "rubric": {
@@ -212,6 +251,7 @@
     "artifacts": {
       "type": "object",
       "additionalProperties": false,
+      "description": "Where the evidence a re-score needs was preserved. Required when run.runMode is agent; the provider-free modes re-materialize their evidence instead.",
       "required": ["transcriptPath", "sandboxPreserved"],
       "properties": {
         "transcriptPath": { "type": "string", "description": "Relative path to the preserved, redacted transcript." },
@@ -219,5 +259,11 @@
         "sandboxPath": { "type": ["string", "null"] }
       }
     }
+  },
+  "if": {
+    "properties": { "run": { "properties": { "runMode": { "const": "agent" } } } }
+  },
+  "then": {
+    "required": ["model", "cost", "stats", "artifacts"]
   }
 }

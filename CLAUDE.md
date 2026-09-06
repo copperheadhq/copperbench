@@ -10,9 +10,9 @@ copperbench: a benchmark measuring language models on verified KiCad hardware ed
 
 ## Current state
 
-A working end-to-end loop, minus the agent. Validation, sandbox materialization, the three evidence adapters, 15 of the 23 assertion types, verdict computation, result-record writing, and `--rescore` are implemented and tested offline. `results/` holds real records from the provider-free run modes.
+A working end-to-end loop, minus the agent. Validation, sandbox materialization, the three evidence adapters, 17 of the 23 assertion types (the baseline-relative ERC and DRC checks among them, when `kicad-cli` is present), verdict computation, result-record writing, and `--rescore` are implemented and tested offline. `results/` holds real records from the provider-free run modes.
 
-**Not implemented:** `--mode agent` (needs a provider credential), the eight assertion types backed by `kicad-cli`, the aggregate report, `LEADERBOARD.md`, and the paper generator.
+**Not implemented:** `--mode agent` (needs a provider credential), six assertion types (`erc_clean`, `drc_clean`, `check_clean`, `drift_clean`, `pin_net_equals`, `doc_row_matches`), the aggregate report, `LEADERBOARD.md`, and the paper generator.
 
 **The run modes.** `--mode noop` does nothing and every discriminating assertion must fail; `--mode gold` applies a reference solution from `test/gold/<task-id>.json` and every evaluable assertion must pass. Together they are the two-sided invariant: an assertion set that passes on a no-op grades nothing, and one that fails on a correct solution is not gradable. Both run at zero provider cost, so a task can be proven to discriminate before a credential is spent.
 

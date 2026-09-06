@@ -6,17 +6,22 @@
 // fine and mean nothing.
 
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { evaluate, HANDLERS, type Outcome } from '../scripts/lib/assertions.ts';
-import { buildRecord, writeRecord, SecretInRecordError, taskManifestHash } from '../scripts/lib/record.ts';
+import { kicadCliAvailable, runDrc } from '../scripts/lib/verification.ts';
+import { buildRecord, writeRecord, RecordSchemaError, SecretInRecordError, taskManifestHash } from '../scripts/lib/record.ts';
 import { scoreRun } from '../scripts/lib/score.ts';
 import { Transcript, type Evidence } from '../scripts/lib/evidence.ts';
 import { REPO } from './helpers.ts';
+
+// Every CLI run here materializes a sandbox and, with kicad-cli present, runs
+// ERC and DRC for real, which takes seconds rather than milliseconds.
+vi.setConfig({ testTimeout: 120_000 });
 
 const tmps: string[] = [];
 afterEach(() => {
@@ -72,13 +77,39 @@ describe('the two-sided invariant', () => {
 });
 
 describe('unevaluable never becomes pass', () => {
-  it('reports a run with an unevaluable required assertion as unscoreable', () => {
-    // Without kicad-cli the two verification assertions cannot be evaluated.
-    // The other eleven pass, and the run is STILL not a pass.
+  it('gold passes the edit task with kicad-cli, and is unscoreable without it', () => {
+    // Both branches are load-bearing. With kicad-cli the reference solution
+    // must PASS, or the task is not gradable (the positive half of the
+    // two-sided invariant). Without it the two verification assertions are
+    // unevaluable and the run is unscoreable; a PASS there would be a lie.
     const results = tmp();
     const r = runCli(['--mode', 'gold', '--task', 'do-rename-net', '--results', results]);
-    expect(r.out).toContain('UNSCOREABLE  do-rename-net');
-    expect(r.out).not.toContain('PASS  do-rename-net');
+    if (kicadCliAvailable()) {
+      expect(r.out).toContain('PASS  do-rename-net');
+      expect(r.code).toBe(0);
+    } else {
+      expect(r.out).toContain('UNSCOREABLE  do-rename-net');
+      expect(r.out).not.toContain('PASS  do-rename-net');
+    }
+  });
+
+  it('grades a refusal on what the model said, not on the echoed config', async () => {
+    // copperhead's run-start event carries the task's budgets, so a transcript
+    // always contains the budget key somewhere. The citation has to come from
+    // the refusal itself.
+    const spec = { id: 'cites', type: 'refusal_cites_budget', args: { budgetKey: 'standby_current_ua' }, weight: 1, required: true };
+    const withOnlyEcho = new Transcript([
+      { type: 'run-start', budgets: { standby_current_ua: 20 } },
+      { type: 'refusal', reason: 'cannot do this' },
+      { type: 'run-end', exitPath: 'refused' },
+    ]);
+    const withCitation = new Transcript([
+      { type: 'run-start', budgets: { standby_current_ua: 20 } },
+      { type: 'refusal', reason: '180uA exceeds the standby_current_ua budget of 20uA' },
+      { type: 'run-end', exitPath: 'refused' },
+    ]);
+    expect((await evaluate(spec, { ...fakeEvidence(), transcript: withOnlyEcho })).status).toBe('fail');
+    expect((await evaluate(spec, { ...fakeEvidence(), transcript: withCitation })).status).toBe('pass');
   });
 
   it('scores an unevaluable required assertion as neither pass nor fail', () => {
@@ -97,6 +128,20 @@ describe('unevaluable never becomes pass', () => {
       { id: 'b', type: 'erc_clean', status: 'unevaluable', weight: 1, required: true, detail: '' },
     ];
     expect(scoreRun(outcomes, fakeEvidence()).verdict).toBe('fail');
+  });
+});
+
+describe('the scorer does not appear in its own evidence', () => {
+  // kicad-cli writes .kicad_prl beside the file it reads. Running it on the
+  // sandbox mutated the tree the diff assertions grade, so
+  // files_touched_subset failed on an artifact the scorer created. Verification
+  // now runs against a copy.
+  it.skipIf(!kicadCliAvailable())('leaves the project directory untouched when running DRC', () => {
+    const dir = tmp();
+    cpSync(path.join(REPO, 'fixtures', 'antmicro-microphone-board', 'tree'), dir, { recursive: true });
+    const before = readdirSync(path.join(dir, 'hardware')).sort();
+    runDrc(path.join(dir, 'hardware', 'microphone-board.kicad_pcb'), dir);
+    expect(readdirSync(path.join(dir, 'hardware')).sort()).toEqual(before);
   });
 });
 
@@ -158,18 +203,37 @@ describe('record writing', () => {
 
   it('is append-only', () => {
     const dir = tmp();
-    writeRecord(dir, { ok: true }, 'r.json');
-    expect(() => writeRecord(dir, { ok: true }, 'r.json')).toThrow(/append-only/);
+    writeRecord(dir, sampleRecord(), 'r.json');
+    expect(() => writeRecord(dir, sampleRecord(), 'r.json')).toThrow(/append-only/);
+  });
+
+  it('refuses a record that does not satisfy schema/result.schema.json', () => {
+    // The schema is the contract a third party reads a record by. A record
+    // that the schema rejects must never reach results/.
+    const dir = tmp();
+    expect(() => writeRecord(dir, { ok: true }, 'r.json')).toThrow(RecordSchemaError);
+    const missingStamp = sampleRecord();
+    delete missingStamp['comparability'];
+    expect(() => writeRecord(dir, missingStamp, 's.json')).toThrow(RecordSchemaError);
+  });
+
+  it('gives a second run on the same day the next run number', () => {
+    // Records are append-only, so the second run of a day must land beside
+    // the first rather than collide with it and abort the matrix.
+    const results = tmp();
+    const first = runCli(['--mode', 'gold', '--task', 'do-budget-refusal-pullup', '--results', results]);
+    const second = runCli(['--mode', 'gold', '--task', 'do-budget-refusal-pullup', '--results', results]);
+    expect(first.code).toBe(0);
+    expect(second.code).toBe(0);
+    const date = new Date().toISOString().slice(0, 10);
+    const dir = path.join(results, date, 'harness-gold', 'do-budget-refusal-pullup');
+    expect(readdirSync(dir).sort()).toEqual(['run-1.json', 'run-2.json']);
+    const rec = JSON.parse(readFileSync(path.join(dir, 'run-2.json'), 'utf8')) as { run: { repeat: number } };
+    expect(rec.run.repeat).toBe(2);
   });
 
   it('stamps comparability on every record', () => {
-    const rec = buildRecord(REPO, {
-      taskId: 't', tier: 'simple', mode: 'do', expectedOutcome: 'edit',
-      model: 'harness:gold', repeat: 1, fixtureId: 'f', fixtureSha256: 'a'.repeat(64),
-      taskManifestHash: 'b'.repeat(64), baselineSha: 'c'.repeat(40), runMode: 'gold',
-      llmCache: false, setupSkipped: [], durationMs: 1,
-      score: { verdict: 'pass', partialCredit: 1, firstFailedRequired: undefined, failureCategory: undefined, outcomes: [] },
-    });
+    const rec = sampleRecord();
     const stamp = rec['comparability'] as Record<string, unknown>;
     for (const key of ['schemaVersion', 'suiteVersion', 'taskManifestHash', 'fixtureSha256', 'copperheadVersion', 'nodeVersion', 'platform']) {
       expect(stamp[key], key).toBeDefined();
@@ -194,7 +258,23 @@ describe('re-scoring', () => {
     const results = tmp();
     runCli(['--mode', 'gold', '--task', 'do-budget-refusal-pullup', '--results', results]);
     const r = runCli(['--rescore', results]);
-    expect(r.out).toContain('0 drift(s)');
+    expect(r.out).toContain('1 re-scored, 0 not comparable, 0 drift(s)');
+    expect(r.code).toBe(0);
+  });
+
+  it('segregates a record from another kicad-cli environment instead of calling it drift', () => {
+    // The comparability stamp exists so an environment difference is never
+    // reported as a failed reproduction (STANDARD.md section 9).
+    const results = tmp();
+    runCli(['--mode', 'gold', '--task', 'do-budget-refusal-pullup', '--results', results]);
+    const date = new Date().toISOString().slice(0, 10);
+    const file = path.join(results, date, 'harness-gold', 'do-budget-refusal-pullup', 'run-1.json');
+    const rec = JSON.parse(readFileSync(file, 'utf8')) as { comparability: { kicadCliVersion: string | null } };
+    rec.comparability.kicadCliVersion = rec.comparability.kicadCliVersion === null ? '7.0.0' : null;
+    writeFileSync(file, `${JSON.stringify(rec, null, 2)}\n`);
+    const r = runCli(['--rescore', results]);
+    expect(r.out).toContain('0 re-scored, 1 not comparable, 0 drift(s)');
+    expect(r.out).toContain('SKIP');
     expect(r.code).toBe(0);
   });
 });
@@ -213,6 +293,19 @@ describe('the runner refuses what it cannot honestly do', () => {
   });
 });
 
+function sampleRecord(): Record<string, unknown> {
+  return buildRecord(REPO, {
+    taskId: 't', tier: 'simple', mode: 'do', expectedOutcome: 'edit',
+    model: 'harness:gold', repeat: 1, fixtureId: 'f', fixtureSha256: 'a'.repeat(64),
+    taskManifestHash: 'b'.repeat(64), baselineSha: 'c'.repeat(40), runMode: 'gold',
+    llmCache: false, setupSkipped: [], durationMs: 1,
+    score: {
+      verdict: 'pass', partialCredit: 1, firstFailedRequired: undefined, failureCategory: undefined,
+      outcomes: [{ id: 'a', type: 'net_present', status: 'pass', weight: 1, required: true, detail: '' }],
+    },
+  });
+}
+
 function fakeEvidence(): Evidence {
   return {
     endState: { dir: '', schematicPath: '' } as never,
@@ -220,5 +313,6 @@ function fakeEvidence(): Evidence {
     transcript: new Transcript([]),
     baseline: {},
     kicadAvailable: false,
+    boardPath: null,
   };
 }

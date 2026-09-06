@@ -20,6 +20,7 @@
 //   npm run benchmark -- --mode noop --dry-run
 //   npm run benchmark -- --rescore results/<date>
 
+import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -27,7 +28,8 @@ import { fileURLToPath } from 'node:url';
 import { evaluate, type AssertionSpec, type Outcome } from './lib/assertions.ts';
 import { DiffEvidence, EndState, Transcript, type Evidence } from './lib/evidence.ts';
 import { git } from './lib/git.ts';
-import { buildRecord, taskManifestHash, writeRecord, detectKicadCliVersion } from './lib/record.ts';
+import { kicadMajor, loadRecords } from './lib/leaderboard.ts';
+import { buildRecord, detectKicadCliVersion, nextRunIndex, SCHEMA_VERSION, SUITE_VERSION, taskManifestHash, writeRecord } from './lib/record.ts';
 import { materialize, type Sandbox } from './lib/sandbox.ts';
 import { scoreRun, type Score } from './lib/score.ts';
 import { validateSuite } from './validate.ts';
@@ -82,6 +84,34 @@ function loadGold(taskId: string): GoldSolution | undefined {
   const file = path.join(REPO, 'test', 'gold', `${taskId}.json`);
   if (!existsSync(file)) return undefined;
   return JSON.parse(readFileSync(file, 'utf8')) as GoldSolution;
+}
+
+// ---------------------------------------------------------------------------
+// Setup
+// ---------------------------------------------------------------------------
+
+const COPPERHEAD_CLI = path.join(REPO, 'node_modules', 'copperhead', 'dist', 'cli.js');
+
+/**
+ * Run one declared setup command in the sandbox, before the baseline commit.
+ * Only LLM-free copperhead subcommands are admissible, and today that is
+ * `init`, which scaffolds docs/ from the schematic and needs kicad-cli. When
+ * the environment cannot run it the command is recorded as skipped, and a
+ * record with skipped setup is segregated rather than compared: its run did
+ * not start from the state the task assumes (STANDARD.md section 3.1).
+ *
+ * `--no-hooks` because the pre-commit hook lives in .git/, outside the tree
+ * the diff evidence measures, and the harness commits are not the agent's.
+ */
+function runSetupCommand(sandboxDir: string, command: string): boolean {
+  if (command !== 'init') return false;
+  if (detectKicadCliVersion() === null || !existsSync(COPPERHEAD_CLI)) return false;
+  try {
+    execFileSync(process.execPath, [COPPERHEAD_CLI, 'init', '--no-hooks'], { cwd: sandboxDir, stdio: 'ignore' });
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -143,6 +173,7 @@ async function scoreSandbox(sandbox: Sandbox, task: Task, fixture: Record<string
     transcript: Transcript.fromSandbox(sandbox.dir),
     baseline: fixture['baseline'] ?? {},
     kicadAvailable: detectKicadCliVersion() !== null,
+    boardPath: (fixture['artifacts']?.board as string | null | undefined) ?? null,
   };
 
   const outcomes: Outcome[] = [];
@@ -221,9 +252,7 @@ async function main(argv: string[]): Promise<number> {
       treeDir: path.join(fixtureDir, 'tree'),
       config: task.manifest['config'],
       setupCommands: task.manifest['setup']?.commands,
-      // copperhead init hard-requires kicad-cli, so setup is recorded as
-      // skipped rather than silently treated as having run.
-      runSetup: () => false,
+      runSetup: runSetupCommand,
     });
 
     try {
@@ -231,13 +260,15 @@ async function main(argv: string[]): Promise<number> {
       else if (gold) runGold(sandbox, task, gold);
 
       const score = await scoreSandbox(sandbox, task, fixture);
+      const relDir = path.join(date, `harness-${mode}`, task.id);
+      const repeat = nextRunIndex(resultsDir, relDir);
       const record = buildRecord(REPO, {
         taskId: task.id,
         tier: task.manifest['tier'],
         mode: task.manifest['mode'],
         expectedOutcome: task.manifest['expectedOutcome'],
         model: `harness:${mode}`,
-        repeat: 1,
+        repeat,
         fixtureId: fixture['id'],
         fixtureSha256: fixture['sha256'],
         taskManifestHash: taskManifestHash(task.dir),
@@ -249,8 +280,7 @@ async function main(argv: string[]): Promise<number> {
         score,
       });
 
-      const rel = path.join(date, `harness-${mode}`, task.id, 'run-1.json');
-      const written = writeRecord(resultsDir, record, rel);
+      const written = writeRecord(resultsDir, record, path.join(relDir, `run-${repeat}.json`));
 
       report(task, score, path.relative(REPO, written), sandbox);
       if (score.verdict !== 'pass') failures += 1;
@@ -269,65 +299,78 @@ async function main(argv: string[]): Promise<number> {
  * outcome comes back identical. A drift here means a published number can no
  * longer be reproduced from the repository, which is the claim this project
  * rests on.
+ *
+ * A record whose comparability stamp disagrees with this environment or with
+ * the checked-out suite is not re-scored: it is reported as not comparable,
+ * the same rule the leaderboard applies (STANDARD.md section 9). Comparing it
+ * anyway would report an environment difference as a failed reproduction.
  */
 async function rescore(dir: string): Promise<number> {
-  const records: string[] = [];
-  const walk = (d: string): void => {
-    for (const e of readdirSync(d, { withFileTypes: true })) {
-      const full = path.join(d, e.name);
-      if (e.isDirectory()) walk(full);
-      else if (e.name.endsWith('.json')) records.push(full);
-    }
-  };
   if (!existsSync(dir)) {
     console.error(`no such results directory: ${path.relative(REPO, dir)}`);
     return 1;
   }
-  walk(dir);
+  const records = loadRecords(dir);
+  const here = detectKicadCliVersion();
 
   let drift = 0;
-  for (const file of records.sort()) {
-    const rec = JSON.parse(readFileSync(file, 'utf8')) as Record<string, any>;
-    const taskId: string = rec['task'].id;
-    const runMode = rec['run'].runMode as RunMode;
-    const [task] = loadTasks(taskId);
-    if (!task) {
-      console.error(`DRIFT ${taskId}: task no longer exists in the suite`);
-      drift += 1;
-      continue;
-    }
+  let skipped = 0;
+  for (const { record: rec, relPath } of records) {
+    const label = path.relative(REPO, path.join(dir, relPath));
+    const taskId = rec.task.id;
+    const runMode = rec.run.runMode;
+    const stamp = rec.comparability;
 
-    // A manifest edit invalidates comparison rather than silently re-grading.
-    const nowHash = taskManifestHash(task.dir);
-    if (nowHash !== rec['comparability'].taskManifestHash) {
-      console.error(`DRIFT ${taskId}: task manifest changed since the record was written`);
-      drift += 1;
+    const why: string[] = [];
+    if (stamp.schemaVersion !== SCHEMA_VERSION) why.push(`schemaVersion ${stamp.schemaVersion} ≠ ${SCHEMA_VERSION}`);
+    if (stamp.suiteVersion !== SUITE_VERSION) why.push(`suiteVersion ${stamp.suiteVersion} ≠ ${SUITE_VERSION}`);
+    if (kicadMajor(stamp.kicadCliVersion) !== kicadMajor(here)) {
+      why.push(`recorded under kicad-cli ${stamp.kicadCliVersion ?? 'none'}, this environment has ${here ?? 'none'}`);
+    }
+    if (rec.run.setupSkipped.length > 0) {
+      why.push(`setup was skipped when the record was written: ${rec.run.setupSkipped.map((s) => s.command).join(', ')}`);
+    }
+    // An agent run is not deterministic: it re-scores from the sandbox and
+    // transcript preserved when it ran, never from a fresh run.
+    const preserved = runMode === 'agent' ? rec.artifacts?.sandboxPath ?? null : null;
+    if (runMode === 'agent' && (preserved === null || !existsSync(path.resolve(REPO, preserved)))) {
+      why.push('agent record has no preserved sandbox to re-score from');
+    }
+    const [task] = loadTasks(taskId);
+    if (!task) why.push('task no longer exists in the suite');
+    else if (taskManifestHash(task.dir) !== stamp.taskManifestHash) why.push('task manifest changed since the record was written');
+    if (why.length > 0 || !task) {
+      console.log(`SKIP  ${label}  not comparable: ${why.join('; ')}`);
+      skipped += 1;
       continue;
     }
 
     const fixtureDir = path.join(REPO, task.manifest['fixture'].path);
     const fixture = JSON.parse(readFileSync(path.join(fixtureDir, 'fixture.json'), 'utf8'));
-    const sandbox = materialize({
-      treeDir: path.join(fixtureDir, 'tree'),
-      config: task.manifest['config'],
-      setupCommands: task.manifest['setup']?.commands,
-      runSetup: () => false,
-    });
+    const sandbox: Sandbox =
+      preserved !== null
+        ? { dir: path.resolve(REPO, preserved), baselineSha: rec.run.baselineSha, setupSkipped: rec.run.setupSkipped, cleanup: () => {} }
+        : materialize({
+            treeDir: path.join(fixtureDir, 'tree'),
+            config: task.manifest['config'],
+            setupCommands: task.manifest['setup']?.commands,
+            runSetup: runSetupCommand,
+          });
     try {
       if (runMode === 'noop') runNoop(sandbox, task);
-      else {
+      else if (runMode === 'gold') {
         const gold = loadGold(task.id);
         if (!gold) throw new Error(`no reference solution for ${task.id}`);
         runGold(sandbox, task, gold);
       }
       const score = await scoreSandbox(sandbox, task, fixture);
 
-      const before = (rec['assertions'] as Outcome[]).map((o) => `${o.id}=${o.status}`).join(',');
+      const before = (rec.assertions as Outcome[]).map((o) => `${o.id}=${o.status}`).join(',');
       const after = score.outcomes.map((o) => `${o.id}=${o.status}`).join(',');
-      const ok = before === after && rec['verdict'] === score.verdict;
-      console.log(`${ok ? 'ok    ' : 'DRIFT '}${path.relative(REPO, file)}  ${score.verdict}`);
+      const ok = before === after && rec.verdict === score.verdict;
+      console.log(`${ok ? 'ok    ' : 'DRIFT '}${label}  ${score.verdict}`);
       if (!ok) {
-        console.error(`  recorded ${rec['verdict']}: ${before}`);
+        console.error(`  recorded ${rec.verdict}: ${before}`);
         console.error(`  now      ${score.verdict}: ${after}`);
         drift += 1;
       }
@@ -336,7 +379,9 @@ async function rescore(dir: string): Promise<number> {
     }
   }
 
-  console.log(`\n${records.length} record(s) re-scored, ${drift} drift(s), no provider and no network`);
+  console.log(
+    `\n${records.length} record(s): ${records.length - skipped} re-scored, ${skipped} not comparable, ${drift} drift(s), no provider and no network`,
+  );
   return drift > 0 ? 1 : 0;
 }
 
