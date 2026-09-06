@@ -25,7 +25,7 @@ Start with [STANDARD.md](STANDARD.md). It is normative: it defines the task form
 | `results/` | Append-only result records, one JSON per run |
 | `LEADERBOARD.md` | Generated from `results/`, never hand-edited |
 | [paper/](paper/) | The arXiv-style whitepaper, whose every number is generated from `results/` |
-| [site/](site/) | The website, built by Astro from `results/`, `tasks/` and `fixtures/` with `npm run site`. Published by CI, never hand-edited |
+| [site/](site/) | The website, built by Astro from `results/`, `tasks/` and `fixtures/` with `npm run site`. Deployed to Cloudflare Workers on push, never hand-edited |
 | [openspec/](openspec/changes/add-model-benchmark-suite/) | Planning artifacts: proposal, design decisions, delta specs, task list |
 
 ## Relationship to copperhead

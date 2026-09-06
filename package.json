@@ -28,9 +28,10 @@
     "hash": "node scripts/hash-fixture.mjs",
     "validate": "tsx scripts/validate.ts",
     "benchmark": "tsx scripts/benchmark.ts",
-    "site": "astro build --root site",
-    "site:dev": "astro dev --root site",
+    "site": "node site/copy-fonts.mjs && astro build --root site",
+    "site:dev": "node site/copy-fonts.mjs && astro dev --root site",
     "site:serve": "npm run site && astro preview --root site",
+    "site:deploy": "npm run site && wrangler deploy",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "lint:md": "markdownlint-cli2 \"**/*.md\" \"#node_modules/**\" \"#fixtures/**/tree/**\"",
@@ -38,6 +39,8 @@
     "paper:pdf": "node scripts/build-paper.mjs --no-render"
   },
   "devDependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
     "@types/node": "^22.13.10",
     "ajv": "^8.20.0",
     "astro": "^7.3.1",
@@ -45,7 +48,8 @@
     "markdownlint-cli2": "0.23.2",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2",
-    "vitest": "^3.0.8"
+    "vitest": "^3.0.8",
+    "wrangler": "^4.129.0"
   },
   "peerDependencies": {
     "copperhead": ">=0.8.1"

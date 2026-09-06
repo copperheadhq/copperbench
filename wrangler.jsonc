@@ -1,0 +1,28 @@
+// Cloudflare Worker that serves the website (site/dist/) as static assets.
+//
+// Assets only: no Worker script, no bindings, nothing runs at the edge beyond
+// the asset router. Deploys come from Cloudflare's GitHub integration (Workers
+// Builds): the Worker is connected to this repository in the dashboard, and
+// Cloudflare runs `npm run site` then `npx wrangler deploy` on every push to
+// main, with a preview version for every other branch and pull request. The
+// settings are listed in site/README.md. `npm run site:deploy` does the same
+// from a machine logged in with `wrangler login`.
+//
+// To serve on a custom domain, add the zone to the account and uncomment
+// routes below with the hostname.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "copperbench",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "./site/dist",
+    // Astro writes index.html and 404.html at the root (build.format "file").
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "workers_dev": true
+  // "routes": [{ "pattern": "<domain>", "custom_domain": true }]
+}

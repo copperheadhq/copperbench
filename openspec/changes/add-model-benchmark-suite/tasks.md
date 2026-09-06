@@ -49,7 +49,7 @@
 - [ ] 5.4 Implement `LEADERBOARD.md` generation with generated-file markers, comparability segregation of mismatched records, and a consistency check that fails on a hand edit
 - [ ] 5.5 Implement `--compare <baseline.json>` with per-tier thresholds for pass-rate drop and cost-per-pass rise, exiting non-zero past threshold
 - [x] 5.6 Wire `npm run benchmark` with `--validate`, `--mode noop|gold`, `--task`, `--results`, `--dry-run`, and `--rescore`. `--mode agent` exits 2 rather than pretending. Not part of default CI
-- [x] 5.7 Implement the website (`site/`, Astro, static): leaderboard-first page rendered from `results/` through `scripts/lib/leaderboard.ts` and `scripts/lib/site-facts.ts`, the shared aggregation that 5.2 and 5.4 extend. Comparability segregation, unscoreable exclusion and the harness discrimination table are implemented there and tested in `test/leaderboard.test.ts`; `LEADERBOARD.md` (5.4) should read the same module rather than re-derive. Published by `.github/workflows/site.yml`
+- [x] 5.7 Implement the website (`site/`, Astro, static): leaderboard-first page rendered from `results/` through `scripts/lib/leaderboard.ts` and `scripts/lib/site-facts.ts`, the shared aggregation that 5.2 and 5.4 extend. Comparability segregation, unscoreable exclusion and the harness discrimination table are implemented there and tested in `test/leaderboard.test.ts`; `LEADERBOARD.md` (5.4) should read the same module rather than re-derive. Deployed to Cloudflare Workers as static assets through Cloudflare's GitHub integration (`wrangler.jsonc`, settings in `site/README.md`)
 
 ## 6. Suite build-out
 
