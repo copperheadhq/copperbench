@@ -13,7 +13,11 @@ const { title, description } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="icon" href="mark.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="manifest" href="site.webmanifest" />
+    <meta name="theme-color" content="#b87333" />
     <link rel="stylesheet" href="fonts/inter/index.css" />
     <link rel="stylesheet" href="fonts/ibm-plex-mono/400.css" />
     <link rel="stylesheet" href="fonts/ibm-plex-mono/500.css" />
