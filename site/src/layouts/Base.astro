@@ -52,6 +52,17 @@ const image = absolute('og.png');
     <link rel="stylesheet" href="fonts/ibm-plex-mono/400.css" />
     <link rel="stylesheet" href="fonts/ibm-plex-mono/500.css" />
     <link rel="stylesheet" href="styles.css" />
+
+    <!-- Google tag (gtag.js). is:inline keeps Astro from bundling these into a
+         hoisted module, which would scope `gtag` away from the global the
+         loader expects and drop the async loader tag from the output. -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-DN1FW6G2MM"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-DN1FW6G2MM');
+    </script>
   </head>
   <body>
     <slot />
