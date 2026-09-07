@@ -74,7 +74,7 @@ const types = (m: Record<string, number>) => Object.entries(m).map(([k, v]) => `
           <tr><th>Sheets</th><td class="num">{n(f.sheets)}</td></tr>
           <tr><th>Symbols</th><td class="num">{n(f.symbols)}</td></tr>
           <tr><th>Schematic lines</th><td class="num">{n(f.schematicLines)}</td></tr>
-          <tr><th>Board lines</th><td class="num">{n(f.boardLines)}</td></tr>
+          <tr><th>Board lines</th><td class="num">{f.boardLines === null ? 'no board' : n(f.boardLines)}</td></tr>
           <tr><th>Signal nets</th><td class="mono">{f.signalNets.join(', ') || 'none listed'}</td></tr>
           <tr><th>Power nets</th><td class="mono">{f.powerNets.join(', ') || 'none listed'}</td></tr>
         </tbody>
@@ -101,14 +101,23 @@ const types = (m: Record<string, number>) => Object.entries(m).map(([k, v]) => `
             <td class="mono muted">{types(f.baseline.erc.warningTypes)}</td>
             <td class="muted"></td>
           </tr>
-          <tr>
-            <td class="model">DRC</td>
-            <td class="right num">{f.baseline.drc.errors}</td>
-            <td class="mono muted">{types(f.baseline.drc.errorTypes)}</td>
-            <td class="right num secondary">{f.baseline.drc.warnings}</td>
-            <td class="mono muted">{types(f.baseline.drc.warningTypes)}</td>
-            <td class="secondary num">{f.baseline.drc.unconnectedItems} unconnected, {f.baseline.drc.schematicParity} parity</td>
-          </tr>
+          {
+            f.baseline.drc ? (
+              <tr>
+                <td class="model">DRC</td>
+                <td class="right num">{f.baseline.drc.errors}</td>
+                <td class="mono muted">{types(f.baseline.drc.errorTypes)}</td>
+                <td class="right num secondary">{f.baseline.drc.warnings}</td>
+                <td class="mono muted">{types(f.baseline.drc.warningTypes)}</td>
+                <td class="secondary num">{f.baseline.drc.unconnectedItems} unconnected, {f.baseline.drc.schematicParity} parity</td>
+              </tr>
+            ) : (
+              <tr>
+                <td class="model">DRC</td>
+                <td class="muted" colspan="5">no board, so no DRC baseline</td>
+              </tr>
+            )
+          }
         </tbody>
       </table>
     </div>

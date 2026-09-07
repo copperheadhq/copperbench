@@ -8,15 +8,30 @@
 // links to the repository on GitHub instead, so a reader is never sent
 // off-site for something the site can show.
 
+import { statSync } from 'node:fs';
 import path from 'node:path';
 
 const RECORD = /^results\/(\d{4}-\d{2}-\d{2}\/[^/]+\/[^/]+\/run-\d+)\.json$/;
 
 /** Normalize a repository path: posix separators, no leading `./`, no trailing slash, `''` for the root. */
 export function normalizeRepoPath(p: string): string {
-  const posix = path.posix.normalize(p.replace(/\\/g, '/'));
-  const trimmed = posix.replace(/^(\.\/)+/, '').replace(/\/+$/, '');
+  const trimmed = path.posix.normalize(p.replace(/\\/g, '/')).replace(/\/+$/, '');
   return trimmed === '.' ? '' : trimmed;
+}
+
+/**
+ * Whether a repository path is a directory on disk, for choosing between a
+ * GitHub tree and blob link. A path that is not on disk would 404 on GitHub
+ * either way and is linked as a file.
+ */
+export function isDirectoryIn(repoRoot: string): (repoPath: string) => boolean {
+  return (repoPath) => {
+    try {
+      return statSync(path.join(repoRoot, repoPath)).isDirectory();
+    } catch {
+      return false;
+    }
+  };
 }
 
 /**
@@ -33,9 +48,11 @@ export function siteRoute(repoPath: string): string | null {
   if (p === 'tasks') return 'tasks';
   if (p === 'fixtures' || p === 'fixtures/FIXTURES.md') return 'fixtures';
   if (p === 'results') return 'results';
-  const task = /^tasks\/([^/]+)$/.exec(p);
+  // A task or fixture is a directory named by its id, which carries no dot;
+  // a file beside them (tasks/TEMPLATE.md, say) has no page.
+  const task = /^tasks\/([^/.]+)$/.exec(p);
   if (task) return `tasks/${task[1]}`;
-  const fixture = /^fixtures\/([^/]+)$/.exec(p);
+  const fixture = /^fixtures\/([^/.]+)$/.exec(p);
   if (fixture) return `fixtures/${fixture[1]}`;
   const record = RECORD.exec(p);
   if (record) return `results/${record[1]}`;
@@ -56,12 +73,17 @@ export function githubUrl(repoUrl: string, repoPath: string, isDirectory: boolea
  * at the root, exactly as the served URLs resolve relative links.
  */
 export function routeDepth(sitePath: string): number {
-  const clean = sitePath
+  const clean = normalizeSitePath(sitePath);
+  return clean === '' ? 0 : clean.split('/').length - 1;
+}
+
+/** A served or built address as a site path: no `.html`, no `index`, no leading or trailing slash, `''` for the front page. */
+export function normalizeSitePath(pathname: string): string {
+  return pathname
     .replace(/\.html$/, '')
     .replace(/(^|\/)index$/, '$1')
     .replace(/^\/+/, '')
     .replace(/\/+$/, '');
-  return clean === '' ? 0 : clean.split('/').length - 1;
 }
 
 /**
@@ -100,7 +122,17 @@ export function rewriteMarkdownLink(href: string, ctx: RewriteContext): string {
   const fileDir = path.posix.dirname(ctx.filePath.replace(/\\/g, '/'));
   // A link that climbs above the repository root is clamped to the root: the
   // author meant a repository path, and GitHub renders it that way too.
-  const resolved = path.posix.normalize(path.posix.join(fileDir, decodeURI(target))).replace(/^(\.\.\/)+/, '').replace(/^\.\.$/, '');
+  // A malformed percent escape is the author's problem, not the build's: the
+  // link passes through as written and resolves to GitHub, which is where it
+  // would have failed anyway.
+  const decoded = ((): string => {
+    try {
+      return decodeURI(target);
+    } catch {
+      return target;
+    }
+  })();
+  const resolved = path.posix.normalize(path.posix.join(fileDir, decoded)).replace(/^(\.\.\/)+/, '').replace(/^\.\.$/, '');
   const repoPath = normalizeRepoPath(resolved);
 
   const from = siteRoute(ctx.filePath) ?? '';

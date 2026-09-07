@@ -40,7 +40,8 @@ const comparable = facts.records.filter((r) => r.comparable).length;
       <p>
         Schema {lb.schemaVersion}, suite {lb.suiteVersion}, the checked-out task manifest and fixture hashes, and
         {lb.kicadMajor === null ? 'no kicad-cli reference yet' : lb.kicadMajor === 'none' ? 'no kicad-cli' : `kicad-cli ${lb.kicadMajor}`}.
-        A record that doesn't match on one of these is listed with the reason and left out of the leaderboard.
+        A record that doesn't match on one of these, or whose run skipped a setup command, is listed with the reason and left out
+        of the leaderboard.
       </p>
       <a href={github('results')}>Raw files on GitHub <Icon name="ext" /></a>
     </div>

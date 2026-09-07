@@ -59,14 +59,16 @@ export interface FixtureFact {
   sheets: number;
   symbols: number;
   schematicLines: number;
-  boardLines: number;
+  /** null for a schematic-only fixture: the schema makes the board, its line count and its DRC baseline optional. */
+  boardLines: number | null;
   signalNets: string[];
   powerNets: string[];
   kicad: { authoredVersion: string; fileFormatVersion: string; verifiedWithKicadCli: string };
-  artifacts: Record<string, string>;
+  artifacts: Record<string, string | null>;
   baseline: {
     /** `errorTypes` enumerates every baseline error by type; the fixture standard requires it whenever `errors` is non-zero. */
     erc: { errors: number; errorTypes: Record<string, number>; warnings: number; warningTypes: Record<string, number> };
+    /** null when the fixture has no board. */
     drc: {
       errors: number;
       errorTypes: Record<string, number>;
@@ -74,7 +76,7 @@ export interface FixtureFact {
       warningTypes: Record<string, number>;
       unconnectedItems: number;
       schematicParity: number;
-    };
+    } | null;
     note: string | null;
   };
 }
@@ -253,11 +255,11 @@ interface FixtureManifest {
   complexity: Tier;
   upstream: { name: string; url: string; commit: string; retrieved: string; license: string; copyright: string; modifications: string };
   kicad: { authoredVersion: string; fileFormatVersion: string; verifiedWithKicadCli: string };
-  artifacts: Record<string, string>;
-  scale: { sheets: number; symbols: number; schematicLines: number; boardLines: number; signalNets: string[]; powerNets: string[] };
+  artifacts: Record<string, string | null>;
+  scale: { sheets: number; symbols: number; schematicLines: number; boardLines?: number | null; signalNets?: string[]; powerNets?: string[] };
   baseline: {
     erc: { errors: number; errorTypes?: Record<string, number>; warnings: number; warningTypes?: Record<string, number> };
-    drc: {
+    drc?: {
       errors: number;
       errorTypes?: Record<string, number>;
       warnings: number;
@@ -286,9 +288,9 @@ function readFixtures(repoRoot: string): FixtureFact[] {
       sheets: m.scale.sheets,
       symbols: m.scale.symbols,
       schematicLines: m.scale.schematicLines,
-      boardLines: m.scale.boardLines,
-      signalNets: m.scale.signalNets,
-      powerNets: m.scale.powerNets,
+      boardLines: m.scale.boardLines ?? null,
+      signalNets: m.scale.signalNets ?? [],
+      powerNets: m.scale.powerNets ?? [],
       kicad: m.kicad,
       artifacts: m.artifacts,
       baseline: {
@@ -298,14 +300,16 @@ function readFixtures(repoRoot: string): FixtureFact[] {
           warnings: m.baseline.erc.warnings,
           warningTypes: m.baseline.erc.warningTypes ?? {},
         },
-        drc: {
-          errors: m.baseline.drc.errors,
-          errorTypes: m.baseline.drc.errorTypes ?? {},
-          warnings: m.baseline.drc.warnings,
-          warningTypes: m.baseline.drc.warningTypes ?? {},
-          unconnectedItems: m.baseline.drc.unconnectedItems,
-          schematicParity: m.baseline.drc.schematicParity,
-        },
+        drc: m.baseline.drc
+          ? {
+              errors: m.baseline.drc.errors,
+              errorTypes: m.baseline.drc.errorTypes ?? {},
+              warnings: m.baseline.drc.warnings,
+              warningTypes: m.baseline.drc.warningTypes ?? {},
+              unconnectedItems: m.baseline.drc.unconnectedItems,
+              schematicParity: m.baseline.drc.schematicParity,
+            }
+          : null,
         note: m.baseline.note ?? null,
       },
     };

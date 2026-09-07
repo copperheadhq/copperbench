@@ -49,6 +49,9 @@ describe('siteRoute', () => {
     expect(normalizeRepoPath('./tasks/x/README.md')).toBe('tasks/x/README.md');
     expect(normalizeRepoPath('tasks/x/')).toBe('tasks/x');
     expect(normalizeRepoPath('.')).toBe('');
+    // A file beside the task and fixture directories has no page; the id regex admits directories only.
+    expect(siteRoute('tasks/TEMPLATE.md')).toBeNull();
+    expect(siteRoute('fixtures/some-file.txt')).toBeNull();
     expect(githubUrl(REPO_URL, 'tasks/x/README.md', false)).toBe(`${REPO_URL}/blob/main/tasks/x/README.md`);
     expect(githubUrl(REPO_URL, 'scripts/', true)).toBe(`${REPO_URL}/tree/main/scripts`);
     expect(githubUrl(REPO_URL, '', false)).toBe(REPO_URL);
@@ -102,6 +105,10 @@ describe('rewriteMarkdownLink', () => {
       `${REPO_URL}/tree/main/fixtures/antmicro-microphone-board/tree`,
     );
     expect(rewriteMarkdownLink('../scripts', ctx('paper/README.md'))).toBe(`${REPO_URL}/tree/main/scripts`);
+    // A malformed percent escape passes through to GitHub rather than aborting the build.
+    expect(rewriteMarkdownLink('tree/100%-done.md', ctx('tasks/do-rename-net/README.md'))).toBe(
+      `${REPO_URL}/blob/main/tasks/do-rename-net/tree/100%-done.md`,
+    );
   });
 
   it('clamps a link that climbs above the repository root to the root', () => {
@@ -132,8 +139,10 @@ describe('collectFacts for the pages', () => {
     for (const f of facts.fixtures) {
       expect(f.commit).toMatch(/^[0-9a-f]{7,40}$/);
       expect(f.sha256).toMatch(/^[0-9a-f]{64}$/);
-      expect(f.boardLines).toBeGreaterThan(0);
+      // Both are null only for a schematic-only fixture, which the schema permits.
+      if (f.boardLines !== null) expect(f.boardLines).toBeGreaterThan(0);
       for (const check of [f.baseline.erc, f.baseline.drc]) {
+        if (check === null) continue;
         if (check.errors > 0) expect(sums(check.errorTypes)).toBe(check.errors);
         else expect(check.errorTypes).toEqual({});
       }

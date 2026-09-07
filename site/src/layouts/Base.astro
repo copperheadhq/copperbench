@@ -19,8 +19,11 @@ const absolute = (p: string): string => new URL(p, site).href;
 const canonical = noindex ? undefined : absolute(route);
 
 // Asset URLs are relative to the page, so a nested page climbs back to the
-// root the same way its links do.
-const asset = (p: string): string => to(Astro.url.pathname, p);
+// root the same way its links do. The not-found page is the exception: the
+// asset router serves it in place at whatever address missed (wrangler.jsonc,
+// not_found_handling), so it cannot know its depth and links absolutely.
+const floating = route === '404';
+const asset = (p: string): string => (floating ? absolute(p) : to(Astro.url.pathname, p));
 
 // One image, rendered by site/og.mjs at the size the tags state.
 const image = absolute('og.png');

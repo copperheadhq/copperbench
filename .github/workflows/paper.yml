@@ -43,14 +43,16 @@ jobs:
       # The packages main.tex needs (geometry, microtype, booktabs, hyperref,
       # natbib, titlesec, abstract), lmodern for lmodern.sty, which
       # texlive-fonts-recommended only recommends, and latexmk, which the
-      # build script prefers. No npm install: scripts/build-paper.mjs has no
+      # build script prefers. plainnat.bst and the bibtex binary come with
+      # texlive-latex-base and texlive-binaries, so texlive-bibtex-extra is
+      # not needed. No npm install: scripts/build-paper.mjs has no
       # dependencies. Verified: this set builds the paper on Ubuntu 24.04.
       - name: Install TeX Live
         run: |
           sudo apt-get update -qq
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends \
             texlive-latex-base texlive-latex-recommended texlive-latex-extra \
-            texlive-fonts-recommended texlive-bibtex-extra lmodern latexmk
+            texlive-fonts-recommended lmodern latexmk
 
       - name: Build the PDF
         run: npm run paper:pdf
@@ -71,9 +73,12 @@ jobs:
           and carries no history; the source is \`paper/\` on \`main\`.
           README
           cd "$out"
+          # Cloudflare's GitHub integration builds every branch it sees a push
+          # to, and this branch has no package.json to build; [CI Skip] in the
+          # commit message is Cloudflare's marker for a push it must ignore.
           git init -q -b paper-pdf
           git add -A
           git -c user.name='github-actions[bot]' \
               -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
-              commit -q -m "Build the paper from ${GITHUB_SHA}"
+              commit -q -m "Build the paper from ${GITHUB_SHA} [CI Skip]"
           git push --force "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}" paper-pdf

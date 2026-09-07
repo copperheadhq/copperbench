@@ -13,7 +13,7 @@ export const collections = {
   docs: defineCollection({
     loader: glob({
       base: findRepoRoot(),
-      pattern: ['STANDARD.md', 'fixtures/FIXTURES.md', 'fixtures/*/README.md', 'tasks/*/README.md', 'paper/README.md'],
+      pattern: ['STANDARD.md', 'fixtures/FIXTURES.md', 'fixtures/*/README.md', 'tasks/*/README.md'],
       generateId: ({ entry }) => entry,
     }),
   }),
