@@ -2,8 +2,26 @@
 interface Props {
   title: string;
   description: string;
+  /** Open Graph image, relative to the site root. Rendered by site/og.mjs. */
+  image?: string;
+  /** A short description of the image for readers who cannot see it. */
+  imageAlt?: string;
 }
-const { title, description } = Astro.props;
+const {
+  title,
+  description,
+  image = 'og.png',
+  imageAlt = 'copperbench: language-model agents on verified KiCad hardware edits',
+} = Astro.props;
+
+// Absolute URLs need the deployed origin, which is SITE_URL at build time
+// (astro.config.mjs). Without it the canonical and og:url tags are left out
+// and the image stays relative, which browsers accept and most scrapers do not.
+const site = Astro.site;
+const absolute = (p: string): string => (site ? new URL(p, site).href : p);
+// The build writes index.html files (build.format 'file'); the canonical is the directory.
+const pathname = Astro.url.pathname.replace(/index\.html$/, '');
+const canonical = site ? new URL(pathname, site).href : undefined;
 ---
 
 <!doctype html>
@@ -13,6 +31,24 @@ const { title, description } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="copperbench" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta property="og:image" content={absolute(image)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absolute(image)} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="alternate icon" href="favicon.ico" sizes="32x32" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
