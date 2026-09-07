@@ -1,11 +1,61 @@
 ---
+// The site's navigation. Every entry under Benchmark is a page on this site;
+// the entries marked with the outbound icon leave it. Which page is current
+// comes from the route, so a task page lights "Tasks".
 import Icon from './Icon.astro';
-import { blob, facts, tree } from '../lib/facts';
+import { copperheadUrl, facts, paperPdf } from '../lib/facts';
+import { currentRoute, to } from '../lib/links';
+
+const at = Astro.url.pathname;
+const route = currentRoute(at);
+const section = route.split('/')[0] ?? '';
+
+interface Item {
+  label: string;
+  /** A site path, or an absolute URL for an outbound entry. */
+  href: string;
+  external?: boolean;
+  highlight?: boolean;
+}
+interface Group {
+  heading: string | null;
+  items: Item[];
+}
+
+const groups: Group[] = [
+  { heading: null, items: [{ label: 'Leaderboard', href: '' }] },
+  {
+    heading: 'Benchmark',
+    items: [
+      { label: 'Standard', href: 'standard' },
+      { label: 'Tasks', href: 'tasks' },
+      { label: 'Fixtures', href: 'fixtures' },
+      { label: 'Result records', href: 'results' },
+      { label: 'Pricing table', href: 'pricing' },
+    ],
+  },
+  {
+    heading: 'About',
+    items: [
+      { label: 'Reproduce a result', href: 'standard#14-reproducing-a-published-number' },
+      { label: 'Add a task', href: 'standard#15-adding-a-task' },
+      { label: 'Paper', href: paperPdf, external: true },
+      { label: 'Repository', href: facts.repoUrl, external: true },
+    ],
+  },
+  { heading: 'Related', items: [{ label: 'copperhead', href: copperheadUrl, external: true, highlight: true }] },
+];
+
+// A fragment link is a pointer into a page, never the page itself, so it is
+// never the current entry.
+const isActive = (item: Item): boolean => !item.external && !item.href.includes('#') && item.href === (item.href === '' ? route : section);
+const linkClass = (item: Item): string | undefined =>
+  [isActive(item) ? 'active' : '', item.highlight ? 'highlight' : ''].filter(Boolean).join(' ') || undefined;
 ---
 
 <aside class="sidebar" aria-label="Sidebar">
   <div class="sidebar-header">
-    <a href="./" class="sidebar-logo"><img src="mark.svg" alt="" width="26" height="26">copperbench</a>
+    <a href={to(at, '')} class="sidebar-logo"><img src={to(at, 'mark.svg')} alt="" width="26" height="26">copperbench</a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
       Menu
       <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
@@ -13,20 +63,18 @@ import { blob, facts, tree } from '../lib/facts';
   </div>
   <nav class="sidebar-nav" id="site-nav">
     <ul>
-      <li><a href="#leaderboard" class="active">Leaderboard</a></li>
-      <li class="section">Benchmark</li>
-      <li><a href={blob('STANDARD.md')}>Standard</a></li>
-      <li><a href={tree('tasks')}>Tasks</a></li>
-      <li><a href="#fixtures">Fixtures</a></li>
-      <li><a href={tree('results')}>Result records</a></li>
-      <li><a href={blob('pricing.json')}>Pricing table</a></li>
-      <li class="section">About</li>
-      <li><a href={tree('paper')}>Paper <Icon name="ext" /></a></li>
-      <li><a href={facts.repoUrl}>Repository <Icon name="ext" /></a></li>
-      <li><a href={blob('STANDARD.md#14-reproducing-a-published-number')}>Reproduce a number</a></li>
-      <li><a href={blob('STANDARD.md#15-adding-a-task')}>Add a task</a></li>
-      <li class="section">Related</li>
-      <li><a href="https://docs.copperhead.sh/">copperhead <Icon name="ext" /></a></li>
+      {groups.map((g) => (
+        <>
+          {g.heading && <li class="section">{g.heading}</li>}
+          {g.items.map((item) => (
+            <li>
+              <a href={item.external ? item.href : to(at, item.href)} class={linkClass(item)} aria-current={isActive(item) ? 'page' : undefined}>
+                {item.label}{item.external && <Icon name="ext" />}
+              </a>
+            </li>
+          ))}
+        </>
+      ))}
     </ul>
   </nav>
   <div class="sidebar-footer">

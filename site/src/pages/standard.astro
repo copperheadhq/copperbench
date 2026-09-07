@@ -1,0 +1,22 @@
+---
+// STANDARD.md, the normative document, rendered as checked in. Its section
+// anchors are GitHub's slugs, so a link that worked on GitHub works here.
+import { getEntry, render } from 'astro:content';
+
+import Page from '../layouts/Page.astro';
+import Prose from '../components/Prose.astro';
+import Toc from '../components/Toc.astro';
+
+const entry = await getEntry('docs', 'STANDARD.md');
+if (!entry) throw new Error('STANDARD.md is not in the docs collection');
+const { Content, headings } = await render(entry);
+---
+
+<Page
+  title="Standard"
+  description="The copperbench standard: task format, the closed assertion vocabulary, execution rules, scoring, comparability and cost accounting."
+  kicker="Normative"
+>
+  <Toc headings={headings} />
+  <Prose source="STANDARD.md"><Content /></Prose>
+</Page>

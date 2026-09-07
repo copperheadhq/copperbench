@@ -31,6 +31,7 @@
     "site:prepare": "node site/copy-fonts.mjs && node site/og.mjs",
     "site": "npm run site:prepare && astro build --root site",
     "site:dev": "npm run site:prepare && astro dev --root site",
+    "dev": "npm run site:dev",
     "site:serve": "npm run site && astro preview --root site",
     "site:deploy": "npm run site && wrangler deploy",
     "test": "vitest run",
@@ -40,6 +41,7 @@
     "paper:pdf": "node scripts/build-paper.mjs --no-render"
   },
   "devDependencies": {
+    "@astrojs/markdown-satteri": "^0.4.0",
     "@fontsource-variable/inter": "^5.3.0",
     "@fontsource/ibm-plex-mono": "^5.3.0",
     "@fontsource/inter": "^5.3.0",

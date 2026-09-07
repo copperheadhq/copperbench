@@ -2,44 +2,44 @@
   {
     "state": "done",
     "title": "Standard",
-    "text": "JSON Schemas, the closed assertion vocabulary, fixture policy and cost accounting rules.",
+    "text": "The task format, the JSON Schemas, the assertion vocabulary, the fixture policy and how cost is accounted for.",
     "link": "STANDARD.md",
     "label": "STANDARD.md"
   },
   {
     "state": "done",
     "title": "Fixtures",
-    "text": "Real open-hardware boards, permissively licensed, frozen at a pinned upstream commit and content-hashed. Baseline ERC and DRC are measured, not assumed.",
+    "text": "Real open-hardware boards under permissive licenses, pinned to an upstream commit and content-hashed, with a baseline ERC and DRC report recorded for each.",
     "link": "fixtures/FIXTURES.md",
     "label": "FIXTURES.md"
   },
   {
     "state": "done",
     "title": "Worked tasks",
-    "text": "An edit task with a calibrated surgicality bound and a refusal task graded on its citation rather than its tone.",
+    "text": "One edit task with a diff-size bound sized for its fixture, and one task where the right answer is to refuse and cite the constraint that makes the request unsafe.",
     "link": "tasks",
     "label": "tasks/"
   },
   {
     "state": "done",
     "title": "Validator, sandbox, scorer, records",
-    "text": "The loop runs offline end to end: schema checks, hash verification, the three evidence adapters, verdicts, append-only records and re-scoring with no provider and no network.",
+    "text": "Everything except the model call works and is tested offline: schema validation, hash checks, the three evidence readers, verdicts, append-only result records and re-scoring of existing records.",
     "link": "scripts",
     "label": "scripts/"
   },
   {
     "state": "next",
     "title": "Agent mode",
-    "text": "A provider-backed run needs a credential and is not implemented. An assertion whose evidence needs kicad-cli reports unevaluable when the tool is absent rather than guessing, so no verdict is ever manufactured."
+    "text": "Not implemented yet; it needs a provider credential. The scorer already handles a missing kicad-cli by marking the affected assertions unevaluable rather than passing them."
   },
   {
     "state": "next",
     "title": "Aggregate report and LEADERBOARD.md",
-    "text": "pass@k with spread, correct and false refusal rates, the failure work queue and the generated markdown leaderboard with its consistency check."
+    "text": "pass@k with spread across repeats, correct and false refusal rates, a list of failures to look at, and the generated markdown leaderboard with a check that the committed file matches a regeneration."
   },
   {
     "state": "pending",
     "title": "First smoke matrix",
-    "text": "Direct API models at three repeats. This page and the paper tables are regenerated from its records."
+    "text": "A first run of direct-API models, three repeats each. This page and the paper's tables will be generated from those records."
   }
 ]

@@ -1,0 +1,50 @@
+---
+// The harness verdicts per task: what the no-op run and the reference
+// solution scored, each cell naming the assertion that blocked it and linking
+// to the record that says so.
+import type { HarnessCell, HarnessRow } from '../../../scripts/lib/leaderboard.ts';
+import { recordRoute } from '../lib/facts';
+import { to } from '../lib/links';
+
+interface Props {
+  rows: HarnessRow[];
+}
+const { rows } = Astro.props;
+const at = Astro.url.pathname;
+
+function cellClass(cell: HarnessCell, expected: string): string {
+  return `verdict verdict-${cell.verdict} ${cell.verdict === expected ? 'verdict-expected' : 'verdict-unexpected'}`;
+}
+---
+
+{rows.length === 0 ? (
+  <p class="section-lead">No comparable harness records yet.</p>
+) : (
+  <div class="table-card">
+    <table class="table">
+      <thead>
+        <tr><th>Task</th><th>Tier</th><th>Expected</th><th>No-op run</th><th>Reference solution</th><th>Date</th></tr>
+      </thead>
+      <tbody>
+        {rows.map((r) => {
+          const noop = r.modes['noop'];
+          const gold = r.modes['gold'];
+          return (
+            <tr>
+              <td><a class="model" href={to(at, `tasks/${r.taskId}`)}>{r.taskId}</a></td>
+              <td class="secondary">{r.tier}</td>
+              <td class="secondary">{r.expectedOutcome}</td>
+              {noop === undefined
+                ? <td class="muted">not run</td>
+                : <td><a class={cellClass(noop, 'fail')} href={to(at, recordRoute(noop.relPath))}>{noop.verdict}</a>{noop.verdict !== 'pass' && <span class="mono muted"> {noop.firstFailedRequired}</span>}</td>}
+              {gold === undefined
+                ? <td class="muted">not run</td>
+                : <td><a class={cellClass(gold, 'pass')} href={to(at, recordRoute(gold.relPath))}>{gold.verdict}</a>{gold.verdict !== 'pass' && <span class="mono muted"> {gold.firstFailedRequired}</span>}</td>}
+              <td class="num muted">{gold?.date ?? noop?.date ?? ''}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  </div>
+)}

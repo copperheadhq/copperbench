@@ -1,6 +1,8 @@
 ---
-import { blob, facts, plural, tree } from '../lib/facts';
+import { copperheadUrl, facts, paperPdf, plural } from '../lib/facts';
+import { to } from '../lib/links';
 
+const at = Astro.url.pathname;
 const lb = facts.leaderboard;
 const stamp = [
   `suite ${lb.suiteVersion}`,
@@ -17,9 +19,9 @@ const stamp = [
     <span class="stamp">{stamp}</span>
     <span class="links">
       <a href={facts.repoUrl}>GitHub</a>
-      <a href={tree('paper')}>Paper</a>
-      <a href={blob('STANDARD.md')}>Standard</a>
-      <a href="https://docs.copperhead.sh/">copperhead</a>
+      <a href={paperPdf}>Paper</a>
+      <a href={to(at, 'standard')}>Standard</a>
+      <a href={copperheadUrl} class="highlight">copperhead</a>
     </span>
   </div>
 </footer>

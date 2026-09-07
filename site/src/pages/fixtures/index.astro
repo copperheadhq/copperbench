@@ -1,0 +1,35 @@
+---
+// The fixture table and the fixture standard, fixtures/FIXTURES.md, rendered
+// as checked in.
+import { getEntry, render } from 'astro:content';
+
+import Page from '../../layouts/Page.astro';
+import Fixtures from '../../components/Fixtures.astro';
+import Prose from '../../components/Prose.astro';
+import Toc from '../../components/Toc.astro';
+
+const entry = await getEntry('docs', 'fixtures/FIXTURES.md');
+if (!entry) throw new Error('fixtures/FIXTURES.md is not in the docs collection');
+const { Content, headings } = await render(entry);
+---
+
+<Page
+  title="Fixtures"
+  description="The boards copperbench tasks run on: real open-hardware designs under permissive licenses, pinned to an upstream commit, content-hashed, with recorded ERC and DRC baselines."
+  kicker="Suite"
+>
+  <h1>Fixtures</h1>
+  <p class="section-lead">
+    The boards the tasks run on. Each is copied unchanged from a permissively licensed open-hardware project at a specific upstream
+    commit, keeps its original LICENSE file, and is credited in NOTICE. Its content hash is recorded so a run can be checked against
+    the exact files it saw. Only the design files go into the sandbox; the provenance notes and the baseline ERC and DRC reports are
+    kept outside it, where the model can't read them. Each fixture page lists where the board came from, how big it is, and the
+    baseline ERC and DRC counts that the no-new-violations assertions compare against.
+  </p>
+  <Fixtures bare />
+
+  <section class="section" id="standard">
+    <Toc headings={headings} />
+    <Prose source="fixtures/FIXTURES.md"><Content /></Prose>
+  </section>
+</Page>

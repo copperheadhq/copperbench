@@ -1,0 +1,50 @@
+---
+// Every result record under results/, one row each, with its comparability
+// status. Records are append-only and never edited after write; this page is
+// the index of the evidence the leaderboard is computed from.
+import Page from '../../layouts/Page.astro';
+import Icon from '../../components/Icon.astro';
+import RecordsTable from '../../components/RecordsTable.astro';
+import { facts, plural } from '../../lib/facts';
+import { github, to } from '../../lib/links';
+
+const at = Astro.url.pathname;
+const lb = facts.leaderboard;
+const comparable = facts.records.filter((r) => r.comparable).length;
+---
+
+<Page
+  title="Result records"
+  description="Every copperbench result record: one JSON file per task, model and repeat, written once, stamped with the suite version it ran under, and re-scorable offline."
+  kicker="Evidence"
+>
+  <h1>Result records</h1>
+  <p class="section-lead">
+    One record per task, model and repeat. Records are written once and not edited afterwards. Each one holds the verdict, the outcome
+    and detail of every assertion, and the stamps used to decide comparability: schema and suite version, task manifest hash, fixture
+    hash, copperhead and <code>kicad-cli</code> versions, Node version and platform. The leaderboard is computed from these files alone,
+    and <a href={to(at, 'standard#14-reproducing-a-published-number')}>anyone can re-score them offline</a>.
+  </p>
+  <div class="cards" style="margin-bottom: 1.5rem;">
+    <div class="card">
+      <div class="card-header"><h4>Snapshot</h4><span class="card-count num">{plural(lb.snapshot.records, 'record')}</span></div>
+      <p>
+        {plural(lb.snapshot.agentRecords, 'agent record')}, {plural(lb.snapshot.harnessRecords, 'harness record')}.
+        {comparable} comparable with the suite as checked out, {lb.snapshot.incomparable} not.
+        {lb.snapshot.dates.length > 0 ? `Dates ${lb.snapshot.dates[0]} to ${lb.snapshot.dates.at(-1)}.` : 'No dates.'}
+      </p>
+      <a href={to(at, 'leaderboard.json')}>Aggregated leaderboard as JSON <Icon name="arrow" /></a>
+    </div>
+    <div class="card">
+      <div class="card-header"><h4>Comparable means</h4><span class="card-count mono">suite {lb.suiteVersion}</span></div>
+      <p>
+        Schema {lb.schemaVersion}, suite {lb.suiteVersion}, the checked-out task manifest and fixture hashes, and
+        {lb.kicadMajor === null ? 'no kicad-cli reference yet' : lb.kicadMajor === 'none' ? 'no kicad-cli' : `kicad-cli ${lb.kicadMajor}`}.
+        A record that doesn't match on one of these, or whose run skipped a setup command, is listed with the reason and left out
+        of the leaderboard.
+      </p>
+      <a href={github('results')}>Raw files on GitHub <Icon name="ext" /></a>
+    </div>
+  </div>
+  <RecordsTable records={facts.records} />
+</Page>

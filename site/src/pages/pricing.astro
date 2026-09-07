@@ -1,0 +1,87 @@
+---
+// pricing.json as a table. Every record stores the USD it computed and the
+// table version it used, so editing the table never rewrites a record; this
+// page shows the table as checked out.
+import Page from '../layouts/Page.astro';
+import Icon from '../components/Icon.astro';
+import { facts, plural } from '../lib/facts';
+import { github, to } from '../lib/links';
+
+const at = Astro.url.pathname;
+const p = facts.pricing;
+const price = (x: number | null) => (x === null ? 'unset' : `$${x}`);
+---
+
+<Page
+  title="Pricing table"
+  description="The price table copperbench uses to compute cost per passing task: USD per million tokens for each model and route, versioned and recorded in every result."
+  kicker="Cost accounting"
+>
+  <h1>Pricing table</h1>
+  <p class="section-lead">
+    Cost per passing task is computed from token counts and this table, as described in
+    <a href={to(at, 'standard#10-cost-accounting')}>section 10 of the standard</a>. Each record stores the USD figure it computed and
+    the table version it used, so a later edit to this file doesn't change any published result. Routes that don't have a meaningful
+    per-token price are recorded with a null cost and shown in a separate table rather than alongside the costed ones.
+  </p>
+  {p.comment && <p class="callout">{p.comment}</p>}
+
+  <section class="section" id="table">
+    <div class="table-card">
+      <table class="table facts">
+        <tbody>
+          <tr><th>Table version</th><td class="mono">{p.tableVersion}</td></tr>
+          <tr><th>Effective date</th><td class="num">{p.effectiveDate}</td></tr>
+          <tr><th>Unit</th><td>{p.currency}, {p.unit}</td></tr>
+          <tr><th>Source</th><td><a href={to(at, 'pricing.json')}><code>pricing.json</code> <Icon name="arrow" /></a> · <a href={github('pricing.json')}>on GitHub <Icon name="ext" /></a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" id="models">
+    <h2 class="section-title">Costed routes</h2>
+    <p class="section-lead">{plural(p.models.length, 'entry')}. A null price means the price isn't known, not that it's free. A run on such an entry reports a null cost.</p>
+    <div class="table-card">
+      <table class="table">
+        <thead><tr><th>Model</th><th>Segment</th><th>Pinning</th><th class="right">Input</th><th class="right">Output</th><th class="right">Cache read</th><th class="right">Cache write</th></tr></thead>
+        <tbody>
+          {p.models.map((m) => (
+            <tr>
+              <td class="model">{m.id}</td>
+              <td class="secondary">{m.segment}</td>
+              <td class="secondary">{m.pinning}</td>
+              <td class="right secondary num">{price(m.input)}</td>
+              <td class="right secondary num">{price(m.output)}</td>
+              <td class="right secondary num">{price(m.cacheRead)}</td>
+              <td class="right secondary num">{price(m.cacheWrite)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" id="null-cost">
+    <h2 class="section-title">Null-cost routes</h2>
+    <p class="section-lead">
+      Routes whose cost is always null. Their records still keep their token counts, but they are shown in a separate table: with a
+      saved login you can't be sure which model version answered, and a self-hosted server costs GPU time rather than tokens.
+    </p>
+    <div class="table-card">
+      <table class="table">
+        <thead><tr><th>Route</th><th>Segment</th><th>Pinning</th><th>Reason</th></tr></thead>
+        <tbody>
+          {p.nullCostRoutes.map((r) => (
+            <tr>
+              <td class="model">{r.id}</td>
+              <td class="secondary">{r.segment}</td>
+              <td class="secondary">{r.pinning}</td>
+              <td class="secondary note">{r.reason}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</Page>

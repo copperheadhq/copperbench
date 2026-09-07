@@ -1,0 +1,17 @@
+---
+// A repository document rendered as it is checked in, with a pointer to the
+// source so a reader can see the file the page came from.
+import Icon from './Icon.astro';
+import { github } from '../lib/links';
+
+interface Props {
+  /** Repository-relative path of the document, for the source link. */
+  source: string;
+}
+const { source } = Astro.props;
+---
+
+<article class="prose">
+  <slot />
+</article>
+<p class="source">This page is rendered from <a href={github(source)}><code>{source}</code> <Icon name="ext" /></a> in the repository, at the commit the site was built from.</p>

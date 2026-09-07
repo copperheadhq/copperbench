@@ -1,5 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
+
+// Served in place at whatever address missed, so the link is absolute; the
+// layout does the same for its assets.
+const home = (Astro.site as URL).href;
 ---
 
 <Base title="Not found" description="There is no page at this address." noindex>
@@ -7,7 +11,10 @@ import Base from '../layouts/Base.astro';
     <div class="container" style="padding-top: 4rem;">
       <section class="section">
         <h2 class="section-title">Not found</h2>
-        <p class="section-lead">There is no page at this address. The leaderboard is at <a href="./">the front page</a>.</p>
+        <p class="section-lead">
+          There is no page at this address. The leaderboard is at <a href={home}>the front page</a>; the standard, tasks, fixtures and
+          result records are in the sidebar there.
+        </p>
       </section>
     </div>
   </div>

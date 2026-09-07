@@ -1,0 +1,26 @@
+---
+// Every page but the front page: the sidebar, a content column and the footer.
+// The front page keeps its own header band (index.astro).
+import Base from './Base.astro';
+import Sidebar from '../components/Sidebar.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  /** A short label above the page's own heading, such as the kind of thing the page is. */
+  kicker?: string;
+}
+const { title, description, kicker } = Astro.props;
+---
+
+<Base title={`${title} · copperbench`} description={description}>
+  <Sidebar />
+  <div class="main">
+    <div class="container page">
+      {kicker && <p class="kicker">{kicker}</p>}
+      <slot />
+    </div>
+    <Footer />
+  </div>
+</Base>

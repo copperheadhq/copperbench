@@ -19,6 +19,8 @@ Every build emits both: `main.pdf` to read or submit, and `render/page-NN.png` s
 
 The build prefers `latexmk` and falls back to `pdflatex`/`bibtex` directly when it is absent, because a missing convenience wrapper should not be why a paper cannot be built. Page rendering needs `pdftoppm` (poppler-utils) and is skipped with a warning when it is missing.
 
+The published PDF is built by [.github/workflows/paper.yml](../.github/workflows/paper.yml) with the same `npm run paper:pdf` on every push to `main` that touches this directory, and force-pushed as `copperbench.pdf` to the orphan branch `paper-pdf`. The website's "Paper" links resolve there. The branch is an artifact with no history; edit `paper/` on `main`, never the branch.
+
 The checked-in `generated/` files are placeholders using `\providecommand`, so the skeleton compiles before the first live matrix and reads as ungenerated rather than as a plausible-looking zero. A real generation overwrites them.
 
 ## Regenerating numbers

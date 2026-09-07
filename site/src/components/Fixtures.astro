@@ -1,15 +1,30 @@
 ---
+// The fixture table: on the front page as a section, on the fixtures page
+// under its own heading.
 import Icon from './Icon.astro';
-import { facts, tree } from '../lib/facts';
+import { facts } from '../lib/facts';
+import { to } from '../lib/links';
+
+interface Props {
+  /** Omit the section heading and lead, for embedding under another heading. */
+  bare?: boolean;
+}
+const { bare = false } = Astro.props;
+const at = Astro.url.pathname;
 ---
 
 <section class="section" id="fixtures">
-  <h2 class="section-title">Fixtures</h2>
-  <p class="section-lead">
-    Real boards, vendored verbatim from permissively licensed open-hardware projects, frozen at a pinned upstream commit and
-    content-hashed. Each keeps its LICENSE and is listed in NOTICE. Only the design tree is copied into a sandbox. Provenance and
-    baseline reports stay outside it so the agent under test cannot read the bookkeeping.
-  </p>
+  {!bare && (
+    <>
+      <h2 class="section-title">Fixtures</h2>
+      <p class="section-lead">
+        The boards the tasks run on. Each is copied unchanged from a permissively licensed open-hardware project at a specific upstream
+        commit, keeps its original LICENSE file, and is credited in NOTICE. Its content hash is recorded so a run can be checked against the
+        exact files it saw. Only the design files go into the sandbox; the provenance notes and the baseline ERC and DRC reports are kept
+        outside it, where the model can't read them.
+      </p>
+    </>
+  )}
   <div class="table-card">
     <table class="table">
       <thead>
@@ -18,7 +33,7 @@ import { facts, tree } from '../lib/facts';
       <tbody>
         {facts.fixtures.map((f) => (
           <tr>
-            <td><a class="model" href={tree(`fixtures/${f.id}`)}>{f.id}</a></td>
+            <td><a class="model" href={to(at, `fixtures/${f.id}`)}>{f.id}</a></td>
             <td class="secondary"><a href={f.url}>{f.name} <Icon name="ext" /></a></td>
             <td class="secondary">{f.complexity}</td>
             <td class="right secondary num">{f.sheets}</td>

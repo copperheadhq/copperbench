@@ -1,0 +1,147 @@
+---
+// One result record: the verdict, every assertion's outcome and detail, and
+// the comparability stamps beside the values the checked-out suite expects.
+// The raw JSON is served beside this page at the same path with `.json`.
+import type { RecordFact } from '../../../../scripts/lib/site-facts.ts';
+import { kicadMajor } from '../../../../scripts/lib/leaderboard.ts';
+import Page from '../../layouts/Page.astro';
+import Icon from '../../components/Icon.astro';
+import { facts, plural, verdictClass } from '../../lib/facts';
+import { github, to } from '../../lib/links';
+
+export function getStaticPaths() {
+  return facts.records.map((record) => ({ params: { path: record.relPath.replace(/\.json$/, '') }, props: { record } }));
+}
+
+interface Props {
+  record: RecordFact;
+}
+const { record: r } = Astro.props;
+const rec = r.record;
+const at = Astro.url.pathname;
+const lb = facts.leaderboard;
+const task = facts.tasks.find((t) => t.id === rec.task.id);
+
+const passes = rec.assertions.filter((a) => a.status === 'pass').length;
+const fails = rec.assertions.filter((a) => a.status === 'fail').length;
+const unevaluable = rec.assertions.filter((a) => a.status === 'unevaluable').length;
+
+interface Stamp {
+  name: string;
+  recorded: string;
+  expected: string | null;
+  match: boolean | null;
+}
+const c = rec.comparability;
+const stamps: Stamp[] = [
+  { name: 'schemaVersion', recorded: c.schemaVersion, expected: lb.schemaVersion, match: c.schemaVersion === lb.schemaVersion },
+  { name: 'suiteVersion', recorded: c.suiteVersion, expected: lb.suiteVersion, match: c.suiteVersion === lb.suiteVersion },
+  { name: 'taskManifestHash', recorded: c.taskManifestHash, expected: task?.manifestHash ?? null, match: task ? c.taskManifestHash === task.manifestHash : null },
+  { name: 'fixtureSha256', recorded: c.fixtureSha256, expected: task?.fixtureSha256 ?? null, match: task ? c.fixtureSha256 === task.fixtureSha256 : null },
+  {
+    name: 'kicadCliVersion',
+    recorded: c.kicadCliVersion ?? 'none',
+    expected: lb.kicadMajor === null ? null : `major ${lb.kicadMajor}`,
+    match: lb.kicadMajor === null ? null : kicadMajor(c.kicadCliVersion) === lb.kicadMajor,
+  },
+  { name: 'copperheadVersion', recorded: c.copperheadVersion, expected: null, match: null },
+  { name: 'copperheadCommit', recorded: c.copperheadCommit ?? 'none', expected: null, match: null },
+  { name: 'nodeVersion', recorded: c.nodeVersion, expected: null, match: null },
+  { name: 'platform', recorded: c.platform, expected: null, match: null },
+];
+const usd = rec.cost?.usd;
+const rawPath = `results/${r.relPath}`;
+---
+
+<Page
+  title={r.relPath}
+  description={`copperbench result record ${r.relPath}: ${rec.run.model} on ${rec.task.id}, verdict ${rec.verdict}.`}
+  kicker={`Result record · ${r.runMode} run · ${r.comparable ? 'comparable' : 'not comparable'}`}
+>
+  <h1 class="mono record-title">{r.relPath}</h1>
+  <p class="section-lead">
+    <a href={to(at, `tasks/${rec.task.id}`)}>{rec.task.id}</a> run by <b>{r.model}</b>, repeat {rec.run.repeat}. Verdict
+    <span class={verdictClass(rec.verdict)}>{rec.verdict}</span>.
+    {rec.firstFailedRequired && <>First required assertion to fail: <code>{rec.firstFailedRequired}</code>.</>}
+    {rec.verdict === 'unscoreable' && <>A required assertion couldn't be evaluated, so this run counts as neither a pass nor a failure and is left out of the pass rate.</>}
+  </p>
+  {!r.comparable && (
+    <p class="callout">
+      Not comparable with the current suite: {r.reasons.join('; ')}. This record was made under a different version of the suite and is
+      not included in any leaderboard row.
+    </p>
+  )}
+
+  <section class="section" id="run">
+    <h2 class="section-title">Run</h2>
+    <div class="table-card">
+      <table class="table facts">
+        <tbody>
+          <tr><th>Task</th><td><a href={to(at, `tasks/${rec.task.id}`)}>{rec.task.id}</a> · {rec.task.tier} tier · {rec.task.mode} mode · expects {rec.task.expectedOutcome}{rec.task.variantOf && <> · variant of <a href={to(at, `tasks/${rec.task.variantOf}`)}>{rec.task.variantOf}</a></>}</td></tr>
+          <tr><th>Fixture</th><td><a href={to(at, `fixtures/${rec.fixture.id}`)}>{rec.fixture.id}</a> <span class="mono muted">{rec.fixture.sha256}</span></td></tr>
+          <tr><th>Model</th><td>{r.model}{rec.model?.provider && <span class="muted"> via {rec.model.provider}</span>}{rec.model?.segment && <span class="muted"> · {rec.model.segment}</span>}{rec.model?.pinning && <span class="muted"> · {rec.model.pinning} pinning</span>}</td></tr>
+          <tr><th>Run mode</th><td>{rec.run.runMode}{rec.run.runMode !== 'agent' && <span class="muted"> (harness run: one of the suite's own checks, no model involved)</span>}</td></tr>
+          <tr><th>Repeat</th><td class="num">{rec.run.repeat}</td></tr>
+          <tr><th>Cost</th><td class="num">{typeof usd === 'number' ? `$${usd.toFixed(4)}` : 'null'}{rec.cost?.priceTableVersion && <span class="muted"> · price table {rec.cost.priceTableVersion}</span>}</td></tr>
+          <tr><th>Duration</th><td class="num">{(rec.run.durationMs / 1000).toFixed(1)} s</td></tr>
+          <tr><th>Baseline commit</th><td class="mono muted">{rec.run.baselineSha}</td></tr>
+          <tr><th>Response cache</th><td>{rec.run.llmCache ? 'on' : 'off'}</td></tr>
+          <tr><th>Setup skipped</th><td>{rec.run.setupSkipped.length === 0 ? 'nothing' : rec.run.setupSkipped.map((s) => <span class="artifact"><code>{s.command}</code>: {s.reason}</span>)}</td></tr>
+          <tr><th>Partial credit</th><td class="num">{rec.partialCredit.toFixed(4)} <span class="muted">(not used on the leaderboard)</span></td></tr>
+          <tr><th>Failure category</th><td>{rec.failureCategory ?? 'none'}</td></tr>
+          {rec.artifacts && <tr><th>Transcript</th><td class="mono muted">{rec.artifacts.transcriptPath}{rec.artifacts.sandboxPreserved && rec.artifacts.sandboxPath && <> · sandbox preserved at {rec.artifacts.sandboxPath}</>}</td></tr>}
+          <tr><th>Raw record</th><td><a href={to(at, rawPath)}><code>{r.relPath}</code> <Icon name="arrow" /></a> · <a href={github(rawPath)}>on GitHub <Icon name="ext" /></a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" id="assertions">
+    <h2 class="section-title">Assertions</h2>
+    <p class="section-lead">
+      {plural(passes, 'pass')}, {plural(fails, 'failure')}, {unevaluable} unevaluable. The run passes when every required assertion passes.
+      If a required assertion couldn't be evaluated, the run is unscoreable.
+    </p>
+    <div class="table-card">
+      <table class="table">
+        <thead><tr><th>Id</th><th>Type</th><th>Required</th><th class="right">Weight</th><th>Outcome</th><th>Detail</th></tr></thead>
+        <tbody>
+          {rec.assertions.map((a) => (
+            <tr>
+              <td class="mono">{a.id}</td>
+              <td class="mono secondary">{a.type}</td>
+              <td class="secondary">{a.required ? 'yes' : 'no'}</td>
+              <td class="right secondary num">{a.weight}</td>
+              <td><span class={verdictClass(a.status)}>{a.status}</span></td>
+              <td class="secondary note">{a.detail}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" id="comparability">
+    <h2 class="section-title">Comparability stamps</h2>
+    <p class="section-lead">
+      What the run was stamped with, next to what the current suite expects. The first five decide whether the record appears on the
+      leaderboard, together with the run having skipped no setup command. The rest are recorded so that a result can be traced back
+      to the environment it was produced in.
+    </p>
+    <div class="table-card">
+      <table class="table">
+        <thead><tr><th>Stamp</th><th>Recorded</th><th>Checked out</th><th>Match</th></tr></thead>
+        <tbody>
+          {stamps.map((s) => (
+            <tr>
+              <td class="mono">{s.name}</td>
+              <td class="mono secondary">{s.recorded}</td>
+              <td class="mono muted">{s.expected ?? 'not compared'}</td>
+              <td>{s.match === null ? <span class="muted">n/a</span> : <span class={`verdict verdict-${s.match ? 'pass' : 'fail'}`}>{s.match ? 'yes' : 'no'}</span>}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</Page>

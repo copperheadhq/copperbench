@@ -1,7 +1,13 @@
 ---
 // The one editorial input, site/status.json. Kept free of numerals. A
-// quantity belongs in a generated cell, not in prose that goes stale.
-import { blob, facts } from '../lib/facts';
+// quantity belongs in a generated cell, not in prose that goes stale. An
+// entry's link is a repository path; it lands on the page that renders it
+// when the site has one and on GitHub otherwise.
+import Icon from './Icon.astro';
+import { facts } from '../lib/facts';
+import { onSite, repoHref } from '../lib/links';
+
+const at = Astro.url.pathname;
 ---
 
 {facts.status.length > 0 && (
@@ -14,7 +20,7 @@ import { blob, facts } from '../lib/facts';
           <span class="state">{e.state}</span>
           <span class="text">
             <b>{e.title}</b>: {e.text}
-            {e.link && <a href={blob(e.link)}>{e.label ?? e.link} →</a>}
+            {e.link && <a href={repoHref(at, e.link)}>{e.label ?? e.link} {onSite(e.link) ? '→' : <Icon name="ext" />}</a>}
           </span>
         </li>
       ))}

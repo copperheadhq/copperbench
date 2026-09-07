@@ -1,0 +1,108 @@
+---
+// One task: its README as checked in, the manifest, the assertion list with
+// the failure each check catches, the harness verdicts and every record.
+import { getEntry, render } from 'astro:content';
+
+import type { TaskFact } from '../../../../scripts/lib/site-facts.ts';
+import Page from '../../layouts/Page.astro';
+import HarnessTable from '../../components/HarnessTable.astro';
+import Icon from '../../components/Icon.astro';
+import Prose from '../../components/Prose.astro';
+import RecordsTable from '../../components/RecordsTable.astro';
+import { argsText, facts, plural } from '../../lib/facts';
+import { github, to } from '../../lib/links';
+
+export function getStaticPaths() {
+  return facts.tasks.map((task) => ({ params: { id: task.id }, props: { task } }));
+}
+
+interface Props {
+  task: TaskFact;
+}
+const { task } = Astro.props;
+const at = Astro.url.pathname;
+
+const entry = await getEntry('docs', `tasks/${task.id}/README.md`);
+if (!entry) throw new Error(`tasks/${task.id}/README.md is not in the docs collection`);
+const { Content } = await render(entry);
+
+const records = facts.records.filter((r) => r.task === task.id);
+const required = task.assertions.filter((a) => a.required).length;
+const source = `tasks/${task.id}`;
+---
+
+<Page
+  title={task.id}
+  description={`copperbench task ${task.id}: ${task.tier} tier, ${task.mode} mode, expects ${task.expectedOutcome}. ${plural(task.assertions.length, 'assertion')}, ${required} required.`}
+  kicker={`Task · ${task.tier} tier · ${task.mode} mode · expects ${task.expectedOutcome}`}
+>
+  <Prose source={`${source}/README.md`}><Content /></Prose>
+
+  <section class="section" id="manifest">
+    <h2 class="section-title">Manifest</h2>
+    <p class="section-lead">
+      The contents of <code>task.json</code>. Every result record stores a hash of this file, so records made against an earlier
+      version of the task are kept separate from records made against this one.
+    </p>
+    <div class="table-card">
+      <table class="table facts">
+        <tbody>
+          <tr><th>Request</th><td>{task.prompt !== null ? <blockquote class="prompt">{task.prompt}</blockquote> : <span>brief at <code>{task.briefPath}</code></span>}</td></tr>
+          <tr><th>Fixture</th><td><a href={to(at, `fixtures/${task.fixture}`)}>{task.fixture}</a> <span class="mono muted">{task.fixtureSha256}</span></td></tr>
+          <tr><th>Tier</th><td>{task.tier}</td></tr>
+          <tr><th>Mode</th><td>{task.mode}</td></tr>
+          <tr><th>Expected outcome</th><td>{task.expectedOutcome}</td></tr>
+          {task.variantOf && <tr><th>Variant of</th><td><a href={to(at, `tasks/${task.variantOf}`)}>{task.variantOf}</a></td></tr>}
+          <tr><th>Setup</th><td class="mono">{task.setup.length > 0 ? task.setup.map((c) => `copperhead ${c}`).join(', ') : 'none'}</td></tr>
+          <tr><th>Caps</th><td class="mono">{Object.entries(task.caps).map(([k, v]) => `${k}: ${v}`).join('  ') || 'none'}</td></tr>
+          <tr><th>Config</th><td><pre class="inline-json">{JSON.stringify(task.config, null, 2)}</pre></td></tr>
+          <tr><th>Tags</th><td class="mono">{task.tags.join(', ') || 'none'}</td></tr>
+          <tr><th>Manifest hash</th><td class="mono muted">{task.manifestHash}</td></tr>
+          <tr><th>Source</th><td><a href={github(`${source}/task.json`)}><code>task.json</code> <Icon name="ext" /></a> · <a href={github(`${source}/assertions.json`)}><code>assertions.json</code> <Icon name="ext" /></a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" id="assertions">
+    <h2 class="section-title">Assertions</h2>
+    <p class="section-lead">
+      {plural(task.assertions.length, 'assertion')}, {required} of them required. A run passes when all of the required ones pass.
+      Weights are only used for partial credit, which isn't shown on the leaderboard. The last column explains what each check is looking for.
+    </p>
+    <div class="table-card">
+      <table class="table">
+        <thead>
+          <tr><th>Id</th><th>Type</th><th>Arguments</th><th class="right">Weight</th><th>Required</th><th>What it catches</th></tr>
+        </thead>
+        <tbody>
+          {task.assertions.map((a) => (
+            <tr>
+              <td class="mono">{a.id}</td>
+              <td class="mono secondary"><a href={to(at, 'standard#6-the-assertion-vocabulary')}>{a.type}</a></td>
+              <td class="mono muted args">{argsText(a.args)}</td>
+              <td class="right secondary num">{a.weight}</td>
+              <td class="secondary">{a.required ? 'yes' : 'no'}</td>
+              <td class="secondary note">{a.note ?? ''}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" id="harness">
+    <h2 class="section-title">Discrimination check</h2>
+    <p class="section-lead">
+      The most recent no-op and reference-solution runs for this task. The no-op should fail and the reference solution should pass.
+      If either didn't, the cell shows which assertion was responsible.
+    </p>
+    <HarnessTable rows={facts.leaderboard.harness.filter((r) => r.taskId === task.id)} />
+  </section>
+
+  <section class="section" id="records">
+    <h2 class="section-title">Records</h2>
+    <p class="section-lead">{plural(records.length, 'record')} for this task. Rows in noop or gold mode are the suite's own checks and don't involve a model.</p>
+    <RecordsTable records={records} hideTask />
+  </section>
+</Page>

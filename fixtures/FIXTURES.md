@@ -41,7 +41,7 @@ Fixtures are redistributed in this repository, so licensing is a hard gate rathe
 **Every vendored fixture must carry**, in its fixture directory:
 
 1. The upstream `LICENSE` file, verbatim and unmodified.
-2. An entry in [NOTICE](../../NOTICE) at the repository root naming the project, copyright holder, license, and upstream URL.
+2. An entry in [NOTICE](../NOTICE) at the repository root naming the project, copyright holder, license, and upstream URL.
 3. A `README.md` stating upstream URL, pinned commit, retrieval date, copyright line, and exactly what was and was not copied.
 4. A `modifications` field in `fixture.json` describing any change to a design file. The strongly preferred value is that no design file was altered.
 

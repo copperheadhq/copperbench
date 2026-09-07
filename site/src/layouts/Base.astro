@@ -1,4 +1,6 @@
 ---
+import { currentRoute, to } from '../lib/links';
+
 interface Props {
   title: string;
   description: string;
@@ -12,9 +14,16 @@ const { title, description, noindex = false } = Astro.props;
 // (build.format 'file') while the asset router serves them without the
 // extension, so the canonical drops it; index collapses to the directory.
 const site = Astro.site as URL;
-const absolute = (p: string): string => new URL(p.replace(/^\//, ''), site).href;
-const pathname = Astro.url.pathname.replace(/(^|\/)index\.html$/, '$1').replace(/\.html$/, '');
-const canonical = noindex ? undefined : absolute(pathname);
+const route = currentRoute(Astro.url.pathname);
+const absolute = (p: string): string => new URL(p, site).href;
+const canonical = noindex ? undefined : absolute(route);
+
+// Asset URLs are relative to the page, so a nested page climbs back to the
+// root the same way its links do. The not-found page is the exception: the
+// asset router serves it in place at whatever address missed (wrangler.jsonc,
+// not_found_handling), so it cannot know its depth and links absolutely.
+const floating = route === '404';
+const asset = (p: string): string => (floating ? absolute(p) : to(Astro.url.pathname, p));
 
 // One image, rendered by site/og.mjs at the size the tags state.
 const image = absolute('og.png');
@@ -43,15 +52,15 @@ const image = absolute('og.png');
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image:alt" content={description} />
 
-    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <link rel="alternate icon" href="favicon.ico" sizes="32x32" />
-    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-    <link rel="manifest" href="site.webmanifest" />
+    <link rel="icon" href={asset('favicon.svg')} type="image/svg+xml" />
+    <link rel="alternate icon" href={asset('favicon.ico')} sizes="32x32" />
+    <link rel="apple-touch-icon" href={asset('apple-touch-icon.png')} />
+    <link rel="manifest" href={asset('site.webmanifest')} />
     <meta name="theme-color" content="#b87333" />
-    <link rel="stylesheet" href="fonts/inter/index.css" />
-    <link rel="stylesheet" href="fonts/ibm-plex-mono/400.css" />
-    <link rel="stylesheet" href="fonts/ibm-plex-mono/500.css" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href={asset('fonts/inter/index.css')} />
+    <link rel="stylesheet" href={asset('fonts/ibm-plex-mono/400.css')} />
+    <link rel="stylesheet" href={asset('fonts/ibm-plex-mono/500.css')} />
+    <link rel="stylesheet" href={asset('styles.css')} />
 
     <!-- Google tag (gtag.js). is:inline keeps Astro from bundling these into a
          hoisted module, which would scope `gtag` away from the global the

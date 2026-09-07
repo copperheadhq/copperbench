@@ -1,0 +1,84 @@
+# Build the whitepaper and publish the PDF where the website can link to it.
+#
+# paper/main.pdf is derived and gitignored, and the website is built on
+# Cloudflare from the repository as checked out, where there is no LaTeX. So
+# the PDF is built here on every push to main that can change it, and the one
+# file is force-pushed as the sole content of the orphan branch `paper-pdf`.
+# GitHub renders a PDF blob inline, and the site's "Paper" links resolve to
+# <repo>/blob/paper-pdf/copperbench.pdf (site/src/lib/facts.ts). The branch
+# holds no history on purpose: it is a published artifact, not a place to edit.
+#
+# The build is the repository's own `npm run paper:pdf`, so the PDF here is the
+# PDF a contributor gets locally. Page images are not needed for publishing.
+
+name: paper
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'paper/**'
+      - 'scripts/build-paper.mjs'
+      - '.github/workflows/paper.yml'
+      - '.node-version'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: paper-pdf
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+
+      # The packages main.tex needs (geometry, microtype, booktabs, hyperref,
+      # natbib, titlesec, abstract), lmodern for lmodern.sty, which
+      # texlive-fonts-recommended only recommends, and latexmk, which the
+      # build script prefers. plainnat.bst and the bibtex binary come with
+      # texlive-latex-base and texlive-binaries, so texlive-bibtex-extra is
+      # not needed. No npm install: scripts/build-paper.mjs has no
+      # dependencies. Verified: this set builds the paper on Ubuntu 24.04.
+      - name: Install TeX Live
+        run: |
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends \
+            texlive-latex-base texlive-latex-recommended texlive-latex-extra \
+            texlive-fonts-recommended lmodern latexmk
+
+      - name: Build the PDF
+        run: npm run paper:pdf
+
+      - name: Publish to the paper-pdf branch
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          set -eu
+          out="$(mktemp -d)"
+          cp paper/main.pdf "$out/copperbench.pdf"
+          cat > "$out/README.md" <<README
+          # copperbench whitepaper, built
+
+          \`copperbench.pdf\` is \`paper/main.pdf\` built from
+          [\`${GITHUB_SHA}\`](https://github.com/${GITHUB_REPOSITORY}/tree/${GITHUB_SHA}/paper)
+          by the \`paper\` workflow. This branch is rewritten on every build
+          and carries no history; the source is \`paper/\` on \`main\`.
+          README
+          cd "$out"
+          # Cloudflare's GitHub integration builds every branch it sees a push
+          # to, and this branch has no package.json to build; [CI Skip] in the
+          # commit message is Cloudflare's marker for a push it must ignore.
+          git init -q -b paper-pdf
+          git add -A
+          git -c user.name='github-actions[bot]' \
+              -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+              commit -q -m "Build the paper from ${GITHUB_SHA} [CI Skip]"
+          git push --force "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}" paper-pdf

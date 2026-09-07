@@ -1,0 +1,56 @@
+---
+// Every task in the suite, with what the harness runs say about it.
+import Page from '../../layouts/Page.astro';
+import Icon from '../../components/Icon.astro';
+import { facts, plural } from '../../lib/facts';
+import { to } from '../../lib/links';
+
+const at = Astro.url.pathname;
+const harness = new Map(facts.leaderboard.harness.map((r) => [r.taskId, r]));
+const cell = (taskId: string, mode: string) => harness.get(taskId)?.modes[mode];
+---
+
+<Page
+  title="Tasks"
+  description="The copperbench tasks: each one is a fixture, a request and a list of assertions, checked against a no-op and a reference solution before any model is run."
+  kicker="Suite"
+>
+  <h1>Tasks</h1>
+  <p class="section-lead">
+    A task is a manifest that names a fixture and a request, plus a list of assertions drawn from the vocabulary in
+    <a href={to(at, 'standard#6-the-assertion-vocabulary')}>section 6 of the standard</a>. The runner has no task-specific code; everything
+    it needs is in those two files. Before a task is used it is run twice without a model, once making no changes (which has to fail)
+    and once with the reference solution (which has to pass). The latest result of each run is in the last two columns.
+  </p>
+  <div class="table-card">
+    <table class="table">
+      <thead>
+        <tr><th>Task</th><th>Tier</th><th>Mode</th><th>Expected</th><th>Fixture</th><th class="right">Assertions</th><th>No-op run</th><th>Reference solution</th></tr>
+      </thead>
+      <tbody>
+        {facts.tasks.map((t) => {
+          const required = t.assertions.filter((a) => a.required).length;
+          const noop = cell(t.id, 'noop');
+          const gold = cell(t.id, 'gold');
+          return (
+            <tr>
+              <td><a class="model" href={to(at, `tasks/${t.id}`)}>{t.id}</a></td>
+              <td class="secondary">{t.tier}</td>
+              <td class="secondary">{t.mode}</td>
+              <td class="secondary">{t.expectedOutcome}</td>
+              <td class="secondary"><a href={to(at, `fixtures/${t.fixture}`)}>{t.fixture}</a></td>
+              <td class="right secondary num" title={`${plural(required, 'required assertion')}`}>{t.assertions.length}<span class="muted"> ({required} req.)</span></td>
+              <td>{noop ? <span class={`verdict verdict-${noop.verdict} ${noop.verdict === 'fail' ? 'verdict-expected' : 'verdict-unexpected'}`}>{noop.verdict}</span> : <span class="muted">not run</span>}</td>
+              <td>{gold ? <span class={`verdict verdict-${gold.verdict} ${gold.verdict === 'pass' ? 'verdict-expected' : 'verdict-unexpected'}`}>{gold.verdict}</span> : <span class="muted">not run</span>}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  </div>
+  <p class="section-lead" style="margin-top: 1.5rem;">
+    Each task page has the README, the manifest, the full assertion list with a note on what each check is for, and every result
+    record for that task.
+    <a href={to(at, 'standard#15-adding-a-task')}>Adding a task <Icon name="arrow" /></a>
+  </p>
+</Page>
