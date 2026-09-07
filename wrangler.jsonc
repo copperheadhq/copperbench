@@ -8,8 +8,8 @@
 // runs first either way. The settings are listed in site/README.md. `npm run site:deploy` does the same
 // from a machine logged in with `wrangler login`.
 //
-// To serve on a custom domain, add the zone to the account and uncomment
-// routes below with the hostname.
+// The custom domain below needs the copperbench.org zone on the same
+// Cloudflare account; wrangler creates the DNS record and certificate.
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "copperbench",
@@ -29,6 +29,6 @@
   "observability": {
     "enabled": true
   },
-  "workers_dev": true
-  // "routes": [{ "pattern": "<domain>", "custom_domain": true }]
+  "workers_dev": true,
+  "routes": [{ "pattern": "copperbench.org", "custom_domain": true }]
 }

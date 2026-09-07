@@ -2,26 +2,22 @@
 interface Props {
   title: string;
   description: string;
-  /** Open Graph image, relative to the site root. Rendered by site/og.mjs. */
-  image?: string;
-  /** A short description of the image for readers who cannot see it. */
-  imageAlt?: string;
+  /** For pages that are not a canonical address, such as the not-found page. */
+  noindex?: boolean;
 }
-const {
-  title,
-  description,
-  image = 'og.png',
-  imageAlt = 'copperbench: language-model agents on verified KiCad hardware edits',
-} = Astro.props;
+const { title, description, noindex = false } = Astro.props;
 
-// Absolute URLs need the deployed origin, which is SITE_URL at build time
-// (astro.config.mjs). Without it the canonical and og:url tags are left out
-// and the image stays relative, which browsers accept and most scrapers do not.
-const site = Astro.site;
-const absolute = (p: string): string => (site ? new URL(p, site).href : p);
-// The build writes index.html files (build.format 'file'); the canonical is the directory.
-const pathname = Astro.url.pathname.replace(/index\.html$/, '');
-const canonical = site ? new URL(pathname, site).href : undefined;
+// Astro.site is always set (astro.config.mjs) and ends in a slash, so paths
+// resolve under it rather than at its origin. The build writes .html files
+// (build.format 'file') while the asset router serves them without the
+// extension, so the canonical drops it; index collapses to the directory.
+const site = Astro.site as URL;
+const absolute = (p: string): string => new URL(p.replace(/^\//, ''), site).href;
+const pathname = Astro.url.pathname.replace(/(^|\/)index\.html$/, '$1').replace(/\.html$/, '');
+const canonical = noindex ? undefined : absolute(pathname);
+
+// One image, rendered by site/og.mjs at the size the tags state.
+const image = absolute('og.png');
 ---
 
 <!doctype html>
@@ -31,6 +27,7 @@ const canonical = site ? new URL(pathname, site).href : undefined;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     {canonical && <link rel="canonical" href={canonical} />}
 
     <meta property="og:type" content="website" />
@@ -38,16 +35,13 @@ const canonical = site ? new URL(pathname, site).href : undefined;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     {canonical && <meta property="og:url" content={canonical} />}
-    <meta property="og:image" content={absolute(image)} />
+    <meta property="og:image" content={image} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:image:alt" content={description} />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={absolute(image)} />
-    <meta name="twitter:image:alt" content={imageAlt} />
+    <meta name="twitter:image:alt" content={description} />
 
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="alternate icon" href="favicon.ico" sizes="32x32" />
