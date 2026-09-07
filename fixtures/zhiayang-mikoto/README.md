@@ -21,7 +21,7 @@ It also sits at a useful scale. At 67 components on one sheet it is five times t
 
 ## Baseline
 
-Measured with `kicad-cli` 10.0.4:
+Measured with `kicad-cli` 10.0.6:
 
 | Check | Errors | Warnings | Detail |
 | --- | --- | --- | --- |

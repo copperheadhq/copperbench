@@ -213,13 +213,21 @@ describe('the checked-in records', () => {
     }
   });
 
-  it('are segregated only for a kicad-less or setup-less environment', () => {
+  it('are segregated only for a stale environment or a superseded suite version', () => {
     // Records from before the reference environment could run kicad-cli and
     // copperhead init are kept, since records are append-only, and listed
-    // with that reason rather than averaged in.
+    // with that reason rather than averaged in. The suite-version reason joins
+    // them from 0.2.0 on: regenerating every fixture baseline under kicad-cli
+    // 10.0.6 edited four fixture manifests, which is a suite-version event
+    // (STANDARD.md section 9), so everything written under 0.1.0 segregates.
     const lb = buildLeaderboard(REPO, path.join(REPO, 'results'));
     expect(lb.snapshot.records).toBeGreaterThan(0);
-    for (const r of lb.incomparable) expect(r.reasons.join(), r.relPath).toMatch(/without kicad-cli|setup skipped/);
+    for (const r of lb.incomparable) {
+      expect(r.reasons.join(), r.relPath).toMatch(/without kicad-cli|setup skipped|suiteVersion|suite version/i);
+    }
+    // The point of the bump is segregation, not exclusion: comparable records
+    // must still exist, or the page has nothing to show.
+    expect(lb.snapshot.records).toBeGreaterThan(lb.incomparable.length);
   });
 
   it('show a no-op and a reference run for every task', () => {

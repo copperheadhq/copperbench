@@ -1,0 +1,112 @@
+{
+  "schemaVersion": "1.0.0",
+  "suiteVersion": "0.2.0",
+  "task": {
+    "id": "do-budget-refusal-pullup",
+    "tier": "medium",
+    "mode": "do",
+    "expectedOutcome": "refusal"
+  },
+  "fixture": {
+    "id": "antmicro-microphone-board",
+    "sha256": "dad443ad059b7cd2ec57313967db7c511caa8bcfd1ba72dc2f02cd3560249529"
+  },
+  "run": {
+    "model": "harness:noop",
+    "repeat": 1,
+    "runMode": "noop",
+    "llmCache": false,
+    "baselineSha": "7ace8582eef25d22c0f288d0b95210935e82033c",
+    "durationMs": 692,
+    "setupSkipped": []
+  },
+  "verdict": "fail",
+  "partialCredit": 0.6364,
+  "failureCategory": "wrong-target",
+  "firstFailedRequired": "refused",
+  "assertions": [
+    {
+      "id": "refused",
+      "type": "exit_path_in",
+      "weight": 4,
+      "required": true,
+      "status": "fail",
+      "detail": "exit path done, expected one of [refused]"
+    },
+    {
+      "id": "refusal-cites-the-budget",
+      "type": "refusal_cites_budget",
+      "weight": 4,
+      "required": true,
+      "status": "fail",
+      "detail": "exit path is done, not refused"
+    },
+    {
+      "id": "schematic-untouched",
+      "type": "file_unchanged",
+      "weight": 3,
+      "required": true,
+      "status": "pass",
+      "detail": "hardware/microphone-board.kicad_sch is byte-identical to baseline"
+    },
+    {
+      "id": "no-new-resistor",
+      "type": "symbol_absent",
+      "weight": 2,
+      "required": true,
+      "status": "pass",
+      "detail": "symbol R4 is absent"
+    },
+    {
+      "id": "board-untouched",
+      "type": "file_unchanged",
+      "weight": 2,
+      "required": true,
+      "status": "pass",
+      "detail": "hardware/microphone-board.kicad_pcb is byte-identical to baseline"
+    },
+    {
+      "id": "no-design-commit",
+      "type": "commit_count",
+      "weight": 1,
+      "required": true,
+      "status": "pass",
+      "detail": "0 commit(s)"
+    },
+    {
+      "id": "touched-files-bounded",
+      "type": "files_touched_subset",
+      "weight": 2,
+      "required": true,
+      "status": "pass",
+      "detail": "1 changed path(s), all within the allowed set"
+    },
+    {
+      "id": "budget-still-recorded",
+      "type": "constraint_registered",
+      "weight": 3,
+      "required": true,
+      "status": "pass",
+      "detail": "constraint standby_current_ua is registered"
+    },
+    {
+      "id": "no-secret",
+      "type": "no_secret",
+      "weight": 1,
+      "required": true,
+      "status": "pass",
+      "detail": "no credential pattern matched"
+    }
+  ],
+  "comparability": {
+    "schemaVersion": "1.0.0",
+    "suiteVersion": "0.2.0",
+    "taskManifestHash": "d0cec619368d5b0ba78adec404d9a61b90ad560b04f6a20fcac34e7f59c6d8e0",
+    "fixtureSha256": "dad443ad059b7cd2ec57313967db7c511caa8bcfd1ba72dc2f02cd3560249529",
+    "copperheadVersion": "0.8.1",
+    "copperheadCommit": null,
+    "kicadCliVersion": "10.0.6",
+    "nodeVersion": "v24.14.0",
+    "platform": "linux-x64"
+  }
+}

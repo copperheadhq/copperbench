@@ -16,7 +16,7 @@
   "kicad": {
     "authoredVersion": "8.x",
     "fileFormatVersion": "20231120",
-    "verifiedWithKicadCli": "10.0.4"
+    "verifiedWithKicadCli": "10.0.6"
   },
   "artifacts": {
     "schematic": "hardware/microphone-board.kicad_sch",
@@ -28,21 +28,34 @@
     "boardLines": 35688,
     "symbols": 12,
     "sheets": 1,
-    "signalNets": ["CLK", "DATA", "SELECT"],
-    "powerNets": ["VDD", "VCC", "GND"]
+    "signalNets": [
+      "CLK",
+      "DATA",
+      "SELECT"
+    ],
+    "powerNets": [
+      "VDD",
+      "VCC",
+      "GND"
+    ]
   },
   "baseline": {
     "erc": {
       "report": "baseline/erc.json",
       "errors": 0,
       "warnings": 44,
-      "warningTypes": { "lib_symbol_issues": 32, "footprint_link_issues": 12 }
+      "warningTypes": {
+        "footprint_link_issues": 12,
+        "lib_symbol_issues": 32
+      }
     },
     "drc": {
       "report": "baseline/drc.json",
       "errors": 0,
       "warnings": 13,
-      "warningTypes": { "lib_footprint_issues": 13 },
+      "warningTypes": {
+        "lib_footprint_issues": 13
+      },
       "unconnectedItems": 0,
       "schematicParity": 0
     },

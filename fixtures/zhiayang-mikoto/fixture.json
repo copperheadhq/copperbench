@@ -16,7 +16,7 @@
   "kicad": {
     "authoredVersion": "8.x",
     "fileFormatVersion": "20231120",
-    "verifiedWithKicadCli": "10.0.4"
+    "verifiedWithKicadCli": "10.0.6"
   },
   "artifacts": {
     "schematic": "mikoto.kicad_sch",
@@ -28,25 +28,51 @@
     "boardLines": 26468,
     "symbols": 67,
     "sheets": 1,
-    "signalNets": ["ANT", "CC1", "CC2", "BAT_I2C_SCL", "BAT_I2C_SDA", "CHARGE_CTRL_1", "CHARGE_CTRL_2", "BLUE_LED"],
-    "powerNets": ["VBUS", "VBAT", "VDDH", "VDD_NRF", "EXT_5V", "GND"]
+    "signalNets": [
+      "ANT",
+      "CC1",
+      "CC2",
+      "BAT_I2C_SCL",
+      "BAT_I2C_SDA",
+      "CHARGE_CTRL_1",
+      "CHARGE_CTRL_2",
+      "BLUE_LED"
+    ],
+    "powerNets": [
+      "VBUS",
+      "VBAT",
+      "VDDH",
+      "VDD_NRF",
+      "EXT_5V",
+      "GND"
+    ]
   },
   "baseline": {
     "erc": {
       "report": "baseline/erc.json",
       "errors": 0,
       "warnings": 295,
-      "warningTypes": { "lib_symbol_issues": 102, "endpoint_off_grid": 193 }
+      "warningTypes": {
+        "endpoint_off_grid": 193,
+        "lib_symbol_issues": 102
+      }
     },
     "drc": {
       "report": "baseline/drc.json",
       "errors": 1,
-      "errorTypes": { "zones_intersect": 1 },
+      "errorTypes": {
+        "zones_intersect": 1
+      },
       "warnings": 2,
-      "warningTypes": { "lib_footprint_mismatch": 2 },
+      "warningTypes": {
+        "lib_footprint_mismatch": 2
+      },
       "unconnectedItems": 0,
       "schematicParity": 84,
-      "schematicParityTypes": { "footprint_symbol_field_mismatch": 65, "footprint_symbol_mismatch": 19 }
+      "schematicParityTypes": {
+        "footprint_symbol_field_mismatch": 65,
+        "footprint_symbol_mismatch": 19
+      }
     },
     "note": "Zero ERC errors and zero unconnected items. The one DRC error is `zones_intersect`, two copper zones sharing a priority, which KiCad 10 rules on more strictly than the KiCad 8 this board was laid out in. The 84 parity issues are entirely metadata: `footprint_symbol_field_mismatch` is Description and LCSC Part fields differing between board and schematic, and `footprint_symbol_mismatch` here is 'Do not populate' and similar attribute flags. None of it is electrical, and the netlist parity that an edit task actually depends on is intact. The 193 `endpoint_off_grid` warnings are a real property of this design and a useful hazard: an agent that reflows geometry will move that count."
   }
