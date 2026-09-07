@@ -19,12 +19,12 @@ The suite reason is origin diversity. Before this fixture, every board in copper
 
 ## Baseline
 
-Measured with `kicad-cli` 10.0.4:
+Measured with `kicad-cli` 10.0.6:
 
 | Check | Errors | Warnings | Detail |
 | --- | --- | --- | --- |
-| ERC | 0 | 182 | 109 `lib_symbol_issues`, 72 `endpoint_off_grid`, 1 `footprint_link_issues` |
-| DRC | 1 | 31 | 1 `courtyards_overlap`; 30 `lib_footprint_mismatch`, 1 `lib_footprint_issues` |
+| ERC | 0 | 224 | 109 `lib_symbol_issues`, 72 `endpoint_off_grid`, 43 `footprint_link_issues` |
+| DRC | 1 | 43 | 1 `courtyards_overlap`; 43 `lib_footprint_issues` |
 | Unconnected | 0 | | |
 | Parity | 1 | | 1 `footprint_symbol_mismatch` |
 

@@ -16,7 +16,7 @@
   "kicad": {
     "authoredVersion": "8.x",
     "fileFormatVersion": "20231120",
-    "verifiedWithKicadCli": "10.0.4"
+    "verifiedWithKicadCli": "10.0.6"
   },
   "artifacts": {
     "schematic": "hardware/baseboard_2slots/baseboard_2slots.kicad_sch",
@@ -28,25 +28,51 @@
     "boardLines": 37794,
     "symbols": 45,
     "sheets": 1,
-    "signalNets": ["SPI_CLK", "SPI_MISO", "SPI_MOSI", "SPI_CS0", "SPI_CS1", "SCL", "SDA", "INT_WIZ", "INT_RF24", "NRF_CE", "STATUS_LEDS"],
-    "powerNets": ["+3.3V", "VDD", "GND"]
+    "signalNets": [
+      "SPI_CLK",
+      "SPI_MISO",
+      "SPI_MOSI",
+      "SPI_CS0",
+      "SPI_CS1",
+      "SCL",
+      "SDA",
+      "INT_WIZ",
+      "INT_RF24",
+      "NRF_CE",
+      "STATUS_LEDS"
+    ],
+    "powerNets": [
+      "+3.3V",
+      "VDD",
+      "GND"
+    ]
   },
   "baseline": {
     "erc": {
       "report": "baseline/erc.json",
       "errors": 0,
-      "warnings": 182,
-      "warningTypes": { "lib_symbol_issues": 109, "endpoint_off_grid": 72, "footprint_link_issues": 1 }
+      "warnings": 224,
+      "warningTypes": {
+        "endpoint_off_grid": 72,
+        "footprint_link_issues": 43,
+        "lib_symbol_issues": 109
+      }
     },
     "drc": {
       "report": "baseline/drc.json",
       "errors": 1,
-      "errorTypes": { "courtyards_overlap": 1 },
-      "warnings": 31,
-      "warningTypes": { "lib_footprint_mismatch": 30, "lib_footprint_issues": 1 },
+      "errorTypes": {
+        "courtyards_overlap": 1
+      },
+      "warnings": 43,
+      "warningTypes": {
+        "lib_footprint_issues": 43
+      },
       "unconnectedItems": 0,
       "schematicParity": 1,
-      "schematicParityTypes": { "footprint_symbol_mismatch": 1 }
+      "schematicParityTypes": {
+        "footprint_symbol_mismatch": 1
+      }
     },
     "note": "The cleanest baseline of every candidate vetted apart from antmicro-microphone-board: one DRC error, one parity issue, zero unconnected items. The single `courtyards_overlap` error is a KiCad 10 geometry evaluation of a board laid out under KiCad 8, not an upstream defect; the project's own .kicad_pro leaves `courtyards_overlap` at error severity, so it is reported rather than suppressed. The 109 `lib_symbol_issues` are library resolution, including a stale `baseboard_4slots-rescue:` lib_id that has no file upstream and resolves from the embedded symbol cache. Tasks assert erc_no_new_violations and drc_no_new_violations against this record."
   }

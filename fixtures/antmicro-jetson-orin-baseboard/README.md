@@ -30,12 +30,12 @@ Glasgow remains an attractive future fixture, and under the recorded-allowlist r
 
 ## Baseline
 
-Measured with `kicad-cli` 10.0.4:
+Measured with `kicad-cli` 10.0.6:
 
 | Check | Errors | Warnings | Detail |
 | --- | --- | --- | --- |
-| ERC | 0 | 1,750 | 1,066 `lib_symbol_issues`, 678 `footprint_link_issues`, 6 `same_local_global_label` |
-| DRC | 6 | 251 | 4 `hole_clearance`, 1 `courtyards_overlap`, 1 `zones_intersect`; 199 `lib_footprint_issues`, 48 `silk_over_copper`, 4 `silk_overlap` |
+| ERC | 0 | 1,751 | 1,066 `lib_symbol_issues`, 678 `footprint_link_issues`, 6 `same_local_global_label`, 1 `ground_pin_not_ground` |
+| DRC | 6 | 226 | 4 `hole_clearance`, 1 `courtyards_overlap`, 1 `zones_intersect`; 199 `lib_footprint_issues`, 14 `silk_over_copper`, 10 `silk_overlap`, 3 `silk_edge_clearance` |
 | Unconnected | 0 | | |
 | Parity | 0 | | |
 
@@ -43,7 +43,7 @@ Zero ERC errors, zero unconnected items and zero parity issues across ten hierar
 
 The six DRC errors are all geometry rules KiCad tightened after this board was laid out under KiCad 8: four `hole_clearance` (a hole closer to another feature than the 0.16 mm board-setup constraint allows), one `courtyards_overlap`, one `zones_intersect`. They are enumerated in `fixture.json` as the recorded allowlist, so `drc_no_new_violations` still fails on any error type that appears at run time but is absent there, or that exceeds its recorded count.
 
-The 1,750 ERC warnings are the ordinary bare-checkout condition at this scale: the design references Antmicro's vendor symbol and footprint libraries, and its own project lib tables are empty.
+The 1,751 ERC warnings are the ordinary bare-checkout condition at this scale: the design references Antmicro's vendor symbol and footprint libraries, and its own project lib tables are empty. All but one are library resolution; the lone `ground_pin_not_ground` appeared when the reference CLI moved from 10.0.4 to 10.0.6, and is a warning rather than an error, so it changes nothing a task is graded on.
 
 ## Scale, and what it does to a surgicality bound
 

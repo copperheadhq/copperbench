@@ -16,7 +16,7 @@
   "kicad": {
     "authoredVersion": "8.x",
     "fileFormatVersion": "20231120",
-    "verifiedWithKicadCli": "10.0.4"
+    "verifiedWithKicadCli": "10.0.6"
   },
   "artifacts": {
     "schematic": "jetson-orin-baseboard.kicad_sch",
@@ -28,22 +28,52 @@
     "boardLines": 1799902,
     "symbols": 669,
     "sheets": 10,
-    "signalNets": ["CSI1_0_D0_P", "CSI1_0_D0_N", "CSIA_3V3", "CSIA_5V", "CSIA_3V3_ISET"],
-    "powerNets": ["+1V8", "+3V3", "+5V", "+5V_SoM", "3V3_STDB", "VDD_SoM", "VCC", "GND", "GNDD"]
+    "signalNets": [
+      "CSI1_0_D0_P",
+      "CSI1_0_D0_N",
+      "CSIA_3V3",
+      "CSIA_5V",
+      "CSIA_3V3_ISET"
+    ],
+    "powerNets": [
+      "+1V8",
+      "+3V3",
+      "+5V",
+      "+5V_SoM",
+      "3V3_STDB",
+      "VDD_SoM",
+      "VCC",
+      "GND",
+      "GNDD"
+    ]
   },
   "baseline": {
     "erc": {
       "report": "baseline/erc.json",
       "errors": 0,
-      "warnings": 1750,
-      "warningTypes": { "lib_symbol_issues": 1066, "footprint_link_issues": 678, "same_local_global_label": 6 }
+      "warnings": 1751,
+      "warningTypes": {
+        "footprint_link_issues": 678,
+        "ground_pin_not_ground": 1,
+        "lib_symbol_issues": 1066,
+        "same_local_global_label": 6
+      }
     },
     "drc": {
       "report": "baseline/drc.json",
       "errors": 6,
-      "errorTypes": { "hole_clearance": 4, "courtyards_overlap": 1, "zones_intersect": 1 },
-      "warnings": 251,
-      "warningTypes": { "lib_footprint_issues": 199, "silk_over_copper": 48, "silk_overlap": 4 },
+      "errorTypes": {
+        "courtyards_overlap": 1,
+        "hole_clearance": 4,
+        "zones_intersect": 1
+      },
+      "warnings": 226,
+      "warningTypes": {
+        "lib_footprint_issues": 199,
+        "silk_edge_clearance": 3,
+        "silk_over_copper": 14,
+        "silk_overlap": 10
+      },
       "unconnectedItems": 0,
       "schematicParity": 0
     },

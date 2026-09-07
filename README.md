@@ -36,7 +36,7 @@ Because the two repositories version independently, every result record stamps t
 
 ## Status
 
-The standard, schemas, fixture policy, four real fixtures, two worked tasks, suite validation, the sandbox, the scorer, and result records are in place, and the whole loop runs offline. What is missing is the agent: `--mode agent` needs a provider credential and is not implemented, and the eight `kicad-cli`-backed assertion types report `unevaluable` rather than guessing. The aggregate report, `LEADERBOARD.md`, and the paper generator are still to come; see the [task list](openspec/changes/add-model-benchmark-suite/tasks.md).
+The standard, schemas, fixture policy, four real fixtures, two worked tasks, suite validation, the sandbox, the scorer, and result records are in place, and the whole loop runs offline. What is missing is the agent: `--mode agent` needs a provider credential and is not implemented, and six assertion types are still stubs that report `unevaluable` rather than guessing. The baseline-relative ERC and DRC checks run when `kicad-cli` is present and report `unevaluable` when it is not. The aggregate report, `LEADERBOARD.md`, and the paper generator are still to come; see the [task list](openspec/changes/add-model-benchmark-suite/tasks.md).
 
 The suite ships two provider-free run modes that prove it discriminates before any credential is spent: `--mode noop` does nothing and every discriminating assertion must fail, and `--mode gold` applies a reference solution and every evaluable assertion must pass.
 

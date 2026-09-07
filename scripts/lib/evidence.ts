@@ -189,9 +189,16 @@ export class Transcript {
     return this.events.filter((e) => e.type === type);
   }
 
-  /** Whole transcript as text, for citation and secret checks. */
-  text(): string {
-    return this.events.map((e) => JSON.stringify(e)).join('\n');
+  /**
+   * Transcript as text, for citation and secret checks. Event types named in
+   * `exclude` are left out: run-start echoes the task's own config, budgets
+   * included, which is not something the model said.
+   */
+  text(exclude: string[] = []): string {
+    return this.events
+      .filter((e) => !exclude.includes(e.type))
+      .map((e) => JSON.stringify(e))
+      .join('\n');
   }
 }
 
@@ -203,4 +210,6 @@ export interface Evidence {
   baseline: Record<string, unknown>;
   /** False when kicad-cli is absent, which makes ERC/DRC unevaluable. */
   kicadAvailable: boolean;
+  /** Board path relative to the sandbox, or null for schematic-only fixtures. */
+  boardPath: string | null;
 }

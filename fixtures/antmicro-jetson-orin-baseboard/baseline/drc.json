@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/drc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-07-29T20:53:47",
+    "date": "2026-09-07T04:12:47",
     "ignored_checks": [
         {
             "description": "Track endpoint not centered on via",
@@ -24,7 +24,7 @@
         "error",
         "warning"
     ],
-    "kicad_version": "10.0.4",
+    "kicad_version": "10.0.6",
     "schematic_parity": [],
     "source": "jetson-orin-baseboard.kicad_pcb",
     "unconnected_items": [],
@@ -168,6 +168,144 @@
             "type": "zones_intersect"
         },
         {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "PCB text 'USB-C 0 DP' on F.Silkscreen",
+                    "pos": {
+                        "x": 80.25,
+                        "y": 120.55
+                    },
+                    "uuid": "0ea852f0-e862-42a8-a4bd-61523abc089f"
+                },
+                {
+                    "description": "Segment of U7 on F.Silkscreen",
+                    "pos": {
+                        "x": 80.7195,
+                        "y": 117.11
+                    },
+                    "uuid": "963c0f6f-2390-4124-9738-18d9cb978e87"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "PCB text 'USB-C 0 DP' on F.Silkscreen",
+                    "pos": {
+                        "x": 80.25,
+                        "y": 120.55
+                    },
+                    "uuid": "0ea852f0-e862-42a8-a4bd-61523abc089f"
+                },
+                {
+                    "description": "Segment of U7 on F.Silkscreen",
+                    "pos": {
+                        "x": 83.3205,
+                        "y": 117.11
+                    },
+                    "uuid": "6b2544ce-34cd-42fb-9324-b9134c6ce508"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "PCB text 'ETH' on F.Silkscreen",
+                    "pos": {
+                        "x": 48.05,
+                        "y": 107.8
+                    },
+                    "uuid": "14ff90cb-307e-4c0c-9034-dc99ccdb694c"
+                },
+                {
+                    "description": "Reference field of J6",
+                    "pos": {
+                        "x": 48.4,
+                        "y": 110.2
+                    },
+                    "uuid": "9a044624-2eec-40e1-9aa2-c5c93356b29c"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of D26 on F.Silkscreen",
+                    "pos": {
+                        "x": 135.019,
+                        "y": 126.02
+                    },
+                    "uuid": "9cf88f93-6309-4324-bae8-700608f47325"
+                },
+                {
+                    "description": "PCB text 'LED 0' on F.Silkscreen",
+                    "pos": {
+                        "x": 134.8,
+                        "y": 124.25
+                    },
+                    "uuid": "a8f19e3b-aa69-4dbc-91ed-d84bd3c2bf28"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of D27 on F.Silkscreen",
+                    "pos": {
+                        "x": 133.119,
+                        "y": 126.02
+                    },
+                    "uuid": "33751dd8-64e2-4f6f-b10f-70be45e04b08"
+                },
+                {
+                    "description": "PCB text 'LED 1' on F.Silkscreen",
+                    "pos": {
+                        "x": 132.9,
+                        "y": 124.25
+                    },
+                    "uuid": "9f2e9053-3391-441a-a301-329fcda05c7e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "PCB text 'USB-C 0 DP' on F.Silkscreen",
+                    "pos": {
+                        "x": 80.25,
+                        "y": 120.55
+                    },
+                    "uuid": "0ea852f0-e862-42a8-a4bd-61523abc089f"
+                },
+                {
+                    "description": "NPTH pad of J9",
+                    "pos": {
+                        "x": 80.1,
+                        "y": 124.2385
+                    },
+                    "uuid": "0edde5e7-61dc-4e42-9490-ca89febbed70"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
             "description": "Silkscreen clipped by solder mask",
             "items": [
                 {
@@ -185,98 +323,6 @@
                         "y": 125.2545
                     },
                     "uuid": "a6a40a9f-f5a5-486f-95a7-94a451f232ed"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Segment of J12 on F.Silkscreen",
-                    "pos": {
-                        "x": 57.895,
-                        "y": 126.9085
-                    },
-                    "uuid": "7ccced43-7f71-43eb-a4a2-43af9d6d8668"
-                },
-                {
-                    "description": "PTH pad SH [GND] of J3",
-                    "pos": {
-                        "x": 57.911,
-                        "y": 125.995
-                    },
-                    "uuid": "cdce0a69-df66-4798-98b7-dc7c57d61f14"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Segment of J12 on F.Silkscreen",
-                    "pos": {
-                        "x": 58.095,
-                        "y": 126.5085
-                    },
-                    "uuid": "f4dcb7c0-9bfd-4273-84be-bcb04a4451f2"
-                },
-                {
-                    "description": "PTH pad SH [GND] of J3",
-                    "pos": {
-                        "x": 57.911,
-                        "y": 125.995
-                    },
-                    "uuid": "cdce0a69-df66-4798-98b7-dc7c57d61f14"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Segment of J12 on F.Silkscreen",
-                    "pos": {
-                        "x": 58.095,
-                        "y": 126.5085
-                    },
-                    "uuid": "02ef0ba1-461e-4a9f-b3d6-1892d21c6d7d"
-                },
-                {
-                    "description": "PTH pad SH [GND] of J3",
-                    "pos": {
-                        "x": 57.911,
-                        "y": 125.995
-                    },
-                    "uuid": "cdce0a69-df66-4798-98b7-dc7c57d61f14"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Segment of J12 on F.Silkscreen",
-                    "pos": {
-                        "x": 58.095,
-                        "y": 126.5085
-                    },
-                    "uuid": "02ef0ba1-461e-4a9f-b3d6-1892d21c6d7d"
-                },
-                {
-                    "description": "PTH pad SH [GND] of J3",
-                    "pos": {
-                        "x": 57.911,
-                        "y": 121.814
-                    },
-                    "uuid": "967a1bd9-33a6-4871-8d53-4d5830606685"
                 }
             ],
             "severity": "warning",
@@ -378,20 +424,20 @@
             "description": "Silkscreen clipped by solder mask",
             "items": [
                 {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "description": "Segment of J12 on F.Silkscreen",
                     "pos": {
-                        "x": 135.75,
-                        "y": 90.5
+                        "x": 57.895,
+                        "y": 126.9085
                     },
-                    "uuid": "799fc994-0d50-4bfc-9c97-93536f2ed1ed"
+                    "uuid": "7ccced43-7f71-43eb-a4a2-43af9d6d8668"
                 },
                 {
-                    "description": "Pad 1 [/Peripherals/USBSS2_TX_CONN_N] of D19 on F.Cu",
+                    "description": "PTH pad SH [GND] of J3",
                     "pos": {
-                        "x": 136.27,
-                        "y": 91.611
+                        "x": 57.911,
+                        "y": 125.995
                     },
-                    "uuid": "7cd611ec-a5e2-4926-9459-f7b8c0adf121"
+                    "uuid": "cdce0a69-df66-4798-98b7-dc7c57d61f14"
                 }
             ],
             "severity": "warning",
@@ -401,20 +447,20 @@
             "description": "Silkscreen clipped by solder mask",
             "items": [
                 {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "description": "Segment of J12 on F.Silkscreen",
                     "pos": {
-                        "x": 135.75,
-                        "y": 90.5
+                        "x": 58.095,
+                        "y": 126.5085
                     },
-                    "uuid": "799fc994-0d50-4bfc-9c97-93536f2ed1ed"
+                    "uuid": "f4dcb7c0-9bfd-4273-84be-bcb04a4451f2"
                 },
                 {
-                    "description": "Pad 1 [/Peripherals/USBSS2_TX_CONN_P] of D21 on F.Cu",
+                    "description": "PTH pad SH [GND] of J3",
                     "pos": {
-                        "x": 136.27,
-                        "y": 92.279
+                        "x": 57.911,
+                        "y": 125.995
                     },
-                    "uuid": "e26d1530-1a91-4e35-8140-50d756912125"
+                    "uuid": "cdce0a69-df66-4798-98b7-dc7c57d61f14"
                 }
             ],
             "severity": "warning",
@@ -424,20 +470,20 @@
             "description": "Silkscreen clipped by solder mask",
             "items": [
                 {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "description": "Segment of J12 on F.Silkscreen",
                     "pos": {
-                        "x": 135.75,
-                        "y": 90.5
+                        "x": 58.095,
+                        "y": 126.5085
                     },
-                    "uuid": "799fc994-0d50-4bfc-9c97-93536f2ed1ed"
+                    "uuid": "02ef0ba1-461e-4a9f-b3d6-1892d21c6d7d"
                 },
                 {
-                    "description": "Pad 2 [GND] of D19 on F.Cu",
+                    "description": "PTH pad SH [GND] of J3",
                     "pos": {
-                        "x": 136.27,
-                        "y": 90.911
+                        "x": 57.911,
+                        "y": 125.995
                     },
-                    "uuid": "7e9ea4db-2d83-4b3b-9722-37747ebb6ced"
+                    "uuid": "cdce0a69-df66-4798-98b7-dc7c57d61f14"
                 }
             ],
             "severity": "warning",
@@ -447,20 +493,20 @@
             "description": "Silkscreen clipped by solder mask",
             "items": [
                 {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "description": "Segment of J12 on F.Silkscreen",
                     "pos": {
-                        "x": 135.75,
-                        "y": 90.5
+                        "x": 58.095,
+                        "y": 126.5085
                     },
-                    "uuid": "799fc994-0d50-4bfc-9c97-93536f2ed1ed"
+                    "uuid": "02ef0ba1-461e-4a9f-b3d6-1892d21c6d7d"
                 },
                 {
-                    "description": "Pad 2 [GND] of D21 on F.Cu",
+                    "description": "PTH pad SH [GND] of J3",
                     "pos": {
-                        "x": 136.27,
-                        "y": 92.979
+                        "x": 57.911,
+                        "y": 121.814
                     },
-                    "uuid": "6a02b7cc-a348-48df-9a88-b17c7324a060"
+                    "uuid": "967a1bd9-33a6-4871-8d53-4d5830606685"
                 }
             ],
             "severity": "warning",
@@ -470,599 +516,24 @@
             "description": "Silkscreen clipped by solder mask",
             "items": [
                 {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
+                    "description": "PCB text 'WLAN' on F.Silkscreen",
                     "pos": {
-                        "x": 146.81,
-                        "y": 83.5
+                        "x": 129.15,
+                        "y": 105.2
                     },
-                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
+                    "uuid": "c0c3dae4-6a7d-4e71-89d9-e1b435696ae6"
                 },
                 {
-                    "description": "Pad 2 [GND] of D45 on F.Cu",
+                    "description": "Pad 1 [Net-(D52-A)] of R187 on F.Cu",
                     "pos": {
-                        "x": 147.45,
-                        "y": 83.951
+                        "x": 128.9,
+                        "y": 107.42
                     },
-                    "uuid": "56197d0e-a096-4d1e-8a10-d2918b86a29b"
+                    "uuid": "7a546531-ed65-469f-ac76-8c1bb91d2a35"
                 }
             ],
             "severity": "warning",
             "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
-                    "pos": {
-                        "x": 146.81,
-                        "y": 83.5
-                    },
-                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
-                },
-                {
-                    "description": "Pad 1 [PCIE2_RX0_P] of D40 on F.Cu",
-                    "pos": {
-                        "x": 147.45,
-                        "y": 87.849
-                    },
-                    "uuid": "b9036b78-27f6-4997-b8d4-5ae19dbdaa7c"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
-                    "pos": {
-                        "x": 146.81,
-                        "y": 83.5
-                    },
-                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
-                },
-                {
-                    "description": "Pad 1 [PCIE2_RX0_N] of D39 on F.Cu",
-                    "pos": {
-                        "x": 147.45,
-                        "y": 87.251
-                    },
-                    "uuid": "151dc50a-6b8d-456c-8362-fb20999bbe5f"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
-                    "pos": {
-                        "x": 146.81,
-                        "y": 83.5
-                    },
-                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
-                },
-                {
-                    "description": "Pad 1 [PCIE2_RX1_P] of D46 on F.Cu",
-                    "pos": {
-                        "x": 147.45,
-                        "y": 85.249
-                    },
-                    "uuid": "828dca47-ce97-4b73-a3ab-cad4412047e3"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
-                    "pos": {
-                        "x": 146.81,
-                        "y": 83.5
-                    },
-                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
-                },
-                {
-                    "description": "Pad 2 [GND] of D46 on F.Cu",
-                    "pos": {
-                        "x": 147.45,
-                        "y": 85.949
-                    },
-                    "uuid": "5d44dfac-c8a1-477f-a660-a64ecdeff135"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
-                    "pos": {
-                        "x": 146.81,
-                        "y": 83.5
-                    },
-                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
-                },
-                {
-                    "description": "Pad 1 [PCIE2_RX1_N] of D45 on F.Cu",
-                    "pos": {
-                        "x": 147.45,
-                        "y": 84.651
-                    },
-                    "uuid": "980231aa-d96b-4647-b0c0-8235433675df"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
-                    "pos": {
-                        "x": 146.81,
-                        "y": 83.5
-                    },
-                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
-                },
-                {
-                    "description": "Pad 2 [GND] of D39 on F.Cu",
-                    "pos": {
-                        "x": 147.45,
-                        "y": 86.551
-                    },
-                    "uuid": "eca23446-c50d-4757-b6b8-715861738c84"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
-                    "pos": {
-                        "x": 146.81,
-                        "y": 83.5
-                    },
-                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
-                },
-                {
-                    "description": "Pad 2 [GND] of D40 on F.Cu",
-                    "pos": {
-                        "x": 147.45,
-                        "y": 88.549
-                    },
-                    "uuid": "10aa3c6b-718b-410e-91bc-319cfd0cb11f"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
-                    "pos": {
-                        "x": 146.81,
-                        "y": 83.5
-                    },
-                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
-                },
-                {
-                    "description": "Pad 2 [GND] of D49 on F.Cu",
-                    "pos": {
-                        "x": 147.45,
-                        "y": 89.151
-                    },
-                    "uuid": "065a9dba-07bb-4004-9c03-99fa0a3aa6ba"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
-                    "pos": {
-                        "x": 146.81,
-                        "y": 83.5
-                    },
-                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
-                },
-                {
-                    "description": "Pad 1 [PCIE3_CLK_P] of D50 on F.Cu",
-                    "pos": {
-                        "x": 147.45,
-                        "y": 90.449
-                    },
-                    "uuid": "260b1b85-e658-439b-be00-2af1e62fc864"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
-                    "pos": {
-                        "x": 146.81,
-                        "y": 83.5
-                    },
-                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
-                },
-                {
-                    "description": "Pad 2 [GND] of D50 on F.Cu",
-                    "pos": {
-                        "x": 147.45,
-                        "y": 91.149
-                    },
-                    "uuid": "0a1359f4-267c-4de8-9419-5ffe77e42657"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
-                    "pos": {
-                        "x": 146.81,
-                        "y": 83.5
-                    },
-                    "uuid": "08d9726b-6d7a-4836-8b03-4e978f353822"
-                },
-                {
-                    "description": "Pad 1 [PCIE3_CLK_N] of D49 on F.Cu",
-                    "pos": {
-                        "x": 147.45,
-                        "y": 89.851
-                    },
-                    "uuid": "b8a79a11-e197-435e-ae72-cfc39c0bb608"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
-                    "pos": {
-                        "x": 134.61,
-                        "y": 87.7
-                    },
-                    "uuid": "48b847fa-37e9-4a25-88e3-6dffef673559"
-                },
-                {
-                    "description": "Pad 1 [PCIE2_CLK_N] of D43 on F.Cu",
-                    "pos": {
-                        "x": 135.1,
-                        "y": 88.821
-                    },
-                    "uuid": "35def102-833a-4430-aa98-cebf40502bc2"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
-                    "pos": {
-                        "x": 134.61,
-                        "y": 87.7
-                    },
-                    "uuid": "48b847fa-37e9-4a25-88e3-6dffef673559"
-                },
-                {
-                    "description": "Pad 2 [GND] of D43 on F.Cu",
-                    "pos": {
-                        "x": 135.1,
-                        "y": 88.121
-                    },
-                    "uuid": "297a9e02-358d-422d-a6a1-f1ca4b768a87"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
-                    "pos": {
-                        "x": 134.61,
-                        "y": 87.7
-                    },
-                    "uuid": "48b847fa-37e9-4a25-88e3-6dffef673559"
-                },
-                {
-                    "description": "Pad 1 [PCIE2_CLK_P] of D44 on F.Cu",
-                    "pos": {
-                        "x": 135.1,
-                        "y": 89.49
-                    },
-                    "uuid": "183dd1f7-4a6e-4a9f-a6cd-59c9dc4a2bbd"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
-                    "pos": {
-                        "x": 134.61,
-                        "y": 87.7
-                    },
-                    "uuid": "48b847fa-37e9-4a25-88e3-6dffef673559"
-                },
-                {
-                    "description": "Pad 2 [GND] of D44 on F.Cu",
-                    "pos": {
-                        "x": 135.1,
-                        "y": 90.19
-                    },
-                    "uuid": "15904c60-18eb-4f03-bf9a-630592965ee5"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
-                    "pos": {
-                        "x": 137.26,
-                        "y": 82.0
-                    },
-                    "uuid": "1f520a01-0e66-4f42-a472-a00c264ca986"
-                },
-                {
-                    "description": "Pad 2 [GND] of D47 on F.Cu",
-                    "pos": {
-                        "x": 137.8,
-                        "y": 82.451
-                    },
-                    "uuid": "2053b37d-0193-46af-8400-1c7030605a34"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
-                    "pos": {
-                        "x": 137.26,
-                        "y": 82.0
-                    },
-                    "uuid": "1f520a01-0e66-4f42-a472-a00c264ca986"
-                },
-                {
-                    "description": "Pad 1 [/Peripherals/PCIE2_TX0_CONN_N] of D41 on F.Cu",
-                    "pos": {
-                        "x": 137.8,
-                        "y": 86.421
-                    },
-                    "uuid": "5ffa5814-fba4-4dc2-9072-e22538fbff78"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
-                    "pos": {
-                        "x": 137.26,
-                        "y": 82.0
-                    },
-                    "uuid": "1f520a01-0e66-4f42-a472-a00c264ca986"
-                },
-                {
-                    "description": "Pad 2 [GND] of D41 on F.Cu",
-                    "pos": {
-                        "x": 137.8,
-                        "y": 85.721
-                    },
-                    "uuid": "4af81695-2370-4d72-b10a-4707c9f5d98b"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
-                    "pos": {
-                        "x": 137.26,
-                        "y": 82.0
-                    },
-                    "uuid": "1f520a01-0e66-4f42-a472-a00c264ca986"
-                },
-                {
-                    "description": "Pad 1 [/Peripherals/PCIE2_TX1_CONN_P] of D48 on F.Cu",
-                    "pos": {
-                        "x": 137.8,
-                        "y": 83.799
-                    },
-                    "uuid": "f34be3ea-44b8-49dd-ba02-4e0714b0b44b"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
-                    "pos": {
-                        "x": 137.26,
-                        "y": 82.0
-                    },
-                    "uuid": "1f520a01-0e66-4f42-a472-a00c264ca986"
-                },
-                {
-                    "description": "Pad 2 [GND] of D48 on F.Cu",
-                    "pos": {
-                        "x": 137.8,
-                        "y": 84.499
-                    },
-                    "uuid": "10774f1c-7433-42e0-9d6e-a73652ad6523"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
-                    "pos": {
-                        "x": 137.26,
-                        "y": 82.0
-                    },
-                    "uuid": "1f520a01-0e66-4f42-a472-a00c264ca986"
-                },
-                {
-                    "description": "Pad 1 [/Peripherals/PCIE2_TX1_CONN_N] of D47 on F.Cu",
-                    "pos": {
-                        "x": 137.8,
-                        "y": 83.151
-                    },
-                    "uuid": "1c7c78fa-565c-4c61-b8ed-4076fd41977b"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
-                    "pos": {
-                        "x": 137.26,
-                        "y": 82.0
-                    },
-                    "uuid": "1f520a01-0e66-4f42-a472-a00c264ca986"
-                },
-                {
-                    "description": "Pad 1 [/Peripherals/PCIE2_TX0_CONN_P] of D42 on F.Cu",
-                    "pos": {
-                        "x": 137.8,
-                        "y": 87.099
-                    },
-                    "uuid": "799c26a8-db6e-4c08-96bf-b438c3e5f743"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on F.Cu and F.Silkscreen",
-                    "pos": {
-                        "x": 137.26,
-                        "y": 82.0
-                    },
-                    "uuid": "1f520a01-0e66-4f42-a472-a00c264ca986"
-                },
-                {
-                    "description": "Pad 2 [GND] of D42 on F.Cu",
-                    "pos": {
-                        "x": 137.8,
-                        "y": 87.799
-                    },
-                    "uuid": "f554824c-cf35-488d-88f7-8a2427028cfa"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clearance",
-            "items": [
-                {
-                    "description": "PCB text 'J9 SELECT ONE' on B.Silkscreen",
-                    "pos": {
-                        "x": 84.335,
-                        "y": 117.04
-                    },
-                    "uuid": "81ba2bd6-18da-46b1-a3bf-fc503fdbaffd"
-                },
-                {
-                    "description": "Rectangle on B.Silkscreen",
-                    "pos": {
-                        "x": 79.685,
-                        "y": 116.39
-                    },
-                    "uuid": "f4ea2f9c-4268-4766-8db6-a6a151ecf4d8"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen clearance",
-            "items": [
-                {
-                    "description": "Rectangle on B.Silkscreen",
-                    "pos": {
-                        "x": 71.55,
-                        "y": 122.757
-                    },
-                    "uuid": "17f466a0-7e24-452f-8a7f-9fc193e067de"
-                },
-                {
-                    "description": "PCB text 'SPI' on B.Silkscreen",
-                    "pos": {
-                        "x": 75.78,
-                        "y": 122.71
-                    },
-                    "uuid": "5810b949-012a-4167-8ac3-ece078b03a4d"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
         },
         {
             "description": "Silkscreen clearance",
@@ -1111,6 +582,98 @@
             "type": "silk_overlap"
         },
         {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Rectangle on B.Silkscreen",
+                    "pos": {
+                        "x": 71.55,
+                        "y": 122.757
+                    },
+                    "uuid": "17f466a0-7e24-452f-8a7f-9fc193e067de"
+                },
+                {
+                    "description": "PCB text 'SPI' on B.Silkscreen",
+                    "pos": {
+                        "x": 75.78,
+                        "y": 122.71
+                    },
+                    "uuid": "5810b949-012a-4167-8ac3-ece078b03a4d"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "PCB text 'J9 SELECT ONE' on B.Silkscreen",
+                    "pos": {
+                        "x": 84.335,
+                        "y": 117.04
+                    },
+                    "uuid": "81ba2bd6-18da-46b1-a3bf-fc503fdbaffd"
+                },
+                {
+                    "description": "Rectangle on B.Silkscreen",
+                    "pos": {
+                        "x": 79.685,
+                        "y": 116.39
+                    },
+                    "uuid": "f4ea2f9c-4268-4766-8db6-a6a151ecf4d8"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Circle of J7 on B.Silkscreen",
+                    "pos": {
+                        "x": 142.39,
+                        "y": 81.83
+                    },
+                    "uuid": "45d1432e-a942-40a1-b6b9-5a551b2ad4d7"
+                },
+                {
+                    "description": "PCB text 'CSI A' on B.Silkscreen",
+                    "pos": {
+                        "x": 142.4,
+                        "y": 80.15
+                    },
+                    "uuid": "ad87afd9-822b-4a6c-bd8d-d90537fd716b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment of C79 on B.Silkscreen",
+                    "pos": {
+                        "x": 40.325,
+                        "y": 100.62
+                    },
+                    "uuid": "1a18ec71-c8c9-4f03-920d-f63f5625adac"
+                },
+                {
+                    "description": "PTH pad 2 [/Ethernet/ULS-12_CTRL] of U23",
+                    "pos": {
+                        "x": 41.668,
+                        "y": 99.491145
+                    },
+                    "uuid": "229f1413-6d33-430e-bf64-edc06e4979ec"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
             "description": "Silkscreen clipped by solder mask",
             "items": [
                 {
@@ -1137,227 +700,20 @@
             "description": "Silkscreen clipped by solder mask",
             "items": [
                 {
-                    "description": "Rule area 'allow_overlap' on B.Cu and B.Silkscreen",
+                    "description": "PCB text 'M.2 KEY M' on B.Silkscreen",
                     "pos": {
-                        "x": 128.149999,
-                        "y": 95.275
+                        "x": 123.15,
+                        "y": 98.65
                     },
-                    "uuid": "e8535b5d-8bd3-4816-a271-518e51cca0e6"
+                    "uuid": "ce6a70ae-8850-48f8-afb1-e024999b4442"
                 },
                 {
-                    "description": "Pad 1 [/Peripherals/USB_CONN_N] of R134 on B.Cu",
+                    "description": "Pad 1 [/M.2/3V3_M2] of R143 on B.Cu",
                     "pos": {
-                        "x": 130.6,
-                        "y": 93.68
+                        "x": 119.56,
+                        "y": 99.29
                     },
-                    "uuid": "0500a2d3-8861-49c1-b1a5-635c98c9b452"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on B.Cu and B.Silkscreen",
-                    "pos": {
-                        "x": 128.149999,
-                        "y": 95.275
-                    },
-                    "uuid": "e8535b5d-8bd3-4816-a271-518e51cca0e6"
-                },
-                {
-                    "description": "Pad 2 [GND] of D22 on B.Cu",
-                    "pos": {
-                        "x": 130.599,
-                        "y": 94.78
-                    },
-                    "uuid": "224500d6-fcb3-4afa-9a34-6cf3c152db71"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on B.Cu and B.Silkscreen",
-                    "pos": {
-                        "x": 128.149999,
-                        "y": 95.275
-                    },
-                    "uuid": "e8535b5d-8bd3-4816-a271-518e51cca0e6"
-                },
-                {
-                    "description": "Pad 1 [USB1_D_N] of D22 on B.Cu",
-                    "pos": {
-                        "x": 129.899,
-                        "y": 94.78
-                    },
-                    "uuid": "2299d316-93b1-47d2-ab45-aa4fd2ae8e9d"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on B.Cu and B.Silkscreen",
-                    "pos": {
-                        "x": 128.149999,
-                        "y": 95.275
-                    },
-                    "uuid": "e8535b5d-8bd3-4816-a271-518e51cca0e6"
-                },
-                {
-                    "description": "Pad 1 [USB1_D_P] of D23 on B.Cu",
-                    "pos": {
-                        "x": 129.301,
-                        "y": 94.5
-                    },
-                    "uuid": "aceaa4fc-55b7-4dc7-a6d5-48fba32e3acc"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on B.Cu and B.Silkscreen",
-                    "pos": {
-                        "x": 128.149999,
-                        "y": 95.275
-                    },
-                    "uuid": "e8535b5d-8bd3-4816-a271-518e51cca0e6"
-                },
-                {
-                    "description": "Pad 2 [GND] of D23 on B.Cu",
-                    "pos": {
-                        "x": 128.601,
-                        "y": 94.5
-                    },
-                    "uuid": "06fb7200-284d-421a-bf85-85a5789093c0"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on B.Cu and B.Silkscreen",
-                    "pos": {
-                        "x": 114.9,
-                        "y": 71.575
-                    },
-                    "uuid": "9e7b4932-ab53-4334-955d-18e456eaf87e"
-                },
-                {
-                    "description": "Pad 1 [USBSS1_RX_N] of D16 on B.Cu",
-                    "pos": {
-                        "x": 116.649,
-                        "y": 71.1
-                    },
-                    "uuid": "7a4308a7-5378-49cc-b84e-0d2bdabd9f44"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on B.Cu and B.Silkscreen",
-                    "pos": {
-                        "x": 114.9,
-                        "y": 71.575
-                    },
-                    "uuid": "9e7b4932-ab53-4334-955d-18e456eaf87e"
-                },
-                {
-                    "description": "Pad 1 [USBSS1_RX_P] of D17 on B.Cu",
-                    "pos": {
-                        "x": 116.051,
-                        "y": 71.1
-                    },
-                    "uuid": "1020330a-bf4c-488d-ab9a-db116a9d000f"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on B.Cu and B.Silkscreen",
-                    "pos": {
-                        "x": 114.9,
-                        "y": 71.575
-                    },
-                    "uuid": "9e7b4932-ab53-4334-955d-18e456eaf87e"
-                },
-                {
-                    "description": "Pad 2 [GND] of D17 on B.Cu",
-                    "pos": {
-                        "x": 115.351,
-                        "y": 71.1
-                    },
-                    "uuid": "d4be3d0a-6c65-49b1-b470-c154e405b89b"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Rule area 'allow_overlap' on B.Cu and B.Silkscreen",
-                    "pos": {
-                        "x": 114.9,
-                        "y": 71.575
-                    },
-                    "uuid": "9e7b4932-ab53-4334-955d-18e456eaf87e"
-                },
-                {
-                    "description": "Pad 2 [GND] of D16 on B.Cu",
-                    "pos": {
-                        "x": 117.349,
-                        "y": 71.1
-                    },
-                    "uuid": "9a1a0107-ff3a-4fad-8e2b-d73aa3959c27"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Segment of C79 on B.Silkscreen",
-                    "pos": {
-                        "x": 40.325,
-                        "y": 100.62
-                    },
-                    "uuid": "1a18ec71-c8c9-4f03-920d-f63f5625adac"
-                },
-                {
-                    "description": "PTH pad 2 [/Ethernet/ULS-12_CTRL] of U23",
-                    "pos": {
-                        "x": 41.668,
-                        "y": 99.491145
-                    },
-                    "uuid": "229f1413-6d33-430e-bf64-edc06e4979ec"
+                    "uuid": "188a841e-3b1c-4e5b-bb83-cba0ff1b8948"
                 }
             ],
             "severity": "warning",
@@ -4347,6 +3703,75 @@
             ],
             "severity": "warning",
             "type": "lib_footprint_issues"
+        },
+        {
+            "description": "Silkscreen clipped by board edge",
+            "items": [
+                {
+                    "description": "Segment on Edge.Cuts",
+                    "pos": {
+                        "x": 149.5,
+                        "y": 128.75
+                    },
+                    "uuid": "4ceec70a-bcb9-46c1-87bc-678974d74807"
+                },
+                {
+                    "description": "PCB text 'USB-C 3 DBG' on B.Silkscreen",
+                    "pos": {
+                        "x": 59.35,
+                        "y": 125.2
+                    },
+                    "uuid": "5ac460f2-7a6d-4226-8e21-8bacf31cb1ae"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Silkscreen clipped by board edge",
+            "items": [
+                {
+                    "description": "Segment on Edge.Cuts",
+                    "pos": {
+                        "x": 149.5,
+                        "y": 128.75
+                    },
+                    "uuid": "4ceec70a-bcb9-46c1-87bc-678974d74807"
+                },
+                {
+                    "description": "PCB text 'USB-C 1' on F.Silkscreen",
+                    "pos": {
+                        "x": 118.85,
+                        "y": 126.25
+                    },
+                    "uuid": "6178c117-ca4d-4a86-9acb-765dc35912b3"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Silkscreen clipped by board edge",
+            "items": [
+                {
+                    "description": "Segment on Edge.Cuts",
+                    "pos": {
+                        "x": 29.75,
+                        "y": 128.5
+                    },
+                    "uuid": "40d2e459-85a9-4cd5-a2cb-65a335d9eca7"
+                },
+                {
+                    "description": "PCB text 'PoE' on F.Silkscreen",
+                    "pos": {
+                        "x": 30.9,
+                        "y": 102.8
+                    },
+                    "uuid": "bdb4572a-e766-4628-bc38-c4c49ae50ae6"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
         }
     ]
 }

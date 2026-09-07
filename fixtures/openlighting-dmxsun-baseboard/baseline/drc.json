@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/drc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-07-29T20:53:29",
+    "date": "2026-09-07T04:12:50",
     "ignored_checks": [
         {
             "description": "Footprint has no courtyard defined",
@@ -44,7 +44,7 @@
         "error",
         "warning"
     ],
-    "kicad_version": "10.0.4",
+    "kicad_version": "10.0.6",
     "schematic_parity": [
         {
             "description": "Value (U3) doesn't match symbol value (W5500_Mini_TH)",
@@ -89,7 +89,97 @@
             "type": "courtyards_overlap"
         },
         {
-            "description": "Footprint 'USB_Micro-B_Wuerth_629105150521' does not match copy in library 'Connector_USB'",
+            "description": "The current configuration does not include the footprint library 'Diode_SMD'",
+            "items": [
+                {
+                    "description": "Footprint D1",
+                    "pos": {
+                        "x": 222.834,
+                        "y": 32.112
+                    },
+                    "uuid": "00000000-0000-0000-0000-00006052a509"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'MountingHole'",
+            "items": [
+                {
+                    "description": "Footprint H1",
+                    "pos": {
+                        "x": 67.908,
+                        "y": 30.0
+                    },
+                    "uuid": "00000000-0000-0000-0000-0000605329c0"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'MountingHole'",
+            "items": [
+                {
+                    "description": "Footprint H5",
+                    "pos": {
+                        "x": 162.0,
+                        "y": 80.0
+                    },
+                    "uuid": "00000000-0000-0000-0000-0000605329c8"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'MountingHole'",
+            "items": [
+                {
+                    "description": "Footprint H6",
+                    "pos": {
+                        "x": 242.0,
+                        "y": 80.0
+                    },
+                    "uuid": "00000000-0000-0000-0000-0000605329d8"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'MountingHole'",
+            "items": [
+                {
+                    "description": "Footprint H3",
+                    "pos": {
+                        "x": 276.6,
+                        "y": 30.0
+                    },
+                    "uuid": "00000000-0000-0000-0000-0000605329e0"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'MountingHole'",
+            "items": [
+                {
+                    "description": "Footprint H8",
+                    "pos": {
+                        "x": 268.0,
+                        "y": 80.0
+                    },
+                    "uuid": "00000000-0000-0000-0000-0000605329f8"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Connector_USB'",
             "items": [
                 {
                     "description": "Footprint J5",
@@ -101,10 +191,25 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'R_0805_2012Metric_Pad1.20x1.40mm_HandSolder' does not match copy in library 'Resistor_SMD'",
+            "description": "The current configuration does not include the footprint library 'RF_Module'",
+            "items": [
+                {
+                    "description": "Footprint U1",
+                    "pos": {
+                        "x": 172.574,
+                        "y": 41.764
+                    },
+                    "uuid": "00000000-0000-0000-0000-000060554eda"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Resistor_SMD'",
             "items": [
                 {
                     "description": "Footprint R2",
@@ -116,10 +221,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'PinHeader_1x05_P2.54mm_Vertical' does not match copy in library 'Connector_PinHeader_2.54mm'",
+            "description": "The current configuration does not include the footprint library 'Connector_PinHeader_2.54mm'",
             "items": [
                 {
                     "description": "Footprint J6",
@@ -131,10 +236,25 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'TerminalBlock_Altech_AK300-4_P5.00mm' not found in library 'TerminalBlock'",
+            "description": "The current configuration does not include the footprint library 'MountingHole'",
+            "items": [
+                {
+                    "description": "Footprint H2",
+                    "pos": {
+                        "x": 136.0,
+                        "y": 80.0
+                    },
+                    "uuid": "00000000-0000-0000-0000-00006055c79c"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'TerminalBlock'",
             "items": [
                 {
                     "description": "Footprint J7",
@@ -149,7 +269,7 @@
             "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'C_0603_1608Metric' does not match copy in library 'Capacitor_SMD'",
+            "description": "The current configuration does not include the footprint library 'Capacitor_SMD'",
             "items": [
                 {
                     "description": "Footprint C1",
@@ -161,10 +281,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'C_0603_1608Metric' does not match copy in library 'Capacitor_SMD'",
+            "description": "The current configuration does not include the footprint library 'Capacitor_SMD'",
             "items": [
                 {
                     "description": "Footprint C2",
@@ -176,10 +296,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'C_0603_1608Metric' does not match copy in library 'Capacitor_SMD'",
+            "description": "The current configuration does not include the footprint library 'Capacitor_SMD'",
             "items": [
                 {
                     "description": "Footprint C3",
@@ -191,10 +311,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'C_0603_1608Metric' does not match copy in library 'Capacitor_SMD'",
+            "description": "The current configuration does not include the footprint library 'Capacitor_SMD'",
             "items": [
                 {
                     "description": "Footprint C4",
@@ -206,10 +326,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'C_0603_1608Metric' does not match copy in library 'Capacitor_SMD'",
+            "description": "The current configuration does not include the footprint library 'Capacitor_SMD'",
             "items": [
                 {
                     "description": "Footprint C5",
@@ -221,10 +341,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'C_0603_1608Metric' does not match copy in library 'Capacitor_SMD'",
+            "description": "The current configuration does not include the footprint library 'Capacitor_SMD'",
             "items": [
                 {
                     "description": "Footprint C8",
@@ -236,10 +356,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'R_0805_2012Metric_Pad1.20x1.40mm_HandSolder' does not match copy in library 'Resistor_SMD'",
+            "description": "The current configuration does not include the footprint library 'Resistor_SMD'",
             "items": [
                 {
                     "description": "Footprint R1",
@@ -251,10 +371,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'C_0603_1608Metric' does not match copy in library 'Capacitor_SMD'",
+            "description": "The current configuration does not include the footprint library 'Capacitor_SMD'",
             "items": [
                 {
                     "description": "Footprint C9",
@@ -266,10 +386,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'C_0603_1608Metric' does not match copy in library 'Capacitor_SMD'",
+            "description": "The current configuration does not include the footprint library 'Capacitor_SMD'",
             "items": [
                 {
                     "description": "Footprint C10",
@@ -281,10 +401,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'C_0603_1608Metric' does not match copy in library 'Capacitor_SMD'",
+            "description": "The current configuration does not include the footprint library 'Capacitor_SMD'",
             "items": [
                 {
                     "description": "Footprint C13",
@@ -296,10 +416,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'CP_Radial_D6.3mm_P2.50mm' does not match copy in library 'Capacitor_THT'",
+            "description": "The current configuration does not include the footprint library 'Capacitor_THT'",
             "items": [
                 {
                     "description": "Footprint C25",
@@ -311,10 +431,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'C_0603_1608Metric' does not match copy in library 'Capacitor_SMD'",
+            "description": "The current configuration does not include the footprint library 'Capacitor_SMD'",
             "items": [
                 {
                     "description": "Footprint C29",
@@ -326,10 +446,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'PinSocket_2x02_P2.54mm_Vertical' does not match copy in library 'Connector_PinSocket_2.54mm'",
+            "description": "The current configuration does not include the footprint library 'Connector_PinSocket_2.54mm'",
             "items": [
                 {
                     "description": "Footprint J15",
@@ -341,10 +461,25 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'CP_Radial_D6.3mm_P2.50mm' does not match copy in library 'Capacitor_THT'",
+            "description": "The current configuration does not include the footprint library 'Connector'",
+            "items": [
+                {
+                    "description": "Footprint J12",
+                    "pos": {
+                        "x": 253.0,
+                        "y": 54.5
+                    },
+                    "uuid": "322a88d4-5610-482a-b997-f2975be7fdf7"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Capacitor_THT'",
             "items": [
                 {
                     "description": "Footprint C16",
@@ -356,10 +491,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'CP_Radial_D6.3mm_P2.50mm' does not match copy in library 'Capacitor_THT'",
+            "description": "The current configuration does not include the footprint library 'Capacitor_THT'",
             "items": [
                 {
                     "description": "Footprint C14",
@@ -371,10 +506,40 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'C_0603_1608Metric' does not match copy in library 'Capacitor_SMD'",
+            "description": "The current configuration does not include the footprint library 'Connector'",
+            "items": [
+                {
+                    "description": "Footprint J10",
+                    "pos": {
+                        "x": 126.0,
+                        "y": 71.5
+                    },
+                    "uuid": "58b545d8-e02d-4493-80f0-922d4db9e71f"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Symbol'",
+            "items": [
+                {
+                    "description": "Footprint SYM1",
+                    "pos": {
+                        "x": 116.9988,
+                        "y": 36.4808
+                    },
+                    "uuid": "abd1a8a0-dd8a-4b3d-ad90-6bb8b9e5b967"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Capacitor_SMD'",
             "items": [
                 {
                     "description": "Footprint C23",
@@ -386,10 +551,25 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'CP_Radial_D6.3mm_P2.50mm' does not match copy in library 'Capacitor_THT'",
+            "description": "The current configuration does not include the footprint library 'Connector'",
+            "items": [
+                {
+                    "description": "Footprint J11",
+                    "pos": {
+                        "x": 117.5,
+                        "y": 71.5
+                    },
+                    "uuid": "b39478bb-fa39-43ba-b190-7b09a3bc7d54"
+                }
+            ],
+            "severity": "warning",
+            "type": "lib_footprint_issues"
+        },
+        {
+            "description": "The current configuration does not include the footprint library 'Capacitor_THT'",
             "items": [
                 {
                     "description": "Footprint C15",
@@ -401,10 +581,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'PinHeader_2x04_P2.54mm_Vertical' does not match copy in library 'Connector_PinHeader_2.54mm'",
+            "description": "The current configuration does not include the footprint library 'Connector_PinHeader_2.54mm'",
             "items": [
                 {
                     "description": "Footprint J3",
@@ -416,10 +596,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'JST_SH_BM04B-SRSS-TB_1x04-1MP_P1.00mm_Vertical' does not match copy in library 'Connector_JST'",
+            "description": "The current configuration does not include the footprint library 'Connector_JST'",
             "items": [
                 {
                     "description": "Footprint J14",
@@ -431,10 +611,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'C_0603_1608Metric' does not match copy in library 'Capacitor_SMD'",
+            "description": "The current configuration does not include the footprint library 'Capacitor_SMD'",
             "items": [
                 {
                     "description": "Footprint C21",
@@ -446,10 +626,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'JST_SH_BM04B-SRSS-TB_1x04-1MP_P1.00mm_Vertical' does not match copy in library 'Connector_JST'",
+            "description": "The current configuration does not include the footprint library 'Connector_JST'",
             "items": [
                 {
                     "description": "Footprint J13",
@@ -461,10 +641,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'CP_Radial_D6.3mm_P2.50mm' does not match copy in library 'Capacitor_THT'",
+            "description": "The current configuration does not include the footprint library 'Capacitor_THT'",
             "items": [
                 {
                     "description": "Footprint C19",
@@ -476,10 +656,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'C_0603_1608Metric' does not match copy in library 'Capacitor_SMD'",
+            "description": "The current configuration does not include the footprint library 'Capacitor_SMD'",
             "items": [
                 {
                     "description": "Footprint C27",
@@ -491,10 +671,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'PinSocket_2x06_P2.54mm_Vertical' does not match copy in library 'Connector_PinSocket_2.54mm'",
+            "description": "The current configuration does not include the footprint library 'Connector_PinSocket_2.54mm'",
             "items": [
                 {
                     "description": "Footprint J1",
@@ -506,10 +686,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'PinSocket_2x06_P2.54mm_Vertical' does not match copy in library 'Connector_PinSocket_2.54mm'",
+            "description": "The current configuration does not include the footprint library 'Connector_PinSocket_2.54mm'",
             "items": [
                 {
                     "description": "Footprint J2",
@@ -521,10 +701,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'PinHeader_2x02_P2.54mm_Vertical' does not match copy in library 'Connector_PinHeader_2.54mm'",
+            "description": "The current configuration does not include the footprint library 'Connector_PinHeader_2.54mm'",
             "items": [
                 {
                     "description": "Footprint J8",
@@ -536,10 +716,10 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         },
         {
-            "description": "Footprint 'PinHeader_2x02_P2.54mm_Vertical' does not match copy in library 'Connector_PinHeader_2.54mm'",
+            "description": "The current configuration does not include the footprint library 'Connector_PinHeader_2.54mm'",
             "items": [
                 {
                     "description": "Footprint J9",
@@ -551,7 +731,7 @@
                 }
             ],
             "severity": "warning",
-            "type": "lib_footprint_mismatch"
+            "type": "lib_footprint_issues"
         }
     ]
 }

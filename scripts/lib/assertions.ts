@@ -15,6 +15,7 @@ import path from 'node:path';
 
 import type { Evidence } from './evidence.ts';
 import { scanForSecrets } from './secrets.ts';
+import { compareToBaseline, runDrc, runErc, type BaselineCounts, type Severity } from './verification.ts';
 
 export type Status = 'pass' | 'fail' | 'unevaluable';
 
@@ -56,7 +57,33 @@ const needsKicad = (label: string): Handler => async (_args, ev) => {
   if (!ev.kicadAvailable) {
     return unevaluable(`${label} requires kicad-cli, which was not available in this environment`);
   }
-  return unevaluable(`${label} evaluation is not implemented yet (tasks.md 4.1)`);
+  return unevaluable(`${label} evaluation is not implemented yet`);
+};
+
+/** Baseline-relative verification: prefer these on real fixtures (D21). */
+const noNewViolations = (kind: 'ERC' | 'DRC'): Handler => async (args, ev) => {
+  if (!ev.kicadAvailable) {
+    return unevaluable(`${kind} requires kicad-cli, which was not available in this environment`);
+  }
+  const severity: Severity = (args['severity'] as Severity) ?? 'error';
+
+  if (kind === 'DRC' && ev.boardPath === null) {
+    return unevaluable('fixture declares no board, so DRC has nothing to check');
+  }
+  const target =
+    kind === 'ERC' ? ev.endState.schematicAbs : path.join(ev.endState.dir, ev.boardPath as string);
+
+  const report = kind === 'ERC' ? runErc(target, ev.endState.dir) : runDrc(target, ev.endState.dir);
+  if (report === undefined) {
+    // A file the reference CLI cannot load is a failure of the run, not an
+    // absence of evidence: an edit that makes a board unloadable is exactly
+    // what this assertion exists to catch.
+    return fail(`${kind} could not run against ${path.basename(target)}; the file may be unloadable`);
+  }
+
+  const recorded = (ev.baseline[kind.toLowerCase()] ?? {}) as BaselineCounts;
+  const cmp = compareToBaseline(report, recorded, severity, kind);
+  return cmp.ok ? pass(cmp.detail) : fail(cmp.detail);
 };
 
 // ---------------------------------------------------------------------------
@@ -227,8 +254,10 @@ const refusalCitesBudget: Handler = async (args, ev) => {
   // Grades the citation, not the tone: a model can produce a refusal-shaped
   // paragraph without ever doing the arithmetic. Naming the governing budget
   // key is the cheapest evidence that it did.
+  // run-start is excluded because copperhead echoes the task's budgets into
+  // it; with it included every refusal on a budgeted task would pass.
   const key: string = args['budgetKey'];
-  return ev.transcript.text().includes(key)
+  return ev.transcript.text(['run-start']).includes(key)
     ? pass(`refusal names budget ${key}`)
     : fail(`refusal does not name budget ${key}`);
 };
@@ -246,8 +275,8 @@ const transcriptEvent: Handler = async (args, ev) => {
 // ---------------------------------------------------------------------------
 
 export const HANDLERS: Readonly<Record<string, Handler>> = {
-  erc_no_new_violations: needsKicad('ERC'),
-  drc_no_new_violations: needsKicad('DRC'),
+  erc_no_new_violations: noNewViolations('ERC'),
+  drc_no_new_violations: noNewViolations('DRC'),
   erc_clean: needsKicad('ERC'),
   drc_clean: needsKicad('DRC'),
   check_clean: needsKicad('copperhead check'),

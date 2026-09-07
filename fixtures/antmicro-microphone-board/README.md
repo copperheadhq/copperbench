@@ -17,7 +17,7 @@ It is deliberately not impressive. A fixture's job is to make agent behavior leg
 
 ## What it establishes about real fixtures
 
-Running verification on it at baseline, with `kicad-cli` 10.0.4:
+Running verification on it at baseline, with `kicad-cli` 10.0.6:
 
 | Check | Errors | Warnings | Detail |
 | --- | --- | --- | --- |

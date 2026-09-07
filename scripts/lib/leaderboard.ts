@@ -53,13 +53,23 @@ export interface ResultRecord {
     llmCache: false;
     baselineSha: string;
     durationMs: number;
+    setupSkipped: Array<{ command: string; reason: string }>;
   };
   model?: { id?: string; provider?: string; segment?: Segment; pinning?: 'strong' | 'weak' };
   cost?: { usd: number | null; priceTableVersion: string | null };
+  artifacts?: { transcriptPath: string; sandboxPreserved: boolean; sandboxPath?: string | null };
   verdict: Verdict;
   partialCredit: number;
   failureCategory: string | null;
   firstFailedRequired: string | null;
+  assertions: Array<{
+    id: string;
+    type: string;
+    status: 'pass' | 'fail' | 'unevaluable';
+    weight: number;
+    required: boolean;
+    detail: string;
+  }>;
   comparability: {
     schemaVersion: string;
     suiteVersion: string;
@@ -137,7 +147,8 @@ export interface Incomparable {
   reasons: string[];
 }
 
-function kicadMajor(version: string | null): string {
+/** The kicad-cli major version a stamp names, or 'none' for a run without kicad-cli. */
+export function kicadMajor(version: string | null): string {
   if (version === null) return 'none';
   const m = /^(\d+)/.exec(version.trim());
   return m?.[1] ?? version;
@@ -170,6 +181,11 @@ export function segregate(
     else {
       if (c.taskManifestHash !== task.manifestHash) reasons.push('task manifest hash differs from the checked-out task');
       if (c.fixtureSha256 !== task.fixtureSha256) reasons.push('fixture hash differs from the checked-out fixture');
+    }
+    // Setup is part of the starting state (STANDARD.md section 3.1). A run
+    // whose declared setup did not happen measured a different task.
+    if (rec.record.run.setupSkipped.length > 0) {
+      reasons.push(`setup skipped: ${rec.record.run.setupSkipped.map((s) => s.command).join(', ')}`);
     }
     if (reasons.length > 0) incomparable.push({ rec, reasons });
     else stampMatched.push(rec);
@@ -228,19 +244,29 @@ function costOf(rec: LoadedRecord): number | null {
   return typeof usd === 'number' ? usd : null;
 }
 
-/** The two headline numbers per tier and per model, over agent records only. */
+/**
+ * The two headline numbers per tier and per model, over agent records only.
+ *
+ * A row is one model on one route. The same model id reached through the
+ * direct API, a hosted endpoint, a self-hosted server, or a saved login has
+ * different cost fidelity and pinning (STANDARD.md section 10), so those runs
+ * never share a row or a cost column.
+ */
 export function aggregate(records: LoadedRecord[]): Record<Tier, Row[]> {
   const out: Record<Tier, Row[]> = { simple: [], medium: [], hard: [] };
 
   for (const tier of TIERS) {
-    const byModel = new Map<string, LoadedRecord[]>();
+    const byRoute = new Map<string, LoadedRecord[]>();
     for (const rec of records) {
       if (isHarness(rec) || rec.record.task.tier !== tier) continue;
-      const key = rec.record.model?.id ?? rec.record.run.model;
-      byModel.set(key, [...(byModel.get(key) ?? []), rec]);
+      const model = rec.record.model?.id ?? rec.record.run.model;
+      const key = `${model}\u0000${segmentOf(rec) ?? ''}\u0000${rec.record.model?.pinning ?? ''}`;
+      byRoute.set(key, [...(byRoute.get(key) ?? []), rec]);
     }
 
-    for (const [model, recs] of byModel) {
+    for (const recs of byRoute.values()) {
+      const first = recs[0] as LoadedRecord;
+      const model = first.record.model?.id ?? first.record.run.model;
       const passes = recs.filter((r) => r.record.verdict === 'pass').length;
       const fails = recs.filter((r) => r.record.verdict === 'fail').length;
       const unscoreable = recs.filter((r) => r.record.verdict === 'unscoreable').length;
@@ -249,11 +275,10 @@ export function aggregate(records: LoadedRecord[]): Record<Tier, Row[]> {
       const costs = recs.map(costOf);
       const costUsd = costs.every((c): c is number => c !== null) ? costs.reduce((a, c) => a + c, 0) : null;
 
-      const first = recs[0];
       out[tier].push({
         model,
-        segment: segmentOf(first as LoadedRecord),
-        pinning: first?.record.model?.pinning ?? null,
+        segment: segmentOf(first),
+        pinning: first.record.model?.pinning ?? null,
         runs: recs.length,
         passes,
         fails,
@@ -274,7 +299,8 @@ export function aggregate(records: LoadedRecord[]): Record<Tier, Row[]> {
       (a, b) =>
         (b.strictPassRate ?? -1) - (a.strictPassRate ?? -1) ||
         (a.costPerPass ?? Infinity) - (b.costPerPass ?? Infinity) ||
-        a.model.localeCompare(b.model),
+        a.model.localeCompare(b.model) ||
+        (a.segment ?? '').localeCompare(b.segment ?? ''),
     );
   }
 

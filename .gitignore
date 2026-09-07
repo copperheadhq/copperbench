@@ -6,6 +6,8 @@ dist/
 .astro/
 # Typefaces copied from node_modules by site/copy-fonts.mjs before each build.
 site/public/fonts/
+# The Open Graph image, rendered by site/og.mjs before each build.
+site/public/og.png
 # wrangler's local state for the Cloudflare deploy.
 .wrangler/
 

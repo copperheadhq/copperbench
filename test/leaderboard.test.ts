@@ -3,6 +3,7 @@
 // numbers, the exclusion of unscoreable runs, the segregation of records whose
 // stamps disagree and the separation of harness runs from model rows.
 
+import { readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 
@@ -18,7 +19,10 @@ import {
   type ResultRecord,
   type Tier,
 } from '../scripts/lib/leaderboard.ts';
+import { Ajv2020 } from 'ajv/dist/2020.js';
+
 import { SCHEMA_VERSION, SUITE_VERSION } from '../scripts/lib/record.ts';
+import { loadRecords } from '../scripts/lib/leaderboard.ts';
 import { collectFacts, findRepoRoot } from '../scripts/lib/site-facts.ts';
 import { REPO } from './helpers.ts';
 
@@ -36,6 +40,7 @@ interface Overrides {
   manifestHash?: string;
   kicad?: string | null;
   date?: string;
+  setupSkipped?: string[];
 }
 
 let n = 0;
@@ -48,11 +53,20 @@ function rec(o: Overrides = {}): LoadedRecord {
     suiteVersion: o.suiteVersion ?? SUITE_VERSION,
     task: { id: taskId, tier: t.tier, mode: 'do', expectedOutcome: 'edit' },
     fixture: { id: 'fx', sha256: t.fixtureSha256 },
-    run: { model, repeat: o.repeat ?? 1, runMode: o.runMode ?? 'agent', llmCache: false, baselineSha: 'x', durationMs: 1 },
+    run: {
+      model,
+      repeat: o.repeat ?? 1,
+      runMode: o.runMode ?? 'agent',
+      llmCache: false,
+      baselineSha: 'x',
+      durationMs: 1,
+      setupSkipped: (o.setupSkipped ?? []).map((command) => ({ command, reason: 'unavailable' })),
+    },
     verdict: o.verdict ?? 'pass',
     partialCredit: 1,
     failureCategory: null,
     firstFailedRequired: null,
+    assertions: [{ id: 'a', type: 'net_present', status: 'pass', weight: 1, required: true, detail: '' }],
     comparability: {
       schemaVersion: SCHEMA_VERSION,
       suiteVersion: o.suiteVersion ?? SUITE_VERSION,
@@ -143,6 +157,14 @@ describe('segregate', () => {
     expect(incomparable[0]?.reasons.join()).toMatch(/kicad-cli major version 8/);
   });
 
+  it('segregates a run whose declared setup was skipped', () => {
+    // Setup is part of the starting state (STANDARD.md section 3.1): a run
+    // that did not get it measured a different task.
+    const { comparable, incomparable } = segregate([rec(), rec({ setupSkipped: ['init'] })], ref);
+    expect(comparable).toHaveLength(1);
+    expect(incomparable[0]?.reasons.join()).toMatch(/setup skipped: init/);
+  });
+
   it('treats a missing kicad-cli as one value rather than a wildcard', () => {
     const { comparable, kicadMajor } = segregate([rec({ kicad: null }), rec({ kicad: null })], ref);
     expect(comparable).toHaveLength(2);
@@ -179,10 +201,33 @@ describe('harnessTable', () => {
 });
 
 describe('the checked-in records', () => {
-  it('are all comparable with the suite as checked out', () => {
+  it('all satisfy schema/result.schema.json', () => {
+    // The schema is the record's contract (STANDARD.md section 13). A record
+    // on disk that fails it is a record a third party cannot read.
+    const schema = JSON.parse(readFileSync(path.join(REPO, 'schema', 'result.schema.json'), 'utf8')) as object;
+    const validate = new Ajv2020({ allErrors: true, strict: false }).compile(schema);
+    const records = loadRecords(path.join(REPO, 'results'));
+    expect(records.length).toBeGreaterThan(0);
+    for (const { record, relPath } of records) {
+      expect(validate(record), `${relPath}: ${JSON.stringify(validate.errors)}`).toBe(true);
+    }
+  });
+
+  it('are segregated only for a stale environment or a superseded suite version', () => {
+    // Records from before the reference environment could run kicad-cli and
+    // copperhead init are kept, since records are append-only, and listed
+    // with that reason rather than averaged in. The suite-version reason joins
+    // them from 0.2.0 on: regenerating every fixture baseline under kicad-cli
+    // 10.0.6 edited four fixture manifests, which is a suite-version event
+    // (STANDARD.md section 9), so everything written under 0.1.0 segregates.
     const lb = buildLeaderboard(REPO, path.join(REPO, 'results'));
     expect(lb.snapshot.records).toBeGreaterThan(0);
-    expect(lb.incomparable).toEqual([]);
+    for (const r of lb.incomparable) {
+      expect(r.reasons.join(), r.relPath).toMatch(/without kicad-cli|setup skipped|suiteVersion|suite version/i);
+    }
+    // The point of the bump is segregation, not exclusion: comparable records
+    // must still exist, or the page has nothing to show.
+    expect(lb.snapshot.records).toBeGreaterThan(lb.incomparable.length);
   });
 
   it('show a no-op and a reference run for every task', () => {
