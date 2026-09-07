@@ -1,8 +1,10 @@
 ---
 // Records whose stamps disagree with the checked-out suite. Listed, with the
 // reason and never averaged in. Renders nothing when there are none.
-import { blob, facts } from '../lib/facts';
+import { facts, recordRoute } from '../lib/facts';
+import { to } from '../lib/links';
 
+const at = Astro.url.pathname;
 const rows = facts.leaderboard.incomparable;
 ---
 
@@ -10,8 +12,8 @@ const rows = facts.leaderboard.incomparable;
   <section class="section" id="incomparable">
     <h2 class="section-title">Not comparable</h2>
     <p class="section-lead">
-      These records disagree with the checked-out suite on at least one comparability stamp. They are still valid evidence about
-      the suite they ran under. They are not evidence about this one.
+      These records were produced under a different suite version, task manifest, fixture hash or <code>kicad-cli</code> major version,
+      so they can't be compared with the rows above. They are kept for reference and don't contribute to any figure on this page.
     </p>
     <div class="table-card">
       <table class="table">
@@ -19,9 +21,9 @@ const rows = facts.leaderboard.incomparable;
         <tbody>
           {rows.map((r) => (
             <tr>
-              <td class="mono"><a href={blob(`results/${r.relPath}`)}>{r.relPath}</a></td>
+              <td class="mono"><a href={to(at, recordRoute(r.relPath))}>{r.relPath}</a></td>
               <td class="secondary">{r.model}</td>
-              <td class="secondary">{r.task}</td>
+              <td class="secondary"><a href={to(at, `tasks/${r.task}`)}>{r.task}</a></td>
               <td class="secondary">{r.reasons.join('; ')}</td>
             </tr>
           ))}

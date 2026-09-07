@@ -1,0 +1,54 @@
+---
+// Result records, one row each, newest date first. Every row links to the
+// record's own page. Used on the records page for all of them and on a task
+// page for that task's.
+import type { RecordFact } from '../../../scripts/lib/site-facts.ts';
+import { recordRoute, verdictClass } from '../lib/facts';
+import { to } from '../lib/links';
+
+interface Props {
+  records: RecordFact[];
+  /** Hide the task column when every row is the same task. */
+  hideTask?: boolean;
+}
+const { records, hideTask = false } = Astro.props;
+const at = Astro.url.pathname;
+const rows = [...records].sort((a, b) => b.date.localeCompare(a.date) || a.relPath.localeCompare(b.relPath));
+---
+
+{rows.length === 0 ? (
+  <p class="section-lead">No records yet.</p>
+) : (
+  <div class="table-card">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Record</th>
+          <th>Date</th>
+          <th>Model</th>
+          {!hideTask && <th>Task</th>}
+          <th>Mode</th>
+          <th class="right">Repeat</th>
+          <th>Verdict</th>
+          <th>First failed required</th>
+          <th>Comparable</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r) => (
+          <tr>
+            <td class="mono"><a href={to(at, recordRoute(r.relPath))}>{r.relPath}</a></td>
+            <td class="num muted">{r.date}</td>
+            <td class="secondary">{r.model}</td>
+            {!hideTask && <td class="secondary"><a href={to(at, `tasks/${r.task}`)}>{r.task}</a></td>}
+            <td class="secondary">{r.runMode}</td>
+            <td class="right secondary num">{r.repeat}</td>
+            <td><span class={verdictClass(r.verdict)}>{r.verdict}</span></td>
+            <td class="mono muted">{r.firstFailedRequired ?? ''}</td>
+            <td class="secondary" title={r.reasons.join('; ')}>{r.comparable ? 'yes' : `no: ${r.reasons.join('; ')}`}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+)}

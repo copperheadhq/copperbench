@@ -1,0 +1,141 @@
+---
+// One fixture: its README as checked in, then the provenance, scale and
+// baseline from fixture.json, and the tasks that run on it.
+import { getEntry, render } from 'astro:content';
+
+import type { FixtureFact } from '../../../../scripts/lib/site-facts.ts';
+import Page from '../../layouts/Page.astro';
+import Icon from '../../components/Icon.astro';
+import Prose from '../../components/Prose.astro';
+import { facts, plural } from '../../lib/facts';
+import { github, to } from '../../lib/links';
+
+export function getStaticPaths() {
+  return facts.fixtures.map((fixture) => ({ params: { id: fixture.id }, props: { fixture } }));
+}
+
+interface Props {
+  fixture: FixtureFact;
+}
+const { fixture: f } = Astro.props;
+const at = Astro.url.pathname;
+
+const entry = await getEntry('docs', `fixtures/${f.id}/README.md`);
+if (!entry) throw new Error(`fixtures/${f.id}/README.md is not in the docs collection`);
+const { Content } = await render(entry);
+
+const tasks = facts.tasks.filter((t) => t.fixture === f.id);
+const source = `fixtures/${f.id}`;
+const n = (x: number) => x.toLocaleString('en-US');
+const types = (m: Record<string, number>) => Object.entries(m).map(([k, v]) => `${v} ${k}`).join(', ') || 'none';
+---
+
+<Page
+  title={f.id}
+  description={`copperbench fixture ${f.id}: ${f.name}, ${f.license}, ${f.complexity} tier. ${plural(f.sheets, 'sheet')}, ${plural(f.symbols, 'symbol')}, baseline ERC ${f.baseline.erc.errors} errors and ${f.baseline.erc.warnings} warnings.`}
+  kicker={`Fixture · ${f.complexity} tier · ${f.license}`}
+>
+  <Prose source={`${source}/README.md`}><Content /></Prose>
+
+  <section class="section" id="provenance">
+    <h2 class="section-title">Provenance</h2>
+    <p class="section-lead">
+      From <code>fixture.json</code>. The hash covers only <code>tree/</code>, which is the part copied into the sandbox. Each task pins
+      this hash, and result records made against a different hash are kept separate on the leaderboard.
+    </p>
+    <div class="table-card">
+      <table class="table facts">
+        <tbody>
+          <tr><th>Upstream</th><td><a href={f.url}>{f.name} <Icon name="ext" /></a></td></tr>
+          <tr><th>Commit</th><td class="mono">{f.commit}</td></tr>
+          <tr><th>Retrieved</th><td class="num">{f.retrieved}</td></tr>
+          <tr><th>License</th><td>{f.license} · <a href={github(`${source}/LICENSE`)}>verbatim LICENSE <Icon name="ext" /></a></td></tr>
+          <tr><th>Copyright</th><td>{f.copyright}</td></tr>
+          <tr><th>Modifications</th><td>{f.modifications}</td></tr>
+          <tr><th>Tree hash</th><td class="mono muted">{f.sha256}</td></tr>
+          <tr><th>KiCad</th><td>authored with {f.kicad.authoredVersion}, file format {f.kicad.fileFormatVersion}, verified with <code>kicad-cli</code> {f.kicad.verifiedWithKicadCli}</td></tr>
+          <tr><th>Artifacts</th><td class="mono">{Object.entries(f.artifacts).map(([k, v]) => <span class="artifact">{k}: {v}</span>)}</td></tr>
+          <tr><th>Source</th><td><a href={github(`${source}/fixture.json`)}><code>fixture.json</code> <Icon name="ext" /></a> · <a href={github(`${source}/tree`)}>design tree <Icon name="ext" /></a> · <a href={github(`${source}/baseline`)}>baseline reports <Icon name="ext" /></a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" id="scale">
+    <h2 class="section-title">Scale</h2>
+    <p class="section-lead">
+      The sizes that a task's diff-ratio bound is set against. A diff ratio is a fraction of the constrained file's line count, so the
+      same percentage allows a very different amount of change on a small board than on a large one. Each task README shows the
+      calculation for its own bound.
+    </p>
+    <div class="table-card">
+      <table class="table facts">
+        <tbody>
+          <tr><th>Sheets</th><td class="num">{n(f.sheets)}</td></tr>
+          <tr><th>Symbols</th><td class="num">{n(f.symbols)}</td></tr>
+          <tr><th>Schematic lines</th><td class="num">{n(f.schematicLines)}</td></tr>
+          <tr><th>Board lines</th><td class="num">{n(f.boardLines)}</td></tr>
+          <tr><th>Signal nets</th><td class="mono">{f.signalNets.join(', ') || 'none listed'}</td></tr>
+          <tr><th>Power nets</th><td class="mono">{f.powerNets.join(', ') || 'none listed'}</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section" id="baseline">
+    <h2 class="section-title">Baseline verification</h2>
+    <p class="section-lead">
+      Measured with <code>kicad-cli</code> {f.kicad.verifiedWithKicadCli} on the files as vendored. A baseline error is permitted only
+      when it is enumerated here by type and accounted for in the README above; an unaccounted one disqualifies the board. Tasks check
+      that a run adds no <em>new</em> violations on top of these counts, since a real board in a bare checkout rarely produces a clean report.
+    </p>
+    <div class="table-card">
+      <table class="table">
+        <thead><tr><th>Check</th><th class="right">Errors</th><th>Error types</th><th class="right">Warnings</th><th>Warning types</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="model">ERC</td>
+            <td class="right num">{f.baseline.erc.errors}</td>
+            <td class="mono muted">{types(f.baseline.erc.errorTypes)}</td>
+            <td class="right num secondary">{f.baseline.erc.warnings}</td>
+            <td class="mono muted">{types(f.baseline.erc.warningTypes)}</td>
+            <td class="muted"></td>
+          </tr>
+          <tr>
+            <td class="model">DRC</td>
+            <td class="right num">{f.baseline.drc.errors}</td>
+            <td class="mono muted">{types(f.baseline.drc.errorTypes)}</td>
+            <td class="right num secondary">{f.baseline.drc.warnings}</td>
+            <td class="mono muted">{types(f.baseline.drc.warningTypes)}</td>
+            <td class="secondary num">{f.baseline.drc.unconnectedItems} unconnected, {f.baseline.drc.schematicParity} parity</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    {f.baseline.note && <p class="section-lead" style="margin-top: 1rem;">{f.baseline.note}</p>}
+  </section>
+
+  <section class="section" id="tasks">
+    <h2 class="section-title">Tasks on this fixture</h2>
+    {tasks.length === 0 ? (
+      <p class="section-lead">No task runs on this fixture yet.</p>
+    ) : (
+      <div class="table-card">
+        <table class="table">
+          <thead><tr><th>Task</th><th>Tier</th><th>Mode</th><th>Expected</th><th class="right">Assertions</th></tr></thead>
+          <tbody>
+            {tasks.map((t) => (
+              <tr>
+                <td><a class="model" href={to(at, `tasks/${t.id}`)}>{t.id}</a></td>
+                <td class="secondary">{t.tier}</td>
+                <td class="secondary">{t.mode}</td>
+                <td class="secondary">{t.expectedOutcome}</td>
+                <td class="right secondary num">{t.assertions.length}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )}
+  </section>
+</Page>

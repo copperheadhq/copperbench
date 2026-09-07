@@ -1,0 +1,23 @@
+---
+// Section list for a long document, from the headings the renderer collected.
+// Second-level headings only: the numbered sections of the standard.
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  headings: MarkdownHeading[];
+  depth?: number;
+}
+const { headings, depth = 2 } = Astro.props;
+const items = headings.filter((h) => h.depth === depth);
+---
+
+{items.length > 0 && (
+  <nav class="toc" aria-label="Contents">
+    <p class="toc-title">Contents</p>
+    <ol>
+      {items.map((h) => (
+        <li><a href={`#${h.slug}`}>{h.text}</a></li>
+      ))}
+    </ol>
+  </nav>
+)}

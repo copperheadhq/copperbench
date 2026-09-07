@@ -38,7 +38,7 @@ npm run paper                                             # paper/main.pdf + pap
 npm run paper:pdf                                         # PDF only, no page render
 ```
 
-Every paper build renders page images alongside the PDF ([scripts/build-paper.mjs](scripts/build-paper.mjs)), so a revision can be inspected without a viewer. Both outputs are derived and gitignored. The build prefers `latexmk` and falls back to `pdflatex`/`bibtex`; page rendering needs `pdftoppm`.
+Every paper build renders page images alongside the PDF ([scripts/build-paper.mjs](scripts/build-paper.mjs)), so a revision can be inspected without a viewer. Both outputs are derived and gitignored. The build prefers `latexmk` and falls back to `pdflatex`/`bibtex`; page rendering needs `pdftoppm`. The published PDF comes from [.github/workflows/paper.yml](.github/workflows/paper.yml), which runs the same build on `main` and force-pushes `copperbench.pdf` to the orphan branch `paper-pdf`; the site's "Paper" links point there, through `paperPdf` in [site/src/lib/facts.ts](site/src/lib/facts.ts).
 
 Verification needs no provider credential, no network, and no build step. `ajv` is the single non-dev-tooling dependency, used only to compile the JSON Schemas at validation time; `scripts/hash-fixture.mjs` stays dependency-free so a third party can verify a published hash without installing anything, and `test/hash.test.ts` asserts it never diverges from the TypeScript promotion.
 

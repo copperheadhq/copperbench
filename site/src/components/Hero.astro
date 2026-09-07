@@ -1,15 +1,17 @@
 ---
-import { blob } from '../lib/facts';
+import { to } from '../lib/links';
+
+const at = Astro.url.pathname;
 ---
 
 <header class="band">
   <div class="container hero">
-    <img src="mark.svg" alt="" width="72" height="72">
+    <img src={to(at, 'mark.svg')} alt="" width="72" height="72">
     <h1>copperbench</h1>
-    <p>Language-model agents on verified KiCad hardware edits. Real boards, <code>kicad-cli</code> as the oracle, cost reported beside pass rate. Grading never calls a model.</p>
+    <p>A benchmark for language-model agents that edit KiCad projects. The tasks use real open-hardware boards, the results are checked with <code>kicad-cli</code> and a fixed list of assertions, and each pass rate is published together with what it cost to get. Grading is done offline and never involves a model.</p>
     <div class="actions">
-      <a class="button button-primary" href={blob('STANDARD.md')}>Read the standard</a>
-      <a class="button button-outline" href={blob('STANDARD.md#14-reproducing-a-published-number')}>Reproduce a number</a>
+      <a class="button button-primary" href={to(at, 'standard')}>Read the standard</a>
+      <a class="button button-outline" href={to(at, 'standard#14-reproducing-a-published-number')}>Reproduce a result</a>
     </div>
   </div>
 </header>

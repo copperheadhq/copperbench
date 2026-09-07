@@ -36,7 +36,7 @@ const SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="${WIDTH}" height="${
   <text x="270" y="300" font-family="Inter" font-weight="600" font-size="104" letter-spacing="-2" fill="#f7f8f8">copperbench</text>
   <text x="272" y="370" font-family="Inter" font-weight="400" font-size="30" fill="#b3b8be">Language-model agents on verified KiCad hardware edits.</text>
   <text x="272" y="418" font-family="Inter" font-weight="400" font-size="30" fill="#e6a366">Grading never calls a model.</text>
-  <text x="96" y="566" font-family="Inter" font-weight="400" font-size="24" fill="#8a9098">Real boards · kicad-cli as the oracle · cost reported beside pass rate</text>
+  <text x="96" y="566" font-family="Inter" font-weight="400" font-size="24" fill="#8a9098">Real boards · checked with kicad-cli · pass rate reported with cost</text>
 </svg>`;
 
 // The static faces: resvg renders a variable font at its default weight only.

@@ -149,6 +149,10 @@ code {
 .sidebar-nav a:hover { background: var(--hover); color: var(--text-strong); }
 .sidebar-nav a.active { background: var(--accent-pill); color: var(--accent-text); font-weight: 600; }
 .sidebar-nav a .ext { color: var(--text-muted); width: 0.75rem; height: 0.75rem; }
+/* The one outbound link that is the point of the whole page: the agent under test. */
+.sidebar-nav a.highlight { color: var(--accent-text); font-weight: 600; }
+.sidebar-nav a.highlight .ext { color: var(--accent-text); }
+.sidebar-nav a.highlight:hover { background: var(--accent-pill); color: var(--accent-high); }
 .sidebar-nav .section {
   padding: 0.25rem 0.75rem;
   margin-top: 1.25rem;
@@ -392,6 +396,8 @@ code {
 .footer .links { display: flex; gap: 1.5rem; }
 .footer .links a { color: var(--text-secondary); }
 .footer .links a:hover { color: var(--accent-text); }
+.footer .links a.highlight { color: var(--accent-text); font-weight: 600; }
+.footer .links a.highlight:hover { color: var(--accent-high); }
 .footer .stamp { font-family: var(--font-mono); font-size: var(--text-xs); }
 
 /* Responsive ---------------------------------------------------------- */
@@ -463,4 +469,97 @@ code {
   .section-title { font-size: var(--text-2xl); }
   .sidebar-logo { font-size: var(--text-base); }
   .table th, .table td { padding-left: 0.75rem; padding-right: 0.75rem; }
+}
+
+/* Inner pages ----------------------------------------------------------- */
+
+/* Everything but the front page: the sidebar, one content column, the footer.
+   The column is narrower than the leaderboard's because most of it is prose. */
+.page { padding-top: 2.5rem; padding-bottom: 1rem; }
+.page > h1 { font-size: var(--text-4xl); margin-bottom: 1rem; }
+.page > h1 + .section-lead, .page > .section-lead { max-width: 52rem; font-size: var(--text-lg); line-height: 1.6; }
+.kicker {
+  margin-bottom: 0.75rem;
+  font-size: var(--text-label);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+.record-title { font-size: var(--text-2xl); overflow-wrap: anywhere; letter-spacing: 0; }
+.callout {
+  margin: 0 0 1.5rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(196, 122, 58, 0.35);
+  border-left: 3px solid var(--accent);
+  border-radius: 0.5rem;
+  background: var(--accent-row);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  text-wrap: pretty;
+}
+.source { margin: 1.5rem 0 2.75rem; font-size: var(--text-sm); color: var(--text-muted); }
+.source .ext { width: 0.75rem; height: 0.75rem; }
+
+/* Rendered repository markdown. The same scale the leaderboard uses, so a
+   document and a table on the same page read as one thing. */
+.prose { max-width: 52rem; font-size: var(--text-base); line-height: var(--line-height); color: var(--text); }
+.prose > :first-child { margin-top: 0; }
+.prose h1 { font-size: var(--text-4xl); margin: 0 0 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+.prose h2 { font-size: var(--text-2xl); margin: 2.5rem 0 0.875rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+.prose h3 { font-size: var(--text-xl); margin: 2rem 0 0.75rem; }
+.prose h4 { font-size: var(--text-lg); margin: 1.5rem 0 0.5rem; }
+.prose h2 a, .prose h3 a, .prose h4 a { color: inherit; }
+.prose p { margin: 0 0 1rem; text-wrap: pretty; }
+.prose ul, .prose ol { margin: 0 0 1rem; padding-left: 1.5rem; }
+.prose li { margin: 0.25rem 0; }
+.prose li > p { margin-bottom: 0.5rem; }
+.prose blockquote { margin: 0 0 1rem; padding: 0.25rem 0 0.25rem 1rem; border-left: 3px solid var(--border-strong); color: var(--text-secondary); }
+.prose hr { border: 0; border-top: 1px solid var(--border); margin: 2rem 0; }
+.prose a { text-decoration: underline; text-decoration-color: rgba(230, 163, 102, 0.35); text-underline-offset: 0.15em; }
+.prose a:hover { text-decoration-color: currentColor; }
+.prose img { max-width: 100%; height: auto; }
+.prose pre {
+  margin: 0 0 1rem;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--bg-alt) !important;
+  font-family: var(--font-mono);
+  font-size: var(--text-code-sm);
+  line-height: 1.6;
+  overflow-x: auto;
+}
+.prose pre code { padding: 0; background: none; box-shadow: none; font-size: inherit; }
+.prose table { width: 100%; margin: 0 0 1.25rem; border-collapse: collapse; font-size: var(--text-sm); display: block; overflow-x: auto; }
+.prose th, .prose td { padding: 0.5rem 0.75rem; border: 1px solid var(--border); text-align: left; vertical-align: top; }
+.prose th { background: var(--bg-alt); font-weight: 500; color: var(--text-secondary); white-space: nowrap; }
+.prose thead th { border-bottom-color: var(--border-strong); }
+
+.toc { max-width: 52rem; margin: 0 0 2rem; padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: 0.75rem; background: var(--bg-alt); }
+.toc-title { margin-bottom: 0.5rem; font-size: var(--text-label); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-strong); }
+.toc ol { margin: 0; padding: 0; list-style: none; columns: 2; column-gap: 2rem; }
+.toc li { margin: 0.2rem 0; font-size: var(--text-sm); break-inside: avoid; }
+.toc a { color: var(--text-secondary); }
+.toc a:hover { color: var(--accent-text); }
+
+/* Key/value tables built from a manifest or a record. */
+.table.facts th { width: 11rem; vertical-align: top; text-align: left; background: none; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.table.facts td { color: var(--text); overflow-wrap: anywhere; }
+.table.facts tbody tr:last-child th, .table.facts tbody tr:last-child td { border-bottom: 0; }
+.table.facts tbody tr:hover { background: none; }
+.table.facts .prompt { margin: 0; padding: 0.375rem 0.75rem; border-left: 3px solid var(--accent); background: var(--accent-row); border-radius: 0 0.375rem 0.375rem 0; color: var(--text-strong); }
+.table.facts .inline-json { margin: 0; font-family: var(--font-mono); font-size: var(--text-code-sm); line-height: 1.5; color: var(--text-secondary); white-space: pre-wrap; }
+.table.facts .artifact { display: block; }
+.table td.note { min-width: 18rem; max-width: 36rem; color: var(--text-secondary); text-wrap: pretty; }
+.table td.args { max-width: 24rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+.table a.verdict:hover { color: var(--accent-text); }
+
+@media (max-width: 900px) {
+  .page { padding-top: 1.5rem; }
+  .page > h1 { font-size: var(--text-3xl); }
+  .prose h1 { font-size: var(--text-3xl); }
+  .prose h2 { font-size: var(--text-xl); }
+  .toc ol { columns: 1; }
+  .table.facts th { width: 8rem; white-space: normal; }
 }
