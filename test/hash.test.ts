@@ -3,7 +3,7 @@
 // party would run, and both agree with what every vendored fixture recorded.
 
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 
@@ -69,7 +69,7 @@ describe('hashFixtureTree', () => {
     try {
       writeFileSync(path.join(root, 'a.txt'), 'one');
       const before = hashFixtureTree(root).sha256;
-      execFileSync('mkdir', ['-p', path.join(root, 'empty')]);
+      mkdirSync(path.join(root, 'empty'), { recursive: true });
       expect(existsSync(path.join(root, 'empty'))).toBe(true);
       expect(hashFixtureTree(root).sha256).toBe(before);
     } finally {

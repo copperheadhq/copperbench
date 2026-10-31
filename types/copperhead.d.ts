@@ -7,12 +7,19 @@
 // surface to two functions is what makes that promise cheap to keep.
 
 declare module 'copperhead/dist/kicad/sexp.js' {
+  export type SexpNode = string | SexpNode[];
+
   export interface KicadSymbol {
     ref: string;
     value: string;
     footprint?: string | undefined;
     libId?: string | undefined;
   }
+
+  export function parseSexp(text: string): SexpNode[];
+  export function isList(n: unknown): n is SexpNode[];
+  export function children(node: unknown, name: string): SexpNode[][];
+  export function child(node: unknown, name: string): SexpNode[] | undefined;
 
   /** Net names visible via labels and power symbols, across all sheets. */
   export function listNets(rootSchematicPath: string): Promise<string[]>;

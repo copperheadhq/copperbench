@@ -117,7 +117,13 @@ function populate(dir: string, opts: SandboxOptions): Sandbox {
     baselineSha,
     setupSkipped,
     cleanup() {
-      if (existsSync(dir)) rmSync(dir, { recursive: true, force: true });
+      if (existsSync(dir)) {
+        try {
+          rmSync(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+        } catch {
+          // ignore cleanup failures on transiently locked temp directories
+        }
+      }
     },
   };
 }

@@ -18,6 +18,7 @@ import path from 'node:path';
 import { listNets, listSymbols } from 'copperhead/dist/kicad/sexp.js';
 
 import { baselineLineCount, changedPaths, commitsSince, diffStatFor, treeIsByteIdenticalTo } from './git.ts';
+import { exportNetlist, type ParsedNetlist } from './verification.ts';
 
 // ---------------------------------------------------------------------------
 // 1. Sandbox end state
@@ -57,6 +58,18 @@ export class EndState {
         : [];
     }
     return this.symbolsCache;
+  }
+
+  private netlistCache: ParsedNetlist | null | undefined;
+
+  async netlist(kicadAvailable: boolean): Promise<ParsedNetlist | null> {
+    if (!kicadAvailable) return null;
+    if (this.netlistCache === undefined) {
+      this.netlistCache = existsSync(this.schematicAbs)
+        ? exportNetlist(this.schematicAbs, this.dir) ?? null
+        : null;
+    }
+    return this.netlistCache;
   }
 
   /** Read a document relative to the sandbox, or undefined when absent. */
@@ -212,4 +225,6 @@ export interface Evidence {
   kicadAvailable: boolean;
   /** Board path relative to the sandbox, or null for schematic-only fixtures. */
   boardPath: string | null;
+  /** Optional pre-computed or mock netlist for testing without kicad-cli. */
+  netlist?: ParsedNetlist | undefined;
 }

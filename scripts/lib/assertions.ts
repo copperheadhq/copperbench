@@ -124,6 +124,101 @@ const symbolAbsent: Handler = async (args, ev) => {
     : pass(`symbol ${args['refdes']} is absent`);
 };
 
+/**
+ * Check whether the net observed in the netlist matches the expected net name.
+ * KiCad prefixes root-level local nets with '/' (e.g. '/DATA'), while global nets
+ * and power symbols lack leading slashes (e.g. 'GND', '+3V3').
+ *
+ * Exact matches always succeed: an assertion querying 'DATA' connects to an actual
+ * global 'DATA' net directly, even if a root-local '/DATA' net coexists.
+ *
+ * Root-level fallback normalization (expectedNet 'DATA' matching actualNet '/DATA')
+ * is allowed ONLY when no distinct global net 'DATA' exists in the design.
+ * If both a global net 'DATA' and a root-local net '/DATA' coexist, resolving shorthand
+ * 'DATA' to the root-local '/DATA' net is ambiguous and fails closed.
+ * Sub-sheet hierarchical nets (e.g. '/Audio/SDA') require the full path and never match 'SDA'.
+ */
+export function resolveNetMatch(
+  actualNet: string,
+  expectedNet: string,
+  knownNets: string[] | Set<string>,
+): { matches: boolean; ambiguous?: boolean } {
+  // 1. Exact match always succeeds (global nets like 'DATA', root-local with slash '/DATA', etc.)
+  if (actualNet === expectedNet) {
+    return { matches: true };
+  }
+
+  // 2. Root-level shorthand fallback: query "DATA" matching actual "/DATA"
+  if (expectedNet.length > 0 && !expectedNet.startsWith('/') && actualNet === '/' + expectedNet) {
+    const netsSet = Array.isArray(knownNets) ? new Set(knownNets) : knownNets;
+    // If a distinct global net exists with the same name, fallback is ambiguous
+    if (netsSet.has(expectedNet)) {
+      return { matches: false, ambiguous: true };
+    }
+    return { matches: true };
+  }
+
+  return { matches: false };
+}
+
+export function netNamesMatch(
+  actualNet: string,
+  expectedNet: string,
+  knownNets?: string[] | Set<string>,
+): boolean {
+  return resolveNetMatch(actualNet, expectedNet, knownNets ?? [actualNet]).matches;
+}
+
+const pinNetEquals: Handler = async (args, ev) => {
+  const refdes = String(args['refdes'] ?? '');
+  const pin = String(args['pin'] ?? '');
+  const expectedNet = String(args['net'] ?? '');
+
+  if (!ev.kicadAvailable && ev.netlist === undefined) {
+    return unevaluable('pin_net_equals requires kicad-cli, which was not available in this environment');
+  }
+
+  const netlist = ev.netlist ?? (await ev.endState.netlist(ev.kicadAvailable));
+  if (!netlist) {
+    return fail('schematic could not be netlisted by kicad-cli; the file may be unloadable or invalid');
+  }
+
+  if (netlist.duplicateRefdes.has(refdes)) {
+    return fail(`ambiguous component: multiple components in schematic share reference "${refdes}"`);
+  }
+
+  if (!netlist.components.has(refdes)) {
+    return fail(`component ${refdes} not found in schematic`);
+  }
+
+  const pins = netlist.componentPins.get(refdes);
+  if (!pins || !pins.has(pin)) {
+    return fail(`pin ${pin} not found on component ${refdes}`);
+  }
+
+  const key = `${refdes}:${pin}`;
+  if (netlist.ambiguousPins.has(key)) {
+    const nets = netlist.ambiguousPins.get(key)!.join(', ');
+    return fail(`ambiguous connectivity: pin ${pin} of ${refdes} appears on multiple distinct nets [${nets}]`);
+  }
+
+  const actualNet = netlist.pinToNet.get(key);
+  if (!actualNet) {
+    return fail(`pin ${pin} of component ${refdes} is not connected to any net (disconnected)`);
+  }
+
+  const match = resolveNetMatch(actualNet, expectedNet, netlist.nets);
+  if (match.ambiguous) {
+    return fail(`ambiguous net "${expectedNet}": schematic contains distinct electrical nets "${expectedNet}" and "/${expectedNet}"`);
+  }
+
+  if (!match.matches) {
+    return fail(`pin ${pin} of ${refdes} is connected to net "${actualNet}", expected "${expectedNet}"`);
+  }
+
+  return pass(`pin ${pin} of ${refdes} is connected to net ${expectedNet}`);
+};
+
 const docContains: Handler = async (args, ev) => {
   const body = ev.endState.doc(args['doc']);
   if (body === undefined) return fail(`document ${args['doc']} not found`);
@@ -286,7 +381,7 @@ export const HANDLERS: Readonly<Record<string, Handler>> = {
   net_absent: netAbsent,
   symbol_present: symbolPresent,
   symbol_absent: symbolAbsent,
-  pin_net_equals: async () => unevaluable('pin_net_equals evaluation is not implemented yet'),
+  pin_net_equals: pinNetEquals,
   doc_row_matches: async () => unevaluable('doc_row_matches evaluation is not implemented yet'),
   doc_contains: docContains,
   constraint_registered: constraintRegistered,
